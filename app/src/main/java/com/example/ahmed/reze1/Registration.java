@@ -141,12 +141,12 @@ public class Registration extends AppCompatActivity {
     }
 
 
-    private void showDialog() {
+    public void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
 
-    private void hideDialog() {
+    public void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }

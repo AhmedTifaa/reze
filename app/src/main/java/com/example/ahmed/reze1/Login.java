@@ -1,9 +1,11 @@
 package com.example.ahmed.reze1;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class Login extends AppCompatActivity {
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
+    private ProgressDialog pDialog;
 
     private static final int REQUEST_SIGNUP = 0;
 
@@ -53,7 +56,12 @@ public class Login extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
         fblogin = (LoginButton) findViewById(R.id.login_button);
+        fblogin.setReadPermissions("public_profile");
         fblogin.setReadPermissions("email");
+        fblogin.setReadPermissions("user_friends");
+        fblogin.setReadPermissions("user_birthday");
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
         // If using in a fragment
         /*fblogin.setFragment(this);*/
         // Callback registration
@@ -95,8 +103,29 @@ public class Login extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // App code
                         Profile profile = Profile.getCurrentProfile();
-                        //Toast.makeText(getBaseContext(),profile.getName(),Toast.LENGTH_LONG).show();
-                        //Toast.makeText(getBaseContext(),profile.getProfilePictureUri(200,200).toString(),Toast.LENGTH_LONG).show();
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("LoginActivity", response.toString());
+
+                                        // Application code
+                                        try {
+                                            String email = object.getString("email");
+                                            String birthday = object.getString("birthday"); // 01/31/1980 format
+                                            Toast.makeText(getBaseContext(),email+" "+birthday,Toast.LENGTH_LONG).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                         intent.putExtra("fbname",profile.getName());
                         intent.putExtra("fbpicurl",profile.getProfilePictureUri(200,200));
@@ -195,6 +224,65 @@ public class Login extends AppCompatActivity {
                 requestQueue.add(request);
             }
         });
+    }
+    public void fbRegister(){
+        Registration registration = new Registration();
+        registration.validate();
+        showDialog();
+        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/register.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                hideDialog();
+                try {
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(response);
+                    //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    if(jsonObject.getString("msg").equals("done")){
+                        //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                        startActivityForResult(intent, 0);
+                        finish();
+                    }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
+                        Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parameters  = new HashMap<String, String>();
+
+//                parameters.put("name",inputFullName.getText().toString());
+//                parameters.put("mobile",inputMobile.getText().toString());
+//                parameters.put("mail",inputEmail.getText().toString());
+//                parameters.put("birthday",inputDateOfBirth.getText().toString());
+//                parameters.put("password",inputPassword.getText().toString());
+
+                return parameters;
+            }
+        };
+        requestQueue.add(request);
+    }
+    public void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    public void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
