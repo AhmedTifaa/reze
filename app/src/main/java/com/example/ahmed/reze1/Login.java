@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
         fblogin.setReadPermissions("email");
         fblogin.setReadPermissions("user_friends");
         fblogin.setReadPermissions("user_birthday");
+
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         // If using in a fragment
