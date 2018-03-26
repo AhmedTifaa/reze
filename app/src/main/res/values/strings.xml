@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Rezetopia</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="loginfacebook">log in with facebook</string>
+    <string name="skip_login">skip log in</string>
+    <string name="mobile">Mobile</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="repassword">Re-Password</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="terms">i accept the terms of rezetopia</string>
+    <string name="search">search</string>
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="sign_up_with_facebook">sign up with facebook</string>
+
+    <string name="slide_2_title">Movie Tickets</string>
+    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+    <string name="facebook_app_id">2006084819714163</string>
+    <string name="fb_login_protocol_scheme">fb2006084819714163</string>
+    <string name="wronglogin">Incorrect email or password</string>
+    <string name="wrongreset">wrong email or phone</string>
+    <string name="exsistEmail">This mail is already exsist you can log in</string>
+
+
+    <string-array name="object_array">
+
+        <item>010</item>
+
+        <item>011</item>
+
+        <item>012</item>
+
+
+    </string-array>
+
+</resources>

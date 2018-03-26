@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/searchbox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="0dp"
+        android:background="@drawable/search_round"
+        android:hint="@string/search"
+        android:onClick="active"
+        android:inputType="textPersonName"
+        android:paddingTop="5dp"
+        android:focusableInTouchMode="true"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:textColorHint="@color/colorPrimary"
+        android:text=""
+        android:textColor="@color/colorAccent" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="34dp"
+        android:layout_alignBottom="@+id/searchbox"
+        android:layout_alignTop="@+id/searchbox"
+        android:layout_toEndOf="@+id/searchbox"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/seaico_round"
+        android:src="@drawable/ic_search_ico"
+        android:text="Button" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_fir_ball" />
+
+
+</RelativeLayout>

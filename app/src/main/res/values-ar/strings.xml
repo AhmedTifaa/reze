@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--/// strings that are in 2 languages files here-->
+    <string name="app_name">ريزيتوبيا</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="password">الرقم السري</string>
+    <string name="forget_password">نسيت الرقم السري</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_up">تفعيل الحساب</string>
+    <string name="loginfacebook">التسجيل من خلال الفيس بوك</string>
+    <string name="skip_login">تخطي تسجيل الدخول</string>
+    <string name="mobile">الهاتف</string>
+    <string name="name">الاسم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="date_of_birth">تاريخ الميلاد</string>
+    <string name="repassword">اعادة كتابة الرقم السري</string>
+    <string name="next">التالي</string>
+    <string name="skip">تخطي</string>
+    <string name="start">الحصول عليها</string>
+    <string name="english">الانجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="terms">اوافق علي شروط ريزيتوبيا</string>
+    <string name="search">بحث</string>
+    <string name="facebook_app_id">2006084819714163</string>
+    <string name="fb_login_protocol_scheme">fb2006084819714163</string>
+    <string name="wronglogin">الايميل او الباسورد غير صحيحان</string>
+    <string name="wrongreset">بيانات غير صحيحة</string>
+    <string name="exsistEmail">هذا الايميل موجود بالفعل يمكنك تسجيل الدخول</string>
+</resources>
