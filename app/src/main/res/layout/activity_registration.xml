@@ -263,7 +263,7 @@
                     android:layout_gravity="center|center_horizontal|center_vertical"
                     android:layout_marginLeft="@dimen/kasb_margin_top"
                     android:background="@drawable/passwordwhite" />
-                <EditText
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Password"
@@ -319,7 +319,7 @@
                     android:layout_gravity="center|center_horizontal|center_vertical"
                     android:layout_marginLeft="@dimen/kasb_margin_top"
                     android:background="@drawable/passwordwhite" />
-                <EditText
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Re-Password"
