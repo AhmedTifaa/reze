@@ -51,6 +51,7 @@ public class Registration extends AppCompatActivity {
 
         adapter.setDropDownViewResource(R.layout.spinner_item);
 
+
         //spinner.setAdapter(adapter);
         inputFullName = (CustomEditText) findViewById(R.id.edName);
         inputMobile=(CustomEditText)findViewById(R.id.edPhone);
