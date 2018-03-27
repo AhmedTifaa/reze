@@ -46,6 +46,8 @@ public class Login extends AppCompatActivity {
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
     private ProgressDialog pDialog;
+    private Profile profile;
+    private Object fbobject;
 
     private static final int REQUEST_SIGNUP = 0;
 
@@ -103,7 +105,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Profile profile = Profile.getCurrentProfile();
+                        profile = Profile.getCurrentProfile();
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
@@ -113,9 +115,13 @@ public class Login extends AppCompatActivity {
 
                                         // Application code
                                         try {
-                                            String email = object.getString("email");
-                                            String birthday = object.getString("birthday"); // 01/31/1980 format
-                                            Toast.makeText(getBaseContext(),email+" "+birthday,Toast.LENGTH_LONG).show();
+
+                                            //String email = object.getString("email");
+                                            //String birthday = object.getString("birthday"); // 01/31/1980 format
+
+                                            fbRegister(profile.getName(),object.getString("email"),object.getString("birthday"),profile.getProfilePictureUri(200,200).toString());
+
+                                            //Toast.makeText(getBaseContext(),email+" "+birthday,Toast.LENGTH_LONG).show();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -127,11 +133,6 @@ public class Login extends AppCompatActivity {
                         parameters.putString("fields", "id,name,email,gender,birthday");
                         request.setParameters(parameters);
                         request.executeAsync();
-                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                        intent.putExtra("fbname",profile.getName());
-                        intent.putExtra("fbpicurl",profile.getProfilePictureUri(200,200));
-                        startActivityForResult(intent, 0);
-                        finish();
                     }
 
                     @Override
@@ -189,6 +190,7 @@ public class Login extends AppCompatActivity {
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("enter")){
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(),"1",Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                 startActivityForResult(intent, 0);
                                 finish();
@@ -217,7 +219,6 @@ public class Login extends AppCompatActivity {
                         hashMap.put("mail",name.getText().toString());
                         hashMap.put("login","login");
                         hashMap.put("password",password.getText().toString());
-
                         return hashMap;
                     }
                 };
@@ -226,25 +227,32 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    public void fbRegister(){
-        Registration registration = new Registration();
-        registration.validate();
+    public void fbRegister(final String name, final String mail, final String birthdate, final String imgUrl){
+
         showDialog();
-        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/register.php", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/fbregister.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hideDialog();
+                Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
                 try {
                     JSONObject jsonObject;
                     jsonObject = new JSONObject(response);
-                    //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                     if(jsonObject.getString("msg").equals("done")){
                         //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                        intent.putExtra("fbname",name);
+                        intent.putExtra("fbpicurl",imgUrl);
                         startActivityForResult(intent, 0);
                         finish();
                     }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
-                        Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                        intent.putExtra("fbname",name);
+                        intent.putExtra("fbpicurl",imgUrl);
+                        startActivityForResult(intent, 0);
+                        finish();
+                        //Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
@@ -265,11 +273,9 @@ public class Login extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parameters  = new HashMap<String, String>();
 
-//                parameters.put("name",inputFullName.getText().toString());
-//                parameters.put("mobile",inputMobile.getText().toString());
-//                parameters.put("mail",inputEmail.getText().toString());
-//                parameters.put("birthday",inputDateOfBirth.getText().toString());
-//                parameters.put("password",inputPassword.getText().toString());
+                parameters.put("name",name);
+                parameters.put("mail",mail);
+                parameters.put("birthday",birthdate);
 
                 return parameters;
             }
