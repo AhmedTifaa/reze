@@ -50,6 +50,8 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="Name"
+                     android:layout_marginLeft="@dimen/dividerlist"
+                     android:layout_gravity="center"
                      android:textColor="@color/colorPrimaryDark"/>
              </LinearLayout>
              <LinearLayout
@@ -104,11 +106,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Phone"/>
+                    android:text="Phone"
+                    android:layout_marginLeft="@dimen/dividerlist"
+                    android:layout_gravity="center"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10">
                 <View
                     android:background="@color/green5"
                     android:layout_height="35dp"
@@ -139,7 +144,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -154,6 +160,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
+                    android:layout_marginLeft="@dimen/dividerlist"
+                    android:layout_gravity="center"
                     android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
             <LinearLayout
@@ -211,7 +219,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Date Of Birth"/>
+                    android:text="Date Of Birth"
+                    android:layout_marginLeft="@dimen/dividerlist"
+                    android:layout_gravity="center"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,6 +277,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Password"
+                    android:layout_marginLeft="@dimen/dividerlist"
+                    android:layout_gravity="center"
                     android:textColor="@color/colorPrimaryDark"/>
             </LinearLayout>
             <LinearLayout
@@ -323,6 +335,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Re-Password"
+                    android:layout_marginLeft="@dimen/dividerlist"
+                    android:layout_gravity="center"
                     android:textColor="@color/colorPrimaryDark"/>
             </LinearLayout>
             <LinearLayout
@@ -364,7 +378,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/kasb_margin_top"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/dimen_10">
 
             <CheckBox
                 android:id="@+id/checkbox"
