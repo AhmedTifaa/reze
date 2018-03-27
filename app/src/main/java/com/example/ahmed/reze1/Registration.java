@@ -1,11 +1,14 @@
 package com.example.ahmed.reze1;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,7 +20,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import com.example.ahmed.reze1.GUI.CustomButton;
@@ -36,8 +42,11 @@ public class Registration extends AppCompatActivity {
     private CustomEditText inputDateOfBirth;
     private CustomEditText inputPassword;
     private CustomEditText inputRepassword;
+    private CustomEditText birthdate;
     private ProgressDialog pDialog;
     private  CustomButton btnLogin;
+    private CheckBox checkBox;
+    private Calendar myCalendar;
     RequestQueue requestQueue;
     public static String URL_REGISTER = "https://rezetopia.com/app/register.php";
 
@@ -50,8 +59,20 @@ public class Registration extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.object_array, R.layout.spinner_item);
 
         adapter.setDropDownViewResource(R.layout.spinner_item);
+        myCalendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
 
+        };
         //spinner.setAdapter(adapter);
         inputFullName = (CustomEditText) findViewById(R.id.edName);
         inputMobile=(CustomEditText)findViewById(R.id.edPhone);
@@ -59,9 +80,10 @@ public class Registration extends AppCompatActivity {
         inputDateOfBirth=(CustomEditText)findViewById(R.id.edDate);
         inputPassword = (CustomEditText) findViewById(R.id.edPassword);
         inputRepassword=(CustomEditText)findViewById(R.id.edConfirmPassword);
+        checkBox = (CheckBox)findViewById(R.id.checkbox);
         btnRegister = (CustomButton) findViewById(R.id.btnRegister);
         btnLogin = (CustomButton) findViewById(R.id.btnLogin);
-
+        birthdate = (CustomEditText)findViewById(R.id.edDate);
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -140,7 +162,11 @@ public class Registration extends AppCompatActivity {
 
 
     }
-
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        birthdate.setText(sdf.format(myCalendar.getTime()));
+    }
 
     public void showDialog() {
         if (!pDialog.isShowing())
@@ -202,6 +228,12 @@ public class Registration extends AppCompatActivity {
             valid = false;
         } else {
             inputRepassword.setError(null);
+        }
+        if(!checkBox.isChecked()){
+            checkBox.setError("Confirm Terms Please");
+            valid = false;
+        } else{
+            checkBox.setError(null);
         }
 
         return valid;

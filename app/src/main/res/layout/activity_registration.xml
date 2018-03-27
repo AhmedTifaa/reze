@@ -239,6 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_margin"
                     android:paddingTop="@dimen/lv_divider_height"
+                    android:focusable="false"
                     android:layout_gravity="center"
                     android:paddingBottom="@dimen/lv_divider_height"
                     android:paddingLeft="@dimen/lv_divider_height"
@@ -386,6 +387,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:checked="false"
                 android:layout_toStartOf="@+id/customTextView"
                 android:background="@drawable/roundone_green"
                 android:layout_marginLeft="@dimen/small_padding"/>
@@ -413,6 +415,7 @@
             android:background="@drawable/rect_white"
             android:layout_marginBottom="@dimen/kasb_margin_top"
             android:textSize="@dimen/txtsize"
+            android:alpha="0.7"
             android:text="Sign Up"
             android:textColor="#000"
             android:id="@+id/btnRegister"/>

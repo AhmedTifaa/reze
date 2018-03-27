@@ -36,20 +36,19 @@
         android:textSize="24sp" />
 
 
-
     <Button
         android:id="@+id/settings_image_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundone_green"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Change picture"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/roundone_green"/>
+        android:textColor="@color/white" />
 
     <Spinner
         android:id="@+id/spinner_city"
