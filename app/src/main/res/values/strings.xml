@@ -51,5 +51,6 @@
 
 
     </string-array>
-
+    <string name="spinner_city">city</string>
+    <string name="spinner_carrer">carrer</string>
 </resources>

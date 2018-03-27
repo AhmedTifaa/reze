@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,10 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     tools:context="com.example.ahmed.reze1.BuildProfile">
-
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_upload_image"
         android:layout_width="150dp"
@@ -48,4 +51,102 @@
         android:textColor="@color/white"
         android:background="@drawable/roundone_green"/>
 
-</LinearLayout>
+    <Spinner
+        android:id="@+id/spinner_city"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinner_city"
+        android:layout_margin="@dimen/dimen_10"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_white"
+        android:layout_margin="@dimen/dimen_10"
+        android:text="address"
+        android:textColor="@color/green7"
+        android:padding="@dimen/dimen_10"
+        android:lines="1"
+        android:hint="address"
+        android:textColorHint="@color/green7"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_carrer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinner_carrer"
+        android:layout_margin="@dimen/dimen_10"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you interested to participate in tournaments and league ?"
+        android:layout_margin="@dimen/dimen_10"
+        android:padding="@dimen/dimen_10"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_margin12"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="99dp"
+            android:background="@color/green7"
+            android:text="yes"
+            android:id="@+id/checkBox2" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="75dp"
+            android:layout_toStartOf="@+id/checkBox2"
+            android:background="@color/green7"
+            android:text="No" />
+    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you registered at team ?"
+            android:layout_margin="@dimen/dimen_10"
+            android:padding="@dimen/dimen_10"
+            android:layout_gravity="center|center_vertical|center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_margin12"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dots_height"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/kasb_margin_top">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="99dp"
+                android:background="@color/green7"
+                android:text="yes"
+                android:id="@+id/checkBox3" />
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="75dp"
+                android:layout_toStartOf="@+id/checkBox3"
+                android:background="@color/green7"
+                android:text="No" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
