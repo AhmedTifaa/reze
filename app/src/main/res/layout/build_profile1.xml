@@ -98,7 +98,8 @@
             android:layout_marginEnd="99dp"
             android:background="@color/green7"
             android:text="yes"
-            android:id="@+id/checkBox2" />
+            android:id="@+id/checkBox2"
+            android:padding="@dimen/dividerlist"/>
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -108,7 +109,8 @@
             android:layout_marginEnd="75dp"
             android:layout_toStartOf="@+id/checkBox2"
             android:background="@color/green7"
-            android:text="No" />
+            android:text="No"
+            android:padding="@dimen/dividerlist"/>
     </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
@@ -135,7 +137,8 @@
                 android:layout_marginEnd="99dp"
                 android:background="@color/green7"
                 android:text="yes"
-                android:id="@+id/checkBox3" />
+                android:id="@+id/checkBox3"
+                android:padding="@dimen/dividerlist"/>
 
             <CheckBox
                 android:id="@+id/checkBox4"
@@ -145,7 +148,8 @@
                 android:layout_marginEnd="75dp"
                 android:layout_toStartOf="@+id/checkBox3"
                 android:background="@color/green7"
-                android:text="No" />
+                android:text="No"
+                android:padding="@dimen/dividerlist"/>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
