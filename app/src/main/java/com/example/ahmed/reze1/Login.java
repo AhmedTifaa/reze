@@ -277,6 +277,7 @@ public class Login extends AppCompatActivity {
                 parameters.put("name",name);
                 parameters.put("mail",mail);
                 parameters.put("birthday",birthdate);
+                parameters.put("img_url",imgUrl);
 
                 return parameters;
             }
