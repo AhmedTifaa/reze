@@ -190,7 +190,7 @@ public class Login extends AppCompatActivity {
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("enter")){
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getBaseContext(),"1",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                 startActivityForResult(intent, 0);
                                 finish();
@@ -240,7 +240,7 @@ public class Login extends AppCompatActivity {
                     jsonObject = new JSONObject(response);
                     Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                     if(jsonObject.getString("msg").equals("done")){
-                        //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                         intent.putExtra("fbname",name);
                         intent.putExtra("fbpicurl",imgUrl);

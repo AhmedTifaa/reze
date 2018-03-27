@@ -63,8 +63,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".BuildProfileTwoActivity" />
-        <activity android:name=".BuildProfileThirdActivity"></activity>
     </application>
 
 </manifest>

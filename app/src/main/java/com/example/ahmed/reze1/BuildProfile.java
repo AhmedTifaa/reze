@@ -8,6 +8,7 @@ package com.example.ahmed.reze1;
         import android.os.AsyncTask;
         import android.os.Build;
         import android.os.Bundle;
+        import android.support.annotation.Nullable;
         import android.support.v4.view.PagerAdapter;
         import android.support.v4.view.ViewPager;
         import android.support.v7.app.AppCompatActivity;
@@ -71,7 +72,9 @@ public class BuildProfile extends AppCompatActivity {
         // layouts of all welcome sliders
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.build_profile1};
+                R.layout.build_profile1,
+                R.layout.build_profile2,
+                R.layout.build_profile3};
 
         // adding bottom dots
         addBottomDots(0);
@@ -147,7 +150,8 @@ public class BuildProfile extends AppCompatActivity {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.start));
                 btnSkip.setVisibility(View.GONE);
-            } else {
+            }
+            else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.VISIBLE);
@@ -187,14 +191,12 @@ public class BuildProfile extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            buildProfile1 buildProfile1 = new buildProfile1(fbname,fbpicurl);
+            //buildProfile1.onCreate(null,null);
+            buildProfile1.init(layoutInflater.inflate(layouts[layouts.length-2], container, false));
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             View view = layoutInflater.inflate(layouts[position], container, false);
-            user_namae = (TextView) view.findViewById(R.id.user_build_name);
-            user_namae.setText(fbname);
-            new DownloadImage((ImageView) view.findViewById(R.id.profile_upload_image)).execute(fbpicurl);
             container.addView(view);
-
             return view;
         }
 
@@ -202,43 +204,16 @@ public class BuildProfile extends AppCompatActivity {
         public int getCount() {
             return layouts.length;
         }
-
         @Override
         public boolean isViewFromObject(View view, Object obj) {
             return view == obj;
         }
-
-
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
         }
     }
-    public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImage(ImageView bmImage){
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls){
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try{
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            }catch (Exception e){
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result){
-            bmImage.setImageBitmap(result);
-        }
-
-    }
 }
 
