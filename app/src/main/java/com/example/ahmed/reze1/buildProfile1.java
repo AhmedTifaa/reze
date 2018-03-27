@@ -32,7 +32,7 @@ public class buildProfile1 extends AppCompatActivity {
         setContentView(R.layout.build_profile1);
     }
     public void init(View view){
-        user_namae = (TextView)findViewById(view.getId());
+        user_namae = (TextView) view.findViewById(R.id.user_build_name);
         user_namae.setText(fbname);
         new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
     }

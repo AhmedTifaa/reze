@@ -192,7 +192,6 @@ public class BuildProfile extends AppCompatActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             buildProfile1 buildProfile1 = new buildProfile1(fbname,fbpicurl);
-            //buildProfile1.onCreate(null,null);
             buildProfile1.init(layoutInflater.inflate(layouts[layouts.length-2], container, false));
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
