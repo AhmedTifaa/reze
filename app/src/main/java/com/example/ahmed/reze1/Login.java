@@ -252,6 +252,7 @@ public class Login extends AppCompatActivity {
                         intent.putExtra("fbpicurl",imgUrl);
                         startActivityForResult(intent, 0);
                         finish();
+
                         //Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
                     }
                     else {
