@@ -151,6 +151,11 @@ public class BuildProfile extends AppCompatActivity {
                 btnNext.setText(getString(R.string.start));
                 btnSkip.setVisibility(View.GONE);
             }
+            if(position == layouts.length-2){
+                user_namae = (TextView)findViewById(R.id.user_build_name);
+                user_namae.setText(fbname);
+                new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+            }
             else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
@@ -191,10 +196,13 @@ public class BuildProfile extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            buildProfile1 buildProfile1 = new buildProfile1(fbname,fbpicurl);
-            buildProfile1.init(layoutInflater.inflate(layouts[layouts.length-2], container, false));
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
+            if(position == layouts.length-2){
+                user_namae = (TextView)findViewById(R.id.user_build_name);
+                user_namae.setText(fbname);
+                new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+            }
             container.addView(view);
             return view;
         }
@@ -212,6 +220,31 @@ public class BuildProfile extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
+    }
+    public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImage(ImageView bmImage){
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls){
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try{
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            }catch (Exception e){
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result){
+            bmImage.setImageBitmap(result);
+        }
+
     }
 
 }
