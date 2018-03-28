@@ -89,7 +89,7 @@
            android:layout_marginTop="@dimen/dimen_10"
            android:layout_marginLeft="@dimen/com_facebook_profilepictureview_preset_size_normal"
            android:layout_marginRight="@dimen/com_facebook_profilepictureview_preset_size_normal"
-           android:background="@drawable/round_green_btn"
+           android:background="@drawable/roundone_green"
            android:textColor="@color/white"
            android:text="next"/>
    </LinearLayout>

@@ -21,6 +21,7 @@
         android:textColorHint="@color/green7"
         android:inputType="number"
         android:imeOptions="actionNext"
+        android:padding="@dimen/small_margin"
         />
         <EditText
             android:background="@drawable/rect_white"
@@ -32,8 +33,11 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:padding="@dimen/small_margin"
+            />
         <EditText
+            android:padding="@dimen/small_margin"
             android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,6 +49,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"/>
         <EditText
+            android:padding="@dimen/small_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -58,6 +63,7 @@
             />
 
         <EditText
+            android:padding="@dimen/small_margin"
             android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +84,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:padding="@dimen/small_margin"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +98,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
         <EditText
             android:layout_width="match_parent"
@@ -102,6 +111,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
 
         <EditText
@@ -115,6 +125,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
         <EditText
             android:layout_width="match_parent"
@@ -127,6 +138,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
         <EditText
             android:layout_width="match_parent"
@@ -139,6 +151,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
         <EditText
             android:layout_width="match_parent"
@@ -151,6 +164,7 @@
             android:inputType="number"
             android:imeOptions="actionDone"
             android:background="@drawable/rect_white"
+            android:padding="@dimen/small_margin"
             />
 
         <Button
@@ -159,7 +173,7 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_marginLeft="@dimen/com_facebook_profilepictureview_preset_size_normal"
             android:layout_marginRight="@dimen/com_facebook_profilepictureview_preset_size_normal"
-            android:background="@drawable/round_green_btn"
+            android:background="@drawable/roundone_green"
             android:textColor="@color/white"
             android:text="finish"
             android:layout_marginBottom="@dimen/dimen_10"/>
