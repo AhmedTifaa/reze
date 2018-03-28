@@ -6,6 +6,8 @@
     tools:context="com.example.ahmed.reze1.Home">
 
     <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment layout -->
 
     <WebView
         android:id="@+id/home_wv"
