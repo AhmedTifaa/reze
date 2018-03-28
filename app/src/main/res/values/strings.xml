@@ -39,7 +39,8 @@
     <string name="wronglogin">Incorrect email or password</string>
     <string name="wrongreset">wrong email or phone</string>
     <string name="exsistEmail">This mail is already exsist you can log in</string>
-
+    <string name="spinner_carrer">Select your Career</string>
+    <string name="spinner_city">Select your City</string>
 
     <string-array name="object_array">
 

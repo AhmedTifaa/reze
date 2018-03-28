@@ -245,6 +245,24 @@ public class BuildProfile extends AppCompatActivity {
                 user_namae = (TextView)findViewById(R.id.user_build_name);
                 user_namae.setText(fbname);
                 new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+                Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
+// Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.spinner_city, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+                adapterSpinnerCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+                spinnerCity.setAdapter(adapterSpinnerCity);
+
+
+                Spinner spinnerCarrer = (Spinner) findViewById(R.id.spinner_carrer);
+// Create an ArrayAdapter using the string array and a default spinner layout
+                ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
+                        R.array.spinner_carrer, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+                adapterSpinnerCarrer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+                spinnerCarrer.setAdapter(adapterSpinnerCarrer);
             }
             container.addView(view);
             return view;
