@@ -59,20 +59,20 @@ public class Registration extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.object_array, R.layout.spinner_item);
 
         adapter.setDropDownViewResource(R.layout.spinner_item);
-        myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-        };
+//        myCalendar = Calendar.getInstance();
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                // TODO Auto-generated method stub
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel();
+//            }
+//
+//        };
         //spinner.setAdapter(adapter);
         inputFullName = (CustomEditText) findViewById(R.id.edName);
         inputMobile=(CustomEditText)findViewById(R.id.edPhone);
@@ -122,6 +122,8 @@ public class Registration extends AppCompatActivity {
                             if(jsonObject.getString("msg").equals("done")){
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                                intent.putExtra("fbname",inputFullName.getText().toString());
+                                intent.putExtra("fbpicurl","");
                                 startActivityForResult(intent, 0);
                                 finish();
                             }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
@@ -162,11 +164,11 @@ public class Registration extends AppCompatActivity {
 
 
     }
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        birthdate.setText(sdf.format(myCalendar.getTime()));
-    }
+//    private void updateLabel() {
+//        String myFormat = "MM/dd/yy"; //In which you need put here
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//        birthdate.setText(sdf.format(myCalendar.getTime()));
+//    }
 
     public void showDialog() {
         if (!pDialog.isShowing())
