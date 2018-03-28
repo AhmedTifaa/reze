@@ -49,8 +49,18 @@
 
         <item>012</item>
 
+    </string-array>
+
+    <string-array name="spinner_city">
+        <item>cairo</item>
+        <item>Helwan</item>
+        <item>Nasr City</item>
+    </string-array>
+
+
+    <string-array name="spinner_carrer">
+        <item>amature</item>
+        <item>professional</item>
 
     </string-array>
-    <string name="spinner_city">city</string>
-    <string name="spinner_carrer">carrer</string>
 </resources>
