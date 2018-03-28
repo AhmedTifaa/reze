@@ -194,7 +194,6 @@ public class BuildProfile extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri imgSelectedUri = data.getData();
             ((ImageView)findViewById(R.id.profile_upload_image)).setImageURI(imgSelectedUri);
-
         }
     }
     /**
