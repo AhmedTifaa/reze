@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <EditText
+        android:background="@drawable/rect_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_10"
@@ -19,8 +20,10 @@
         android:textColor="@color/green7"
         android:textColorHint="@color/green7"
         android:inputType="number"
-        android:imeOptions="actionNext"/>
+        android:imeOptions="actionNext"
+        />
         <EditText
+            android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -31,6 +34,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"/>
         <EditText
+            android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -49,9 +53,12 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
 
         <EditText
+            android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -62,6 +69,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"/>
         <EditText
+            android:background="@drawable/rect_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -80,7 +88,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,7 +100,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -101,7 +113,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +125,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,7 +137,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:background="@drawable/rect_white"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,7 +149,9 @@
             android:textColor="@color/green7"
             android:textColorHint="@color/green7"
             android:inputType="number"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:background="@drawable/rect_white"
+            />
 
         <Button
             android:layout_width="match_parent"
