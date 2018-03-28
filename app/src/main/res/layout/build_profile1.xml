@@ -43,6 +43,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
+        android:onClick="gallary"
         android:background="@drawable/roundone_green"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"

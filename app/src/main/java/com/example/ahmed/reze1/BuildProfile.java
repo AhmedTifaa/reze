@@ -5,6 +5,7 @@ package com.example.ahmed.reze1;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.Color;
+        import android.net.Uri;
         import android.os.AsyncTask;
         import android.os.Build;
         import android.os.Bundle;
@@ -27,6 +28,7 @@ package com.example.ahmed.reze1;
 
         import com.example.ahmed.reze1.helper.PrefManager;
 
+        import java.io.FileNotFoundException;
         import java.io.InputStream;
 
 public class BuildProfile extends AppCompatActivity {
@@ -41,6 +43,7 @@ public class BuildProfile extends AppCompatActivity {
     private String fbname;
     private String fbpicurl;
     private TextView user_namae;
+    public static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +158,7 @@ public class BuildProfile extends AppCompatActivity {
                 user_namae = (TextView)findViewById(R.id.user_build_name);
                 user_namae.setText(fbname);
                 new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+
             }
             else {
                 // still pages are left
@@ -173,7 +177,25 @@ public class BuildProfile extends AppCompatActivity {
 
         }
     };
+    public void gallary(View view){
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
 
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select App");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        startActivityForResult(chooserIntent, PICK_IMAGE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri imgSelectedUri = data.getData();
+            ((ImageView)findViewById(R.id.profile_upload_image)).setImageURI(imgSelectedUri);
+        }
+    }
     /**
      * Making notification bar transparent
      */
