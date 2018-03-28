@@ -42,6 +42,20 @@
     <string name="spinner_carrer">Select your Career</string>
     <string name="spinner_city">Select your City</string>
 
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="replay">Replay</string>
+    <string name="tell_something">Tell something to your team&#8230;</string>
+
+    <string name="follow">Follow</string>
+    <string name="schedule">Schedule</string>
+    <string name="details">Details</string>
+    <string name="amenities">Amenities</string>
+    <string name="review">Reviews</string>
+    <string name="book_now">Book now</string>
+    <string name="arena_number">Arena number</string>
+
     <string-array name="object_array">
 
         <item>010</item>

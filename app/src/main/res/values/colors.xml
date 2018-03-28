@@ -12,6 +12,7 @@
     <color name="btn_disabled">#999999</color>
     <color name="lbl_value">#222222</color>
     <color name="red">#C40000</color>
+    <color name="holo_gray">#E1E1E1</color>
 
     <color name="grey">#cfcfd1</color>
 
