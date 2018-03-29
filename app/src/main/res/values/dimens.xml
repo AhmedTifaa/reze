@@ -136,4 +136,6 @@
     <dimen name="desc_padding">40dp</dimen>
     <dimen name="btn_large_layout">350dp</dimen>
     <dimen name="btn_xlarge_layout">260dp</dimen>
+
+    <dimen name="cover_height">150dp</dimen>
 </resources>

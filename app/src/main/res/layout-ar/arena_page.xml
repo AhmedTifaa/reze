@@ -82,7 +82,7 @@
         android:id="@+id/coverView"
         android:layout_below="@id/horzLine"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="@dimen/cover_height"
         android:background="@color/colorPrimary"
         />
 
