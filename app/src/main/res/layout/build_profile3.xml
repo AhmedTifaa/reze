@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <EditText
-        android:background="@drawable/rect_white"
+        android:background="@drawable/roundtwoltr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_10"
@@ -24,7 +24,7 @@
         android:padding="@dimen/small_margin"
         />
         <EditText
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -38,7 +38,7 @@
             />
         <EditText
             android:padding="@dimen/small_margin"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -59,12 +59,12 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             />
 
         <EditText
             android:padding="@dimen/small_margin"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -75,7 +75,7 @@
             android:inputType="number"
             android:imeOptions="actionNext"/>
         <EditText
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -97,7 +97,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
         <EditText
@@ -110,7 +110,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
 
@@ -124,7 +124,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
         <EditText
@@ -137,7 +137,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
         <EditText
@@ -150,7 +150,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
         <EditText
@@ -163,7 +163,7 @@
             android:textColorHint="@color/green7"
             android:inputType="number"
             android:imeOptions="actionDone"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/roundtwoltr"
             android:padding="@dimen/small_margin"
             />
 
