@@ -41,4 +41,6 @@
     <string name="review">المراجعات</string>
     <string name="book_now">احجز الأن</string>
     <string name="arena_number">ملعب رقم</string>
+    <string name="booking">الحجز</string>
+    <string name="your_news_feed">اضافة منشور</string>
 </resources>

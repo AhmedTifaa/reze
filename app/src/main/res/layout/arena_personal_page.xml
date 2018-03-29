@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/dimen_10"
-                android:src="@drawable/ic_arrow_back_ar"/>
+                android:src="@drawable/ic_back_arrow"/>
 
             <LinearLayout
                 android:id="@+id/searchLeft"
@@ -31,7 +31,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_10"
                 android:layout_centerVertical="true"
-                android:background="@drawable/search_dark_right_ar"
+                android:background="@drawable/search_dark_left"
                 android:orientation="horizontal">
 
                 <EditText
@@ -56,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_10"
-                android:background="@drawable/search_dark_left_ar">
+                android:background="@drawable/search_dark_right">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -167,11 +167,78 @@
                 android:background="@drawable/dark_button"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/postLayout"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vendorDataLayout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp">
+
+                <RelativeLayout
+                    android:background="@drawable/tell_something_background"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dimen_20"
+                        android:text="@string/your_news_feed"/>
+
+                    <ImageView
+                        android:id="@+id/ballView"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/ic_ball"
+                        android:padding="0dp"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/postPlusView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/plus_circle"
+                    android:layout_marginEnd="@dimen/dimen_45"
+                    android:src="@drawable/ic_plus"/>
+
+                <Button
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@id/postPlusView"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/booking"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/light_post_button"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/pagerHeader"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@id/vendorDataLayout"
+            android:layout_below="@id/postLayout"
             android:orientation="horizontal"
             android:weightSum="5"
             android:background="@color/holo_gray"
@@ -220,4 +287,3 @@
 
     </RelativeLayout>
 </ScrollView>
-

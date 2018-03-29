@@ -55,6 +55,8 @@
     <string name="review">Reviews</string>
     <string name="book_now">Book now</string>
     <string name="arena_number">Arena number</string>
+    <string name="booking">Booking</string>
+    <string name="your_news_feed">Your news feed&#8230;</string>
 
     <string-array name="object_array">
 
