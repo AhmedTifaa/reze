@@ -51,6 +51,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
         Bundle inBundle = getIntent().getExtras();
+        
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);

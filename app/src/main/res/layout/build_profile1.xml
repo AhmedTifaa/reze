@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:fadeScrollbars="false"
     tools:context="com.example.ahmed.reze1.BuildProfile">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:paddingBottom="100dp"
         android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_upload_image"
@@ -38,13 +40,13 @@
     <Button
         android:id="@+id/settings_image_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
         android:onClick="gallary"
-        android:background="@drawable/roundone_green"
+        android:background="@drawable/roundone_green4"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Change picture"
@@ -55,62 +57,73 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:prompt="@string/spinner_city"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingRight="7dp"
+        android:paddingLeft="18dp"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/roundtwoltr"
         android:layout_margin="@dimen/dimen_10"
         />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_white"
-        android:layout_margin="@dimen/dimen_10"
-        android:text="address"
-        android:textColor="@color/green7"
-        android:padding="@dimen/dimen_10"
-        android:lines="1"
-        android:hint="address"
-        android:textColorHint="@color/green7"
-        />
-
     <Spinner
         android:id="@+id/spinner_carrer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:prompt="@string/spinner_carrer"
+        android:background="@drawable/roundtwoltr"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingRight="7dp"
+        android:paddingLeft="18dp"
+        android:spinnerMode="dropdown"
         android:layout_margin="@dimen/dimen_10"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundtwoltr"
+            android:layout_margin="@dimen/dimen_10"
+            android:textColor="@color/green7"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
+            android:lines="1"
+            android:hint="Address"
+            android:textColorHint="#fff"
+            />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Are you interested to participate in tournaments and league ?"
         android:layout_margin="@dimen/dimen_10"
         android:padding="@dimen/dimen_10"
+        android:textAlignment="center"
         android:layout_gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/small_margin12"/>
+        android:textSize="12dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+      <RadioGroup
+          android:gravity="center"
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center"
-            android:layout_marginEnd="99dp"
-            android:background="@drawable/roundone_green"
-            android:text="yes"
-            android:id="@+id/checkBox2"
-            android:padding="@dimen/dividerlist"/>
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="75dp"
-            android:layout_toStartOf="@+id/checkBox2"
-            android:background="@drawable/roundone_green"
-            android:text="No"
-            android:padding="@dimen/dividerlist"/>
+          <RadioButton
+              android:id="@+id/radioButton1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Yes "
+              android:textSize="12sp" />
+
+          <RadioButton
+              android:id="@+id/radioButton2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="No "
+              android:textSize="12sp" />
+      </RadioGroup>
     </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
@@ -120,7 +133,7 @@
             android:padding="@dimen/dimen_10"
             android:layout_gravity="center|center_vertical|center_horizontal"
             android:textColor="@color/white"
-            android:textSize="@dimen/small_margin12"
+            android:textSize="12dp"
             android:gravity="center"
             android:layout_marginTop="@dimen/dots_height"/>
         <RelativeLayout
@@ -128,28 +141,26 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/kasb_margin_top">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"
-                android:layout_marginEnd="99dp"
-                android:background="@drawable/roundone_green"
-                android:text="yes"
-                android:id="@+id/checkBox3"
-                android:padding="@dimen/dividerlist"/>
+            <RadioGroup
+                android:gravity="center"
 
-            <CheckBox
-                android:id="@+id/checkBox4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="75dp"
-                android:layout_toStartOf="@+id/checkBox3"
-                android:background="@drawable/roundone_green"
-                android:text="No"
-                android:padding="@dimen/dividerlist"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes "
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No "
+                    android:textSize="12sp" />
+            </RadioGroup>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -71,21 +71,21 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-        webview = (WebView)v.findViewById(R.id.home_wv);
-        webview.clearCache(true);
-        webview.addJavascriptInterface(new Home_i(getContext()), "Android");
-        WebSettings webSettings = webview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        if (getResources().getConfiguration().locale.toString().equals("en")){
-            distfile = "file:///android_asset/en/Home.html";
-        }
-        else if(getResources().getConfiguration().locale.toString().equals("ar")){
-            distfile = "file:///android_asset/ar/Home.html";
-        }
-        webview.loadUrl(distfile);
-        //webview.loadUrl("https://www.google.com.eg");
-        return v;
+          View v = inflater.inflate(R.layout.fragment_home, container, false);
+//        webview = (WebView)v.findViewById(R.id.home_wv);
+//        webview.clearCache(true);
+//        webview.addJavascriptInterface(new Home_i(getContext()), "Android");
+//        WebSettings webSettings = webview.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        if (getResources().getConfiguration().locale.toString().equals("en")){
+//            distfile = "file:///android_asset/en/Home.html";
+//        }
+//        else if(getResources().getConfiguration().locale.toString().equals("ar")){
+//            distfile = "file:///android_asset/ar/Home.html";
+//        }
+//        webview.loadUrl(distfile);
+//        //webview.loadUrl("https://www.google.com.eg");
+          return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -67,6 +67,7 @@
     </string-array>
 
     <string-array name="spinner_city">
+        <item>select city</item>
         <item>cairo</item>
         <item>Helwan</item>
         <item>Nasr City</item>
@@ -74,6 +75,7 @@
 
 
     <string-array name="spinner_carrer">
+        <item>select career</item>
         <item>amature</item>
         <item>professional</item>
 

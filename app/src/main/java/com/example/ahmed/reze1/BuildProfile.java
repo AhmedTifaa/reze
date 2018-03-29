@@ -159,8 +159,9 @@ public class BuildProfile extends AppCompatActivity {
             if(position == layouts.length-2){
                 user_namae = (TextView)findViewById(R.id.user_build_name);
                 user_namae.setText(fbname);
-                new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
-
+                if (fbpicurl != ""){
+                    new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+                }
                 Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
@@ -245,7 +246,9 @@ public class BuildProfile extends AppCompatActivity {
             if(position == layouts.length-2){
                 user_namae = (TextView)findViewById(R.id.user_build_name);
                 user_namae.setText(fbname);
-                new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+                if (fbpicurl != ""){
+                    new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+                }
                 Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
