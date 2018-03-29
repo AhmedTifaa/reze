@@ -164,7 +164,8 @@
                 android:text="@string/follow"
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_size_13sp"
-                android:background="@drawable/dark_button"/>
+                android:background="@drawable/dark_button"
+                android:textColor="@color/white"/>
         </RelativeLayout>
 
         <LinearLayout
