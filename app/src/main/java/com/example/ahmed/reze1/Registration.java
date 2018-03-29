@@ -1,6 +1,7 @@
 package com.example.ahmed.reze1;
 
 import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import com.example.ahmed.reze1.GUI.CustomButton;
 import com.example.ahmed.reze1.GUI.CustomEditText;
+import com.example.ahmed.reze1.helper.DateDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -239,5 +242,23 @@ public class Registration extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+
+    public void onStart(){
+        super.onStart();
+
+        inputDateOfBirth=(CustomEditText)findViewById(R.id.edDate);
+        inputDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            public void onFocusChange(View view, boolean hasfocus){
+                if(hasfocus){
+                    DateDialog dialog=new DateDialog(view);
+                    FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    dialog.show(ft, "DatePicker");
+
+                }
+            }
+
+        });
     }
 }
