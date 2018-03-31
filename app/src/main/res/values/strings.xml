@@ -57,6 +57,7 @@
     <string name="arena_number">Arena number</string>
     <string name="booking">Booking</string>
     <string name="your_news_feed">Your news feed&#8230;</string>
+    <string name="add_to_your_post">Add to your post</string>
 
     <string-array name="object_array">
 
