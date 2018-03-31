@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.BuildProfileThirdActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.example.ahmed.reze1.BuildProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="70dp"
+        android:paddingBottom="70dp"
         android:orientation="vertical">
     <EditText
         android:background="@drawable/roundtwoltr"
@@ -21,7 +24,10 @@
         android:textColorHint="@color/colorPrimaryDark"
         android:inputType="number"
         android:imeOptions="actionNext"
-        android:padding="@dimen/medium_margin"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingRight="7dp"
+        android:paddingLeft="18dp"
         />
         <EditText
             android:background="@drawable/roundtwoltr"
@@ -34,10 +40,16 @@
             android:textColorHint="@color/colorPrimaryDark"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +61,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"/>
         <EditText
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_10"
@@ -63,7 +78,10 @@
             />
 
         <EditText
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             android:background="@drawable/roundtwoltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,7 +103,10 @@
             android:textColorHint="@color/colorPrimaryDark"
             android:inputType="number"
             android:imeOptions="actionNext"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
             android:layout_width="match_parent"
@@ -98,7 +119,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
             android:layout_width="match_parent"
@@ -111,7 +135,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
 
         <EditText
@@ -125,7 +152,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
             android:layout_width="match_parent"
@@ -138,7 +168,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
             android:layout_width="match_parent"
@@ -151,7 +184,10 @@
             android:inputType="number"
             android:imeOptions="actionNext"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
         <EditText
             android:layout_width="match_parent"
@@ -164,18 +200,11 @@
             android:inputType="number"
             android:imeOptions="actionDone"
             android:background="@drawable/roundtwoltr"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
             />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:layout_marginLeft="@dimen/com_facebook_profilepictureview_preset_size_normal"
-            android:layout_marginRight="@dimen/com_facebook_profilepictureview_preset_size_normal"
-            android:background="@drawable/roundone_green"
-            android:textColor="@color/white"
-            android:text="finish"
-            android:layout_marginBottom="@dimen/dimen_10"/>
     </LinearLayout>
 </ScrollView>

@@ -1,42 +1,42 @@
 package com.example.ahmed.reze1;
 
-        import android.content.Context;
-        import android.content.Intent;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Color;
-        import android.net.Uri;
-        import android.os.AsyncTask;
-        import android.os.Build;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.content.res.TypedArrayUtils;
-        import android.support.v4.view.PagerAdapter;
-        import android.support.v4.view.ViewPager;
-        import android.support.v7.app.AppCompatActivity;
-        import android.text.Html;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.MotionEvent;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.view.Window;
-        import android.view.WindowManager;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
-        import android.widget.Spinner;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.res.TypedArrayUtils;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.example.ahmed.reze1.helper.PrefManager;
+import com.example.ahmed.reze1.helper.PrefManager;
 
-        import java.io.FileNotFoundException;
-        import java.io.InputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
-public class BuildProfile extends AppCompatActivity {
+public class BuildProfile1 extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -67,9 +67,9 @@ public class BuildProfile extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_buildprofile);
-        Bundle inBundle = getIntent().getExtras();
-        fbname = inBundle.get("fbname").toString();
-        fbpicurl = inBundle.get("fbpicurl").toString();
+        //Bundle inBundle = getIntent().getExtras();
+        //fbname = inBundle.get("fbname").toString();
+        //fbpicurl = inBundle.get("fbpicurl").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -81,7 +81,7 @@ public class BuildProfile extends AppCompatActivity {
         // layouts of all welcome sliders
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.build_profile1,
+                R.layout.build_profile2,
                 /*R.layout.build_profile2,
                 R.layout.build_profile3*/};
 
@@ -103,7 +103,7 @@ public class BuildProfile extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
+                startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
                 finish();
                 // checking for last page
                 // if last page home screen will be launched
@@ -149,16 +149,16 @@ public class BuildProfile extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(BuildProfile.this, MainActivity.class));
+        startActivity(new Intent(BuildProfile1.this, MainActivity.class));
         finish();
     }
 
-   ViewPager.OnTouchListener onTouchListener = new View.OnTouchListener() {
-       @Override
-       public boolean onTouch(View view, MotionEvent motionEvent) {
-           return false;
-       }
-   };
+    ViewPager.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return false;
+        }
+    };
 
 
 
@@ -168,9 +168,9 @@ public class BuildProfile extends AppCompatActivity {
         public void onPageSelected(int position) {
 
             //Toast.makeText(getBaseContext(),viewPager.getCurrentItem()+"",Toast.LENGTH_LONG).show();
-            viewPager.getAdapter().notifyDataSetChanged();
+            //viewPager.getAdapter().notifyDataSetChanged();
             //addBottomDots(position);
-             //btnNext.setVisibility(View.GONE);
+            //btnNext.setVisibility(View.GONE);
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
@@ -224,17 +224,7 @@ public class BuildProfile extends AppCompatActivity {
             //Toast.makeText(getBaseContext(),"12",Toast.LENGTH_LONG).show();
         }
     };
-    public void gallary(View view){
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
 
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select App");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-        startActivityForResult(chooserIntent, PICK_IMAGE);
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -269,42 +259,6 @@ public class BuildProfile extends AppCompatActivity {
 
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
-            //Toast.makeText(getBaseContext(),layouts.length+"    "+position,Toast.LENGTH_LONG).show();
-            if(position == 0){
-                //Toast.makeText(getBaseContext(),position+"",Toast.LENGTH_LONG).show();
-                user_namae = (TextView)view.findViewById(R.id.user_build_name);
-                user_namae.setText(fbname);
-                //((ImageView)findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
-                //Toast.makeText(getBaseContext(),fbpicurl,Toast.LENGTH_LONG).show();
-                if (fbpicurl.equals("null")){
-                    //Toast.makeText(getBaseContext(),"1",Toast.LENGTH_LONG).show();
-                    ((ImageView)view.findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
-
-                }
-                else{
-                    //Toast.makeText(getBaseContext(),"2",Toast.LENGTH_LONG).show();
-                    new DownloadImage((ImageView)view.findViewById(R.id.profile_upload_image)).execute(fbpicurl);
-                    ((EditText)view.findViewById(R.id.phone_compelete)).setVisibility(View.VISIBLE);
-                }
-                Spinner spinnerCity = (Spinner) view.findViewById(R.id.spinner_city);
-// Create an ArrayAdapter using the string array and a default spinner layout
-                ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
-                        R.array.spinner_city, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-                adapterSpinnerCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-                spinnerCity.setAdapter(adapterSpinnerCity);
-
-
-                Spinner spinnerCarrer = (Spinner) view.findViewById(R.id.spinner_carrer);
-// Create an ArrayAdapter using the string array and a default spinner layout
-                ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
-                        R.array.spinner_carrer, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-                adapterSpinnerCarrer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-                spinnerCarrer.setAdapter(adapterSpinnerCarrer);
-            }
             container.addView(view);
             return view;
         }
@@ -322,31 +276,6 @@ public class BuildProfile extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
-    }
-    public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImage(ImageView bmImage){
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls){
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try{
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            }catch (Exception e){
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result){
-            bmImage.setImageBitmap(result);
-        }
-
     }
 
 }

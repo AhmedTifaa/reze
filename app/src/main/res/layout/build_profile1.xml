@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     android:fadeScrollbars="false"
-    tools:context="com.example.ahmed.reze1.BuildProfile">
+    tools:context="com.example.ahmed.reze1.BuildProfile1">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -89,7 +89,24 @@
             android:paddingLeft="18dp"
             android:lines="1"
             android:hint="Address"
-            android:textColorHint="#fff"
+            android:textColorHint="@color/green2"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundtwoltr"
+            android:layout_margin="@dimen/dimen_10"
+            android:textColor="@color/green7"
+            android:id="@+id/phone_compelete"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingRight="7dp"
+            android:paddingLeft="18dp"
+            android:lines="1"
+            android:inputType="phone"
+            android:visibility="gone"
+            android:hint="Phone Number"
+            android:textColorHint="@color/green2"
             />
     <TextView
         android:layout_width="match_parent"

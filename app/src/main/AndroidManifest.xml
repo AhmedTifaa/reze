@@ -57,6 +57,12 @@
             android:name=".BuildProfile"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
+            android:name=".BuildProfile1"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".BuildProfile2"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>

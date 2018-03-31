@@ -113,20 +113,23 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validate();
-                showDialog();
+                //showDialog();
                 StringRequest request = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        hideDialog();
+                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                        //hideDialog();
                         try {
                             JSONObject jsonObject;
                             jsonObject = new JSONObject(response);
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("done")){
-                                //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                 intent.putExtra("fbname",inputFullName.getText().toString());
-                                intent.putExtra("fbpicurl","");
+                                intent.putExtra("fbpicurl","null");
                                 startActivityForResult(intent, 0);
                                 finish();
                             }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){

@@ -137,8 +137,6 @@
                     android:layout_marginRight="@dimen/medium_margin"
                     android:layout_marginLeft="@dimen/card_view_content_padding"/>
             </LinearLayout>
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -414,7 +412,7 @@
             android:background="@drawable/rect_white"
             android:layout_marginBottom="@dimen/kasb_margin_top"
             android:textSize="@dimen/txtsize"
-            android:alpha="0.7"
+            android:alpha="1"
             android:text="Sign Up"
             android:textColor="#000"
             android:id="@+id/btnRegister"/>

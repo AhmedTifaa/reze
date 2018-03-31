@@ -5,109 +5,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.BuildProfileTwoActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.example.ahmed.reze1.BuildProfile">
+
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:paddingTop="70dp"
+       android:layout_height="wrap_content"
        android:orientation="vertical">
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/green7"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="your height"
-        android:layout_margin="@dimen/dimen_10"
-        android:paddingTop="@dimen/dividerlist"
-        android:paddingRight="@dimen/small_margin"
-        android:inputType="number"
-        android:imeOptions="actionNext"
-        android:background="@drawable/roundtwoltr"
-        android:paddingLeft="@dimen/kasb_margin_top"
-        android:paddingBottom="@dimen/small_margin"
-        />
-       <EditText
-           android:paddingLeft="@dimen/kasb_margin_top"
-           android:paddingBottom="@dimen/small_margin"
-           android:paddingTop="@dimen/dividerlist"
-           android:paddingRight="@dimen/small_margin"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColorHint="@color/green7"
-           android:textColor="@color/colorPrimaryDark"
-           android:text="your weight"
-           android:layout_margin="@dimen/dimen_10"
-           android:imeOptions="actionNext"
-           android:inputType="number"
-           android:background="@drawable/roundtwoltr"
-           />
 
-       <EditText
-           android:paddingLeft="@dimen/kasb_margin_top"
-           android:paddingBottom="@dimen/small_margin"
-           android:paddingTop="@dimen/dividerlist"
-           android:paddingRight="@dimen/small_margin"
-           android:background="@drawable/roundtwoltr"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColorHint="@color/green7"
-           android:textColor="@color/colorPrimaryDark"
-           android:text="your nationality"
-           android:layout_margin="@dimen/dimen_10"
-           android:inputType="number"
-           android:imeOptions="actionNext"/>
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="your height"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
 
-       <EditText
-           android:background="@drawable/roundtwoltr"
-           android:paddingLeft="@dimen/kasb_margin_top"
-           android:paddingBottom="@dimen/small_margin"
-           android:paddingTop="@dimen/dividerlist"
-           android:paddingRight="@dimen/small_margin"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColorHint="@color/green7"
-           android:textColor="@color/colorPrimaryDark"
-           android:text="your position"
-           android:layout_margin="@dimen/dimen_10"
-           android:inputType="number"
-           android:imeOptions="actionNext"/>
-       <EditText
-           android:background="@drawable/roundtwoltr"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColorHint="@color/green7"
-           android:textColor="@color/colorPrimaryDark"
-           android:text="your dominant foot"
-           android:layout_margin="@dimen/dimen_10"
-           android:paddingLeft="@dimen/kasb_margin_top"
-           android:paddingBottom="@dimen/small_margin"
-           android:paddingTop="@dimen/dividerlist"
-           android:paddingRight="@dimen/small_margin"
-           android:inputType="number"
-           android:imeOptions="actionNext"/>
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="your weight"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
 
-       <EditText
-           android:background="@drawable/roundtwoltr"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:textColorHint="@color/green7"
-           android:textColor="@color/colorPrimaryDark"
-           android:text="you are registered in a team"
-           android:layout_margin="@dimen/dimen_10"
-           android:paddingLeft="@dimen/kasb_margin_top"
-           android:paddingBottom="@dimen/small_margin"
-           android:paddingTop="@dimen/dividerlist"
-           android:paddingRight="@dimen/small_margin"
-           android:inputType="number"
-           android:imeOptions="actionDone"/>
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="your nationality"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
 
-       <Button
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/dimen_10"
-           android:layout_marginLeft="@dimen/com_facebook_profilepictureview_preset_size_normal"
-           android:layout_marginRight="@dimen/com_facebook_profilepictureview_preset_size_normal"
-           android:background="@drawable/roundone_green"
-           android:textColor="@color/white"
-           android:text="next"/>
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="your position"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
+
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionNext"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="your dominant foot"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
+
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_10"
+          android:background="@drawable/roundtwoltr"
+          android:imeOptions="actionDone"
+          android:inputType="number"
+          android:paddingBottom="7dp"
+          android:paddingLeft="@dimen/kasb_margin_top"
+          android:paddingRight="7dp"
+          android:paddingTop="7dp"
+          android:text="you are registered in a team"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/green7" />
+
    </LinearLayout>
 </RelativeLayout>

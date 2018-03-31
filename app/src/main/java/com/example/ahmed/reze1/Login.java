@@ -191,7 +191,7 @@ public class Login extends AppCompatActivity {
                             if(jsonObject.getString("msg").equals("enter")){
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), Home.class);
                                 startActivityForResult(intent, 0);
                                 finish();
                             }
@@ -234,11 +234,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 hideDialog();
-                Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
                 try {
                     JSONObject jsonObject;
                     jsonObject = new JSONObject(response);
-                    Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                     if(jsonObject.getString("msg").equals("done")){
                         Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
