@@ -32,6 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private String fbname;
     private String fbpicurl;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
         
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
+        id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
@@ -131,6 +133,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = new Intent(WelcomeActivity.this, BuildProfile.class);
         intent.putExtra("fbname",fbname);
         intent.putExtra("fbpicurl",fbpicurl);
+        intent.putExtra("id",id);
         startActivityForResult(intent,0);
         finish();
     }

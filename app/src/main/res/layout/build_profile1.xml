@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     android:fadeScrollbars="false"
-    tools:context="com.example.ahmed.reze1.BuildProfile1">
+    tools:context="com.example.ahmed.reze1.BuildProfile">
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -82,7 +82,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/roundtwoltr"
             android:layout_margin="@dimen/dimen_10"
-            android:textColor="@color/green7"
+            android:id="@+id/c_address"
+            android:textColor="#fff"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:paddingRight="7dp"
@@ -96,7 +97,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/roundtwoltr"
             android:layout_margin="@dimen/dimen_10"
-            android:textColor="@color/green7"
+            android:textColor="#fff"
             android:id="@+id/phone_compelete"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
@@ -122,8 +123,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
       <RadioGroup
+          android:id="@+id/rgptl"
           android:gravity="center"
-
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
 
@@ -132,6 +133,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Yes "
+              android:checked="true"
               android:textSize="12sp" />
 
           <RadioButton
@@ -160,7 +162,7 @@
 
             <RadioGroup
                 android:gravity="center"
-
+                android:id="@+id/rtp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -176,6 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No "
+                    android:checked="true"
                     android:textSize="12sp" />
             </RadioGroup>
         </RelativeLayout>

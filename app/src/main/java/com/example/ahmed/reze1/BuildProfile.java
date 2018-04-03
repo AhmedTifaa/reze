@@ -5,49 +5,66 @@ package com.example.ahmed.reze1;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.Color;
+        import android.graphics.drawable.BitmapDrawable;
         import android.net.Uri;
         import android.os.AsyncTask;
         import android.os.Build;
         import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.content.res.TypedArrayUtils;
-        import android.support.v4.view.PagerAdapter;
         import android.support.v4.view.ViewPager;
         import android.support.v7.app.AppCompatActivity;
-        import android.text.Html;
         import android.util.Log;
         import android.view.LayoutInflater;
-        import android.view.MotionEvent;
         import android.view.View;
         import android.view.ViewGroup;
         import android.view.Window;
         import android.view.WindowManager;
+        import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.ImageView;
         import android.widget.LinearLayout;
+        import android.widget.RadioButton;
+        import android.widget.RadioGroup;
         import android.widget.Spinner;
         import android.widget.TextView;
         import android.widget.Toast;
-
+        import com.android.volley.AuthFailureError;
+        import com.android.volley.Request;
+        import com.android.volley.RequestQueue;
+        import com.android.volley.Response;
+        import com.android.volley.VolleyError;
+        import com.android.volley.toolbox.StringRequest;
+        import com.android.volley.toolbox.Volley;
         import com.example.ahmed.reze1.helper.PrefManager;
-
-        import java.io.FileNotFoundException;
+        import org.json.JSONException;
+        import org.json.JSONObject;
+        import java.io.ByteArrayOutputStream;
         import java.io.InputStream;
+        import java.util.HashMap;
+        import java.util.Map;
 
 public class BuildProfile extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private LinearLayout dotsLayout;
-    private TextView[] dots;
     public int[] layouts;
-    private Button btnSkip,btnNext;
+    private Button btnNext;
     private PrefManager prefManager;
     private String fbname;
     private String fbpicurl;
     private TextView user_namae;
+    public RadioGroup radioGroupptl;
+    public RadioGroup radioGroupr;
+    public RequestQueue requestQueue;
+    public EditText address;
+    public EditText phone;
+    public RadioButton radioButtonptl;
+    public RadioButton radioButtonr;
+    public ImageView user_img;
+    public String user_id;
+    public Spinner spinnerCarrer;
+    public Spinner spinnerCity;
     public static final int PICK_IMAGE = 1;
 
     @Override
@@ -70,9 +87,9 @@ public class BuildProfile extends AppCompatActivity {
         Bundle inBundle = getIntent().getExtras();
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        requestQueue = Volley.newRequestQueue(this);
         //btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         //btnSkip.setVisibility(View.GONE);
@@ -103,45 +120,72 @@ public class BuildProfile extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
-                finish();
-                // checking for last page
-                // if last page home screen will be launched
-//                int current = getItem(+1);
-//                //Toast.makeText(getBaseContext(),getItem(0)+"",Toast.LENGTH_LONG).show();
-//                if(current == layouts.length-2){
-//                    //Toast.makeText(getBaseContext(),"compelete",Toast.LENGTH_LONG).show();
-//                }
-//                if (current < layouts.length) {
-//                    // move to next screen
-//                    viewPager.setCurrentItem(current);
-//                } else {
-//                    launchHomeScreen();
-//                }
+                //Toast.makeText(getBaseContext(),spinnerCarrer.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),spinnerCity.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+//                Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
+//                new UploadImage(per_img,(System.currentTimeMillis()/100)+"").execute();
+                //radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
+                //radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
+                //Toast.makeText(getBaseContext(),address.getText(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),phone.getText(),Toast.LENGTH_LONG).show();
+               // Toast.makeText(getBaseContext(),radioButtonptl.getText(),Toast.LENGTH_LONG).show();
+               // Toast.makeText(getBaseContext(),radioButtonr.getText(),Toast.LENGTH_LONG).show();
+                validate();
+                radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
+                radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
+                Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
+                new UploadImage(per_img,(System.currentTimeMillis()/100)+"").execute();
+                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/rcp.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                        //hideDialog();
+                        try {
+                            JSONObject jsonObject;
+                            jsonObject = new JSONObject(response);
+                            //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                            if(jsonObject.getString("msg").equals("success")){
+                                startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> parameters  = new HashMap<String, String>();
+
+                        parameters.put("city",spinnerCity.getSelectedItem().toString());
+                        parameters.put("career",spinnerCarrer.getSelectedItem().toString());
+                        parameters.put("address",address.getText().toString());
+                        parameters.put("phone",phone.getText().toString());
+                        parameters.put("ptl",radioButtonptl.getText().toString());
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
             }
         });
 
 
     }
 
-//    private void addBottomDots(int currentPage) {
-//        dots = new TextView[layouts.length];
-//
-//        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
-//        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
-//
-//        dotsLayout.removeAllViews();
-//        for (int i = 0; i < dots.length; i++) {
-//            dots[i] = new TextView(this);
-//            dots[i].setText(Html.fromHtml("&#8226;"));
-//            dots[i].setTextSize(35);
-//            dots[i].setTextColor(colorsInactive[currentPage]);
-//            dotsLayout.addView(dots[i]);
-//        }
-//
-//        if (dots.length > 0)
-//            dots[currentPage].setTextColor(colorsActive[currentPage]);
-//    }
+
 
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
@@ -152,15 +196,6 @@ public class BuildProfile extends AppCompatActivity {
         startActivity(new Intent(BuildProfile.this, MainActivity.class));
         finish();
     }
-
-   ViewPager.OnTouchListener onTouchListener = new View.OnTouchListener() {
-       @Override
-       public boolean onTouch(View view, MotionEvent motionEvent) {
-           return false;
-       }
-   };
-
-
 
     //	viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -177,40 +212,6 @@ public class BuildProfile extends AppCompatActivity {
                 btnNext.setText(getString(R.string.start));
                 //btnSkip.setVisibility(View.GONE);
             }
-//            if(position == 0){
-//                user_namae = (TextView)findViewById(R.id.user_build_name);
-//                user_namae.setText(fbname);
-//                if (fbpicurl != "null"){
-//                    new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
-//                }
-//                else{
-//                    ((ImageView)findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
-//                }
-//                Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
-//// Create an ArrayAdapter using the string array and a default spinner layout
-//                ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
-//                        R.array.spinner_city, android.R.layout.simple_spinner_item);
-//// Specify the layout to use when the list of choices appears
-//                adapterSpinnerCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//// Apply the adapter to the spinner
-//                spinnerCity.setAdapter(adapterSpinnerCity);
-//
-//
-//                Spinner spinnerCarrer = (Spinner) findViewById(R.id.spinner_carrer);
-//// Create an ArrayAdapter using the string array and a default spinner layout
-//                ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
-//                        R.array.spinner_carrer, android.R.layout.simple_spinner_item);
-//// Specify the layout to use when the list of choices appears
-//                adapterSpinnerCarrer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//// Apply the adapter to the spinner
-//                spinnerCarrer.setAdapter(adapterSpinnerCarrer);
-//
-//            }
-//            else {
-//                // still pages are left
-//                //btnNext.setText(getString(R.string.next));
-//                //btnSkip.setVisibility(View.VISIBLE);
-//            }
         }
 
         @Override
@@ -269,6 +270,7 @@ public class BuildProfile extends AppCompatActivity {
 
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
+            user_img = (ImageView)view.findViewById(R.id.profile_upload_image);
             //Toast.makeText(getBaseContext(),layouts.length+"    "+position,Toast.LENGTH_LONG).show();
             if(position == 0){
                 //Toast.makeText(getBaseContext(),position+"",Toast.LENGTH_LONG).show();
@@ -286,7 +288,8 @@ public class BuildProfile extends AppCompatActivity {
                     new DownloadImage((ImageView)view.findViewById(R.id.profile_upload_image)).execute(fbpicurl);
                     ((EditText)view.findViewById(R.id.phone_compelete)).setVisibility(View.VISIBLE);
                 }
-                Spinner spinnerCity = (Spinner) view.findViewById(R.id.spinner_city);
+
+                spinnerCity = (Spinner) view.findViewById(R.id.spinner_city);
 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
                         R.array.spinner_city, android.R.layout.simple_spinner_item);
@@ -294,9 +297,23 @@ public class BuildProfile extends AppCompatActivity {
                 adapterSpinnerCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
                 spinnerCity.setAdapter(adapterSpinnerCity);
+                spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getBaseContext(),spinnerCity.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                    }
 
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
 
-                Spinner spinnerCarrer = (Spinner) view.findViewById(R.id.spinner_carrer);
+                    }
+                });
+
+                spinnerCarrer = (Spinner) view.findViewById(R.id.spinner_carrer);
+                radioGroupptl = (RadioGroup)view.findViewById(R.id.rgptl);
+                radioGroupr = (RadioGroup)view.findViewById(R.id.rtp);
+                address = (EditText) view.findViewById(R.id.c_address);
+                phone = (EditText)view.findViewById(R.id.phone_compelete);
 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
                         R.array.spinner_carrer, android.R.layout.simple_spinner_item);
@@ -304,6 +321,17 @@ public class BuildProfile extends AppCompatActivity {
                 adapterSpinnerCarrer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
                 spinnerCarrer.setAdapter(adapterSpinnerCarrer);
+                spinnerCarrer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getBaseContext(),spinnerCarrer.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
             }
             container.addView(view);
             return view;
@@ -348,6 +376,123 @@ public class BuildProfile extends AppCompatActivity {
         }
 
     }
+    public class UploadImage extends AsyncTask<Void,Void,Void>{
+        Bitmap image;
+        String imgName;
+
+        public UploadImage(Bitmap image,String imgName){
+           this.image = image;
+           this.imgName = imgName;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            final String enI = android.util.Base64.encodeToString(byteArrayOutputStream.toByteArray(), android.util.Base64.DEFAULT);
+            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/upload.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                    //hideDialog();
+                    try {
+                        JSONObject jsonObject;
+                        jsonObject = new JSONObject(response);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
+
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String> parameters  = new HashMap<String, String>();
+
+                    parameters.put("image",enI.toString());
+                    parameters.put("img_name",imgName.toString());
+                    parameters.put("id",user_id.toString());
+                    return parameters;
+                }
+            };
+            requestQueue.add(request);
+//            ArrayList<NameValuePair> data = new ArrayList<>();
+//            data.add(new BasicNameValuePair("image",enI));
+//            data.add(new BasicNameValuePair("img_name",imgName));
+//            data.add(new BasicNameValuePair("id",user_id));
+//            HttpParams httpParams = httpRequest();
+//            HttpClient httpClient = new DefaultHttpClient(httpParams);
+//            HttpPost httpPost = new HttpPost("");
+//            try {
+//                httpPost.setEntity(new UrlEncodedFormEntity(data));
+//                httpClient.execute(httpPost);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            } catch (ClientProtocolException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(getBaseContext(),"image sent",Toast.LENGTH_LONG).show();
+        }
+    }
+//    private HttpParams httpRequest(){
+//      HttpParams httpParams = new BasicHttpParams();
+//        HttpConnectionParams.setConnectionTimeout(httpParams,100 * 30);
+//        HttpConnectionParams.setSoTimeout(httpParams,100 * 30);
+//        return httpParams;
+//    }
+public boolean validate() {
+    boolean valid = true;
+
+    String addressV = address.getText().toString();
+    String mobile = phone.getText().toString();
+
+    if (addressV.isEmpty()) {
+        address.setError(getResources().getString(R.string.validate_address));
+        valid = false;
+    } else {
+        address.setError(null);
+    }
+
+    if (mobile.isEmpty()) {
+        phone.setError(getResources().getString(R.string.validate_phone));
+        valid = false;
+    } else {
+        phone.setError(null);
+    }
+    if (spinnerCarrer.getSelectedItem().toString().equals("0")) {
+        TextView errorText = (TextView)spinnerCarrer.getSelectedView();
+        errorText.setError(getResources().getString(R.string.validate_career));
+        valid = false;
+    } else {
+        TextView errorText = (TextView)spinnerCarrer.getSelectedView();
+        errorText.setError(null);
+    }
+    if (spinnerCity.getSelectedItem().toString().equals("0")) {
+        TextView errorText = (TextView)spinnerCity.getSelectedView();
+        errorText.setError(getResources().getString(R.string.validate_city));
+        valid = false;
+    } else {
+        TextView errorText = (TextView)spinnerCarrer.getSelectedView();
+        errorText.setError(null);
+    }
+
+    return valid;
+}
 
 }
 

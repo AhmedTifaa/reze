@@ -244,12 +244,14 @@ public class Login extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                         intent.putExtra("fbname",name);
                         intent.putExtra("fbpicurl",imgUrl);
+                        intent.putExtra("id",jsonObject.getString("id"));
                         startActivityForResult(intent, 0);
                         finish();
                     }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
                         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                         intent.putExtra("fbname",name);
                         intent.putExtra("fbpicurl",imgUrl);
+                        intent.putExtra("id",jsonObject.getString("id"));
                         startActivityForResult(intent, 0);
                         finish();
 
