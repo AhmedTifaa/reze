@@ -13,96 +13,146 @@
        android:paddingTop="70dp"
        android:layout_height="wrap_content"
        android:orientation="vertical">
-
-      <EditText
+      <TextView
           android:layout_width="match_parent"
+          android:text="Height"
+          android:textAlignment="center"
+          android:textSize="20dp"
+          android:layout_height="wrap_content" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:weightSum="3">
+      <EditText
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/dimen_10"
           android:background="@drawable/roundtwoltr"
+          android:hint="your height"
           android:imeOptions="actionNext"
           android:inputType="number"
           android:paddingBottom="7dp"
           android:paddingLeft="@dimen/kasb_margin_top"
           android:paddingRight="7dp"
           android:paddingTop="7dp"
-          android:text="your height"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
+          android:textColor="#fff"
+          android:layout_weight="2"
+          android:text="100 CM"
+          android:textColorHint="@color/colorPrimaryDark" />
+      <Button
+          android:id="@+id/hplus"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:layout_gravity="center"
+          android:elevation="20dp"
+          android:textSize="30dp"
+          android:background="@color/colorPrimary"
+          android:text="+" />
+      <Button
+          android:id="@+id/hminus"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:layout_gravity="center"
+          android:elevation="20dp"
+          android:textSize="30dp"
+          android:textColor="#464646"
+          android:background="@color/colorPrimary"
+          android:text="-" />
 
-      <EditText
+   </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:text="Weight"
+          android:textAlignment="center"
+          android:textSize="20dp"
+          android:layout_height="wrap_content" />
+
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen_10"
-          android:background="@drawable/roundtwoltr"
-          android:imeOptions="actionNext"
-          android:inputType="number"
-          android:paddingBottom="7dp"
-          android:paddingLeft="@dimen/kasb_margin_top"
-          android:paddingRight="7dp"
-          android:paddingTop="7dp"
-          android:text="your weight"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
+          android:weightSum="3">
+         <EditText
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/dimen_10"
+             android:background="@drawable/roundtwoltr"
+             android:hint="your weight"
+             android:imeOptions="actionNext"
+             android:inputType="number"
+             android:paddingBottom="7dp"
+             android:paddingLeft="@dimen/kasb_margin_top"
+             android:paddingRight="7dp"
+             android:paddingTop="7dp"
+             android:textColor="#fff"
+             android:layout_weight="2"
+             android:text="20 KG"
+             android:textColorHint="@color/colorPrimaryDark" />
+         <Button
+             android:id="@+id/wplus"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.5"
+             android:layout_gravity="center"
+             android:elevation="20dp"
+             android:textSize="30dp"
+             android:background="@color/colorPrimary"
+             android:text="+" />
+         <Button
+             android:id="@+id/wminus"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.5"
+             android:layout_gravity="center"
+             android:elevation="20dp"
+             android:textSize="30dp"
+             android:textColor="#464646"
+             android:background="@color/colorPrimary"
+             android:text="-" />
 
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen_10"
-          android:background="@drawable/roundtwoltr"
-          android:imeOptions="actionNext"
-          android:inputType="number"
-          android:paddingBottom="7dp"
-          android:paddingLeft="@dimen/kasb_margin_top"
-          android:paddingRight="7dp"
-          android:paddingTop="7dp"
-          android:text="your nationality"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
+      </LinearLayout>
 
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen_10"
-          android:background="@drawable/roundtwoltr"
-          android:imeOptions="actionNext"
-          android:inputType="number"
-          android:paddingBottom="7dp"
-          android:paddingLeft="@dimen/kasb_margin_top"
-          android:paddingRight="7dp"
-          android:paddingTop="7dp"
-          android:text="your position"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
 
-      <EditText
-          android:layout_width="match_parent"
+      <Spinner
+          android:id="@+id/spinner_nag"
+          android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen_10"
-          android:background="@drawable/roundtwoltr"
-          android:imeOptions="actionNext"
-          android:inputType="number"
-          android:paddingBottom="7dp"
-          android:paddingLeft="@dimen/kasb_margin_top"
-          android:paddingRight="7dp"
+          android:prompt="@string/spinner_playerPosition"
           android:paddingTop="7dp"
-          android:text="your dominant foot"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
-
-      <EditText
-          android:layout_width="match_parent"
+          android:paddingBottom="7dp"
+          android:paddingRight="7dp"
+          android:paddingLeft="18dp"
+          android:spinnerMode="dropdown"
+          android:background="@drawable/roundtwoltr"
+          android:layout_margin="@dimen/dimen_10"
+          />
+      <Spinner
+          android:id="@+id/spinner_playerPosition"
+          android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen_10"
-          android:background="@drawable/roundtwoltr"
-          android:imeOptions="actionDone"
-          android:inputType="number"
-          android:paddingBottom="7dp"
-          android:paddingLeft="@dimen/kasb_margin_top"
-          android:paddingRight="7dp"
+          android:prompt="@string/spinner_playerPosition"
           android:paddingTop="7dp"
-          android:text="you are registered in a team"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/green7" />
+          android:paddingBottom="7dp"
+          android:paddingRight="7dp"
+          android:paddingLeft="18dp"
+          android:spinnerMode="dropdown"
+          android:background="@drawable/roundtwoltr"
+          android:layout_margin="@dimen/dimen_10"
+          />
+      <Spinner
+          android:id="@+id/spinner_foot"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:prompt="@string/spinner_foot"
+          android:paddingTop="7dp"
+          android:paddingBottom="7dp"
+          android:paddingRight="7dp"
+          android:paddingLeft="18dp"
+          android:spinnerMode="dropdown"
+          android:background="@drawable/roundtwoltr"
+          android:layout_margin="@dimen/dimen_10"
+          />
 
    </LinearLayout>
 </RelativeLayout>

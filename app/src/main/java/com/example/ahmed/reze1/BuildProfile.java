@@ -130,7 +130,10 @@ public class BuildProfile extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(),phone.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonptl.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonr.getText(),Toast.LENGTH_LONG).show();
-                validate();
+
+                if(!validate()){
+                    return;
+                }
                 radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
                 radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
                 Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
@@ -139,14 +142,14 @@ public class BuildProfile extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                        //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                         //hideDialog();
                         try {
                             JSONObject jsonObject;
                             jsonObject = new JSONObject(response);
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                            if(jsonObject.getString("msg").equals("success")){
+                            if(jsonObject.getString("msg").equals("done")){
                                 startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
                                 finish();
                             }
@@ -174,6 +177,7 @@ public class BuildProfile extends AppCompatActivity {
                         parameters.put("address",address.getText().toString());
                         parameters.put("phone",phone.getText().toString());
                         parameters.put("ptl",radioButtonptl.getText().toString());
+                        parameters.put("id",user_id);
 
                         return parameters;
                     }
@@ -469,12 +473,18 @@ public boolean validate() {
     }
 
     if (mobile.isEmpty()) {
-        phone.setError(getResources().getString(R.string.validate_phone));
-        valid = false;
+        if(phone.getVisibility() == View.GONE){
+            return true;
+        }else{
+            phone.setError(getResources().getString(R.string.validate_phone));
+            valid = false;
+        }
+
     } else {
         phone.setError(null);
     }
     if (spinnerCarrer.getSelectedItem().toString().equals("0")) {
+        Toast.makeText(getBaseContext(),R.string.validate_career,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCarrer.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_career));
         valid = false;
@@ -483,6 +493,7 @@ public boolean validate() {
         errorText.setError(null);
     }
     if (spinnerCity.getSelectedItem().toString().equals("0")) {
+        Toast.makeText(getBaseContext(),R.string.validate_city,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCity.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_city));
         valid = false;

@@ -192,6 +192,7 @@ public class Login extends AppCompatActivity {
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), Home.class);
+                                intent.putExtra("id",jsonObject.getString("id"));
                                 startActivityForResult(intent, 0);
                                 finish();
                             }

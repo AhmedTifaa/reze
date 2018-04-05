@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ import com.example.ahmed.reze1.helper.PrefManager;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+
 
 public class BuildProfile1 extends AppCompatActivity {
 
@@ -49,6 +52,11 @@ public class BuildProfile1 extends AppCompatActivity {
     private String fbpicurl;
     private TextView user_namae;
     public static final int PICK_IMAGE = 1;
+    public  EditText national;
+    public ArrayList<String> Nagitems=new ArrayList<>();
+    public Spinner spinnerPosition;
+    public Spinner spinnerNag;
+    public Spinner spinnerFoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +267,56 @@ public class BuildProfile1 extends AppCompatActivity {
 
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
+            spinnerPosition = (Spinner) view.findViewById(R.id.spinner_playerPosition);
+            spinnerFoot = (Spinner) view.findViewById(R.id.spinner_foot);
+            spinnerNag = (Spinner) view.findViewById(R.id.spinner_nag);
+
+            ArrayAdapter<CharSequence> adapterSpinnerPosition = ArrayAdapter.createFromResource(getApplicationContext(),
+                    R.array.spinner_playerPosition, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapterSpinnerFoot = ArrayAdapter.createFromResource(getApplicationContext(),
+                    R.array.spinner_foot, android.R.layout.simple_spinner_item);
+            ArrayAdapter<CharSequence> adapterSpinnerNag = ArrayAdapter.createFromResource(getApplicationContext(),
+                    R.array.countries_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+            adapterSpinnerPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapterSpinnerFoot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapterSpinnerNag.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerPosition.setAdapter(adapterSpinnerPosition);
+            spinnerFoot.setAdapter(adapterSpinnerFoot);
+            spinnerNag.setAdapter(adapterSpinnerNag);
+            spinnerPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(getBaseContext(),spinnerPosition.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            spinnerFoot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(getBaseContext(),spinnerFoot.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            spinnerNag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Toast.makeText(getBaseContext(),spinnerNag.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
             container.addView(view);
             return view;
         }

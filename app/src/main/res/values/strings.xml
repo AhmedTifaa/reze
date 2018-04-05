@@ -41,6 +41,9 @@
     <string name="exsistEmail">This mail is already exsist you can log in</string>
     <string name="spinner_carrer">Select your Career</string>
     <string name="spinner_city">Select your City</string>
+    <string name="spinner_playerPosition">Select your City</string>
+    <string name="spinner_foot">Select Dominant Foot</string>
+    <string name="countries_array">Select nationality</string>
 
     <string name="like">Like</string>
     <string name="comment">Comment</string>
@@ -87,4 +90,28 @@
         <item>professional</item>
 
     </string-array>
+    <string-array name="spinner_playerPosition">
+        <item>select Your Position</item>
+        <item>amature</item>
+        <item>Goalkeeper</item>
+        <item>Defenders</item>
+        <item>Midfielders </item>
+        <item>Forwards </item>
+    </string-array>
+    <string-array name="spinner_foot">
+        <item>Select Dominant Foot</item>
+        <item>Right</item>
+        <item>Left</item>
+    </string-array>
+    <string-array name="countries_array">
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>American Samoa</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Anguilla</item>
+        <item>Antarctica</item>
+    </string-array>
+
 </resources>
