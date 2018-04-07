@@ -44,7 +44,7 @@
     <string name="spinner_playerPosition">Select your City</string>
     <string name="spinner_foot">Select Dominant Foot</string>
     <string name="countries_array">Select nationality</string>
-
+    <string name="checkingNetwork">There is an error in network</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
