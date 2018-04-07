@@ -27,6 +27,7 @@
     <string name="wronglogin">الايميل او الباسورد غير صحيحان</string>
     <string name="wrongreset">بيانات غير صحيحة</string>
     <string name="exsistEmail">هذا الايميل موجود بالفعل يمكنك تسجيل الدخول</string>
+    <string name="checkingNetwork">هناك خطأ حدث اثناء الاتصال بالانترنت</string>
 
     <string name="like">اعجاب</string>
     <string name="comment">تعليق</string>
