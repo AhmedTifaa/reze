@@ -13,7 +13,8 @@
     <color name="lbl_value">#222222</color>
     <color name="red">#C40000</color>
     <color name="holo_gray">#E1E1E1</color>
-
+   <color name="btn_off">#464646</color>
+    <color name="btn_on">#fff</color>
     <color name="grey">#cfcfd1</color>
 
     <color name="green">#0099a8</color>

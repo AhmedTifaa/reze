@@ -24,6 +24,7 @@
        android:layout_height="wrap_content"
        android:weightSum="3">
       <EditText
+          android:id="@+id/height_player"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/dimen_10"
@@ -31,14 +32,22 @@
           android:hint="your height"
           android:imeOptions="actionNext"
           android:inputType="number"
+          android:maxLength="200"
           android:paddingBottom="7dp"
           android:paddingLeft="@dimen/kasb_margin_top"
           android:paddingRight="7dp"
           android:paddingTop="7dp"
           android:textColor="#fff"
-          android:layout_weight="2"
-          android:text="100 CM"
+          android:layout_weight="1"
+          android:text="100"
           android:textColorHint="@color/colorPrimaryDark" />
+      <TextView
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:textSize="20dp"
+          android:layout_gravity="center"
+          android:layout_height="wrap_content"
+          android:text="CM"/>
       <Button
           android:id="@+id/hplus"
           android:layout_width="0dp"
@@ -79,16 +88,25 @@
              android:layout_margin="@dimen/dimen_10"
              android:background="@drawable/roundtwoltr"
              android:hint="your weight"
+             android:id="@+id/weight_player"
              android:imeOptions="actionNext"
              android:inputType="number"
              android:paddingBottom="7dp"
+             android:maxLength="80"
              android:paddingLeft="@dimen/kasb_margin_top"
              android:paddingRight="7dp"
              android:paddingTop="7dp"
              android:textColor="#fff"
-             android:layout_weight="2"
-             android:text="20 KG"
+             android:layout_weight="1"
+             android:text="20"
              android:textColorHint="@color/colorPrimaryDark" />
+         <TextView
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:textSize="20dp"
+             android:layout_gravity="center"
+             android:layout_height="wrap_content"
+             android:text="KG"/>
          <Button
              android:id="@+id/wplus"
              android:layout_width="0dp"

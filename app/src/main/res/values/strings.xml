@@ -65,6 +65,9 @@
     <string name="validate_phone">Type Your Phone Number</string>
     <string name="validate_city">Select Your City</string>
     <string name="validate_career">Select Your career</string>
+    <string name="validate_nag">Select Your country</string>
+    <string name="validate_foot">Select Dominant Foot</string>
+    <string name="validate_position">Select Your Position</string>
 
     <string-array name="object_array">
 
@@ -104,6 +107,7 @@
         <item>Left</item>
     </string-array>
     <string-array name="countries_array">
+        <item>Select Your Country</item>
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>

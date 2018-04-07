@@ -14,7 +14,9 @@ import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -57,6 +59,18 @@ public class BuildProfile1 extends AppCompatActivity {
     public Spinner spinnerPosition;
     public Spinner spinnerNag;
     public Spinner spinnerFoot;
+    public Button hplus;
+    public Button hminus;
+    public EditText heightPlayer;
+    int maxHeight = 200;
+    int minHeight = 100;
+    int inputHeight = 0;
+    public Button wplus;
+    public Button wminus;
+    public EditText weightPlayer;
+    int maxWeight = 80;
+    int minWeight = 20;
+    int inputWeight = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,7 +284,143 @@ public class BuildProfile1 extends AppCompatActivity {
             spinnerPosition = (Spinner) view.findViewById(R.id.spinner_playerPosition);
             spinnerFoot = (Spinner) view.findViewById(R.id.spinner_foot);
             spinnerNag = (Spinner) view.findViewById(R.id.spinner_nag);
+            heightPlayer = (EditText) view.findViewById(R.id.height_player);
+            hplus = (Button)view.findViewById(R.id.hplus);
+            hminus = (Button)view.findViewById(R.id.hminus);
+            weightPlayer = (EditText) view.findViewById(R.id.weight_player);
+            wplus = (Button)view.findViewById(R.id.wplus);
+            wminus = (Button)view.findViewById(R.id.wminus);
+            hplus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    inputHeight = Integer.parseInt(heightPlayer.getText().toString());
+                    inputHeight++;
+                    if(inputHeight > maxHeight){
+                        heightPlayer.setText("200");
+                    }else{
+                     heightPlayer.setText(inputHeight+"");
+                    }
+                }
+            });
+            hminus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    inputHeight = Integer.parseInt(heightPlayer.getText().toString());
+                    inputHeight--;
+                    if(inputHeight < minHeight){
+                        heightPlayer.setText("100");
+                    }else{
+                        heightPlayer.setText(inputHeight+"");
+                    }
+                }
+            });
+            wplus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    inputWeight = Integer.parseInt(weightPlayer.getText().toString());
+                    inputWeight++;
+                    if(inputWeight > maxWeight){
+                        weightPlayer.setText("80");
+                    }else{
+                        weightPlayer.setText(inputWeight+"");
+                    }
+                }
+            });
+            wminus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    inputWeight = Integer.parseInt(weightPlayer.getText().toString());
+                    inputWeight--;
+                    if(inputWeight < minWeight){
+                        heightPlayer.setText("20");
+                    }else{
+                        weightPlayer.setText(inputWeight+"");
+                    }
+                }
+            });
+            heightPlayer.addTextChangedListener(new TextWatcher() {
 
+                public void onTextChanged(CharSequence s, int start, int before,
+                                          int count) {
+                    inputHeight = Integer.parseInt(s.toString());
+                    if (inputHeight > 100){
+                        hminus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+                    else{
+                        hminus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+                    if (inputHeight < 200){
+                        hplus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+                    else{
+                        hplus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+                    if(inputHeight < minHeight )
+                    {
+                        heightPlayer.setText("100");
+                        //hplus.setTextColor(getResources().getColor(R.color.btn_on));
+                        //hminus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+                    if(inputHeight > maxHeight){
+                        heightPlayer.setText("200");
+                        //hplus.setTextColor(getResources().getColor(R.color.btn_off));
+                        //hminus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count,
+                                              int after) {
+
+
+                }
+
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            weightPlayer.addTextChangedListener(new TextWatcher() {
+
+                public void onTextChanged(CharSequence s, int start, int before,
+                                          int count) {
+                    inputWeight = Integer.parseInt(s.toString());
+                    if (inputWeight > 20){
+                        wminus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+                    else{
+                        wminus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+                    if (inputWeight < 80){
+                        wplus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+                    else{
+                        wplus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+
+                    if(inputWeight < minWeight )
+                    {
+                        weightPlayer.setText("20");
+                        //wplus.setTextColor(getResources().getColor(R.color.btn_on));
+                        //wminus.setTextColor(getResources().getColor(R.color.btn_off));
+                    }
+                    if(inputWeight > maxWeight){
+                        weightPlayer.setText("80");
+                        //wplus.setTextColor(getResources().getColor(R.color.btn_off));
+                        //wminus.setTextColor(getResources().getColor(R.color.btn_on));
+                    }
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count,
+                                              int after) {
+
+
+                }
+
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
             ArrayAdapter<CharSequence> adapterSpinnerPosition = ArrayAdapter.createFromResource(getApplicationContext(),
                     R.array.spinner_playerPosition, android.R.layout.simple_spinner_item);
             ArrayAdapter<CharSequence> adapterSpinnerFoot = ArrayAdapter.createFromResource(getApplicationContext(),
@@ -334,6 +484,38 @@ public class BuildProfile1 extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
+    }
+    public boolean validate() {
+        boolean valid = true;
+        if (spinnerNag.getSelectedItem().toString().equals("0")) {
+            Toast.makeText(getBaseContext(),R.string.validate_nag,Toast.LENGTH_LONG).show();
+            TextView errorText = (TextView)spinnerNag.getSelectedView();
+            errorText.setError(getResources().getString(R.string.validate_nag));
+            valid = false;
+        } else {
+            TextView errorText = (TextView)spinnerNag.getSelectedView();
+            errorText.setError(null);
+        }
+        if (spinnerFoot.getSelectedItem().toString().equals("0")) {
+            Toast.makeText(getBaseContext(),R.string.validate_foot,Toast.LENGTH_LONG).show();
+            TextView errorText = (TextView)spinnerFoot.getSelectedView();
+            errorText.setError(getResources().getString(R.string.validate_foot));
+            valid = false;
+        } else {
+            TextView errorText = (TextView)spinnerFoot.getSelectedView();
+            errorText.setError(null);
+        }
+        if (spinnerPosition.getSelectedItem().toString().equals("0")) {
+            Toast.makeText(getBaseContext(),R.string.validate_position,Toast.LENGTH_LONG).show();
+            TextView errorText = (TextView)spinnerPosition.getSelectedView();
+            errorText.setError(getResources().getString(R.string.validate_position));
+            valid = false;
+        } else {
+            TextView errorText = (TextView)spinnerFoot.getSelectedView();
+            errorText.setError(null);
+        }
+
+        return valid;
     }
 
 }
