@@ -377,6 +377,7 @@ public class BuildProfile1 extends AppCompatActivity {
 
                 public void afterTextChanged(Editable s) {
 
+
                 }
             });
             weightPlayer.addTextChangedListener(new TextWatcher() {
