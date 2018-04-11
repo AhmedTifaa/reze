@@ -33,6 +33,8 @@ import android.widget.Toast;
 
 import com.example.ahmed.reze1.helper.PrefManager;
 
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -52,6 +54,7 @@ public class BuildProfile2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         // Checking for first time launch - before calling setContentView()
@@ -259,6 +262,13 @@ public class BuildProfile2 extends AppCompatActivity {
             btnNext.setText(R.string.start);
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
+            DiscreteSeekBar discreteSeekBar1 = (DiscreteSeekBar) view.findViewById(R.id.discrete1);
+            discreteSeekBar1.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    return value * 100;
+                }
+            });
             container.addView(view);
             return view;
         }
