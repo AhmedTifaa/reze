@@ -47,7 +47,7 @@
 
     <color name="grey13">#d2d2d2</color>
 
-    <color name="myControlColorNormal">#f90871</color>
+    <!--<color name="myControlColorNormal">#f90871</color>-->
 
     <color name="myControlColorActivated">#b2ff1e</color>
 

@@ -19,10 +19,11 @@
         android:focusableInTouchMode="true"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
+        android:textCursorDrawable="@color/colorAccent"
         android:paddingLeft="15dp"
         android:textColorHint="@color/colorPrimary"
         android:text=""
-        android:textColor="@color/colorAccent" />
+        android:textColor="#fff" />
 
     <ImageButton
         android:layout_width="50dp"

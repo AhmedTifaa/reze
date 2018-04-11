@@ -263,12 +263,115 @@ public class BuildProfile2 extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
             DiscreteSeekBar discreteSeekBar1 = (DiscreteSeekBar) view.findViewById(R.id.discrete1);
+            final TextView seekval1 = (TextView)view.findViewById(R.id.perval1);
             discreteSeekBar1.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
-                    return value * 100;
+                    seekval1.setText(value*10+" %");
+                    return value * 10;
                 }
             });
+            discreteSeekBar1.getProgress();
+            DiscreteSeekBar discreteSeekBar2 = (DiscreteSeekBar) view.findViewById(R.id.discrete2);
+            final TextView seekval2 = (TextView)view.findViewById(R.id.perval2);
+            discreteSeekBar2.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval2.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar3 = (DiscreteSeekBar) view.findViewById(R.id.discrete3);
+            final TextView seekval3 = (TextView)view.findViewById(R.id.perval3);
+            discreteSeekBar3.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval3.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar4 = (DiscreteSeekBar) view.findViewById(R.id.discrete4);
+            final TextView seekval4 = (TextView)view.findViewById(R.id.perval4);
+            discreteSeekBar4.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval4.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar5 = (DiscreteSeekBar) view.findViewById(R.id.discrete5);
+            final TextView seekval5 = (TextView)view.findViewById(R.id.perval5);
+            discreteSeekBar4.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval5.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar6 = (DiscreteSeekBar) view.findViewById(R.id.discrete6);
+            final TextView seekval6 = (TextView)view.findViewById(R.id.perval6);
+            discreteSeekBar6.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval6.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar7 = (DiscreteSeekBar) view.findViewById(R.id.discrete7);
+            final TextView seekval7 = (TextView)view.findViewById(R.id.perval4);
+            discreteSeekBar7.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval7.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar8 = (DiscreteSeekBar) view.findViewById(R.id.discrete8);
+            final TextView seekval8 = (TextView)view.findViewById(R.id.perval8);
+            discreteSeekBar8.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval8.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar9 = (DiscreteSeekBar) view.findViewById(R.id.discrete9);
+            final TextView seekval9 = (TextView)view.findViewById(R.id.perval9);
+            discreteSeekBar9.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval9.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar10 = (DiscreteSeekBar) view.findViewById(R.id.discrete10);
+            final TextView seekval10 = (TextView)view.findViewById(R.id.perval10);
+            discreteSeekBar10.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval10.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar11 = (DiscreteSeekBar) view.findViewById(R.id.discrete11);
+            final TextView seekval11 = (TextView)view.findViewById(R.id.perval11);
+            discreteSeekBar11.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval11.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+            DiscreteSeekBar discreteSeekBar12 = (DiscreteSeekBar) view.findViewById(R.id.discrete12);
+            final TextView seekval12 = (TextView)view.findViewById(R.id.perval12);
+            discreteSeekBar12.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+                @Override
+                public int transform(int value) {
+                    seekval12.setText(value*10+" %");
+                    return value * 10;
+                }
+            });
+
             container.addView(view);
             return view;
         }

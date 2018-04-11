@@ -125,8 +125,13 @@ public class BuildProfile1 extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
-                finish();
+                if(!validate()){
+
+                }else{
+                    startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
+                    finish();
+                }
+
                 // checking for last page
                 // if last page home screen will be launched
 //                int current = getItem(+1);
@@ -488,7 +493,7 @@ public class BuildProfile1 extends AppCompatActivity {
     }
     public boolean validate() {
         boolean valid = true;
-        if (spinnerNag.getSelectedItem().toString().equals("0")) {
+        if (spinnerNag.getSelectedItemPosition() == 0) {
             Toast.makeText(getBaseContext(),R.string.validate_nag,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerNag.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_nag));
@@ -497,7 +502,7 @@ public class BuildProfile1 extends AppCompatActivity {
             TextView errorText = (TextView)spinnerNag.getSelectedView();
             errorText.setError(null);
         }
-        if (spinnerFoot.getSelectedItem().toString().equals("0")) {
+        if (spinnerFoot.getSelectedItemPosition() == 0) {
             Toast.makeText(getBaseContext(),R.string.validate_foot,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerFoot.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_foot));
@@ -506,7 +511,7 @@ public class BuildProfile1 extends AppCompatActivity {
             TextView errorText = (TextView)spinnerFoot.getSelectedView();
             errorText.setError(null);
         }
-        if (spinnerPosition.getSelectedItem().toString().equals("0")) {
+        if (spinnerPosition.getSelectedItemPosition() == 0) {
             Toast.makeText(getBaseContext(),R.string.validate_position,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerPosition.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_position));

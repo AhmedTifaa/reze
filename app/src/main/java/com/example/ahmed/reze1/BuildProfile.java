@@ -130,59 +130,64 @@ public class BuildProfile extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(),phone.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonptl.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonr.getText(),Toast.LENGTH_LONG).show();
-
+               Toast.makeText(getBaseContext(),validate()+"",Toast.LENGTH_LONG).show();
                 if(!validate()){
-                    return;
+
+
                 }
-                radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
-                radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
-                Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
-                new UploadImage(per_img,(System.currentTimeMillis()/100)+"").execute();
-                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/rcp.php", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                else{
+                    radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
+                    radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
+                    Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
+                    new UploadImage(per_img,(System.currentTimeMillis()/100)+"").execute();
+                    StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/rcp.php", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
-                        //hideDialog();
-                        try {
-                            JSONObject jsonObject;
-                            jsonObject = new JSONObject(response);
-                            //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                            if(jsonObject.getString("msg").equals("done")){
-                                startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                            }
+                            //hideDialog();
+                            try {
+                                JSONObject jsonObject;
+                                jsonObject = new JSONObject(response);
+                                //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                                if(jsonObject.getString("msg").equals("done")){
+                                    startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                }) {
+                        }
+                    }) {
 
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String,String> parameters  = new HashMap<String, String>();
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> parameters  = new HashMap<String, String>();
 
-                        parameters.put("city",spinnerCity.getSelectedItem().toString());
-                        parameters.put("career",spinnerCarrer.getSelectedItem().toString());
-                        parameters.put("address",address.getText().toString());
-                        parameters.put("phone",phone.getText().toString());
-                        parameters.put("ptl",radioButtonptl.getText().toString());
-                        parameters.put("id",user_id);
+                            parameters.put("city",spinnerCity.getSelectedItem().toString());
+                            parameters.put("career",spinnerCarrer.getSelectedItem().toString());
+                            parameters.put("address",address.getText().toString());
+                            parameters.put("phone",phone.getText().toString());
+                            parameters.put("ptl",radioButtonptl.getText().toString());
+                            parameters.put("id",user_id);
 
-                        return parameters;
-                    }
-                };
-                requestQueue.add(request);
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(request);
+
+                }
+
             }
         });
 
@@ -474,7 +479,7 @@ public boolean validate() {
 
     if (mobile.isEmpty()) {
         if(phone.getVisibility() == View.GONE){
-            return true;
+
         }else{
             phone.setError(getResources().getString(R.string.validate_phone));
             valid = false;
@@ -483,7 +488,7 @@ public boolean validate() {
     } else {
         phone.setError(null);
     }
-    if (spinnerCarrer.getSelectedItem().toString().equals("0")) {
+    if (spinnerCarrer.getSelectedItemPosition() == 0) {
         Toast.makeText(getBaseContext(),R.string.validate_career,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCarrer.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_career));
@@ -492,7 +497,7 @@ public boolean validate() {
         TextView errorText = (TextView)spinnerCarrer.getSelectedView();
         errorText.setError(null);
     }
-    if (spinnerCity.getSelectedItem().toString().equals("0")) {
+    if (spinnerCity.getSelectedItemPosition() == 0) {
         Toast.makeText(getBaseContext(),R.string.validate_city,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCity.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_city));
