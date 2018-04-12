@@ -31,12 +31,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.helper.PrefManager;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuildProfile2 extends AppCompatActivity {
 
@@ -47,11 +58,36 @@ public class BuildProfile2 extends AppCompatActivity {
     public int[] layouts;
     private Button btnSkip,btnNext;
     private PrefManager prefManager;
+    public RequestQueue requestQueue;
     private String fbname;
     private String fbpicurl;
     private TextView user_namae;
     public static final int PICK_IMAGE = 1;
-
+   public  String user_id;
+   public TextView seekval1;
+   public TextView seekval2;
+   public TextView seekval3;
+   public TextView seekval4;
+   public TextView seekval5;
+   public TextView seekval6;
+   public TextView seekval7;
+   public TextView seekval8;
+   public TextView seekval9;
+   public TextView seekval10;
+   public TextView seekval11;
+   public TextView seekval12;
+   public DiscreteSeekBar discreteSeekBar1;
+   public DiscreteSeekBar discreteSeekBar2;
+   public DiscreteSeekBar discreteSeekBar3;
+   public DiscreteSeekBar discreteSeekBar4;
+   public DiscreteSeekBar discreteSeekBar5;
+   public DiscreteSeekBar discreteSeekBar6;
+   public DiscreteSeekBar discreteSeekBar7;
+   public DiscreteSeekBar discreteSeekBar8;
+   public DiscreteSeekBar discreteSeekBar9;
+   public DiscreteSeekBar discreteSeekBar10;
+   public DiscreteSeekBar discreteSeekBar11;
+   public DiscreteSeekBar discreteSeekBar12;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,8 +109,10 @@ public class BuildProfile2 extends AppCompatActivity {
         //Bundle inBundle = getIntent().getExtras();
         //fbname = inBundle.get("fbname").toString();
         //fbpicurl = inBundle.get("fbpicurl").toString();
+        Bundle inBundle = getIntent().getExtras();
+        user_id = inBundle.get("user_id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-
+        requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         //btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
@@ -106,8 +144,62 @@ public class BuildProfile2 extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
-                finish();
+//                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
+//                finish();
+                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/us.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                        //hideDialog();
+                        try {
+                            JSONObject jsonObject;
+                            jsonObject = new JSONObject(response);
+                            //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                            if(jsonObject.getString("msg").equals("done")){
+                                Intent intent = new Intent(BuildProfile2.this,MainActivity.class);
+                                intent.putExtra("user_id",user_id);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> parameters  = new HashMap<String, String>();
+
+                        parameters.put("attack",discreteSeekBar1.getProgress()*10+"");
+                        parameters.put("defense",discreteSeekBar2.getProgress()*10+"");
+                        parameters.put("stamina",discreteSeekBar3.getProgress()*10+"");
+                        parameters.put("speed",discreteSeekBar4.getProgress()*10+"");
+                        parameters.put("ballcontroll",discreteSeekBar5.getProgress()*10+"");
+                        parameters.put("lowpass",discreteSeekBar6.getProgress()*10+"");
+                        parameters.put("loftedpass",discreteSeekBar7.getProgress()*10+"");
+                        parameters.put("shootacc",discreteSeekBar8.getProgress()*10+"");
+                        parameters.put("shootpower",discreteSeekBar9.getProgress()*10+"");
+                        parameters.put("freekick",discreteSeekBar10.getProgress()*10+"");
+                        parameters.put("header",discreteSeekBar11.getProgress()*10+"");
+                        parameters.put("jump",discreteSeekBar12.getProgress()*10+"");
+                        parameters.put("id",user_id);
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
                 // checking for last page
                 // if last page home screen will be launched
 //                int current = getItem(+1);
@@ -262,8 +354,8 @@ public class BuildProfile2 extends AppCompatActivity {
             btnNext.setText(R.string.start);
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
-            DiscreteSeekBar discreteSeekBar1 = (DiscreteSeekBar) view.findViewById(R.id.discrete1);
-            final TextView seekval1 = (TextView)view.findViewById(R.id.perval1);
+            discreteSeekBar1 = (DiscreteSeekBar) view.findViewById(R.id.discrete1);
+            seekval1 = (TextView)view.findViewById(R.id.perval1);
             discreteSeekBar1.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -272,8 +364,8 @@ public class BuildProfile2 extends AppCompatActivity {
                 }
             });
             discreteSeekBar1.getProgress();
-            DiscreteSeekBar discreteSeekBar2 = (DiscreteSeekBar) view.findViewById(R.id.discrete2);
-            final TextView seekval2 = (TextView)view.findViewById(R.id.perval2);
+            discreteSeekBar2 = (DiscreteSeekBar) view.findViewById(R.id.discrete2);
+            seekval2 = (TextView)view.findViewById(R.id.perval2);
             discreteSeekBar2.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -281,8 +373,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar3 = (DiscreteSeekBar) view.findViewById(R.id.discrete3);
-            final TextView seekval3 = (TextView)view.findViewById(R.id.perval3);
+            discreteSeekBar3 = (DiscreteSeekBar) view.findViewById(R.id.discrete3);
+            seekval3 = (TextView)view.findViewById(R.id.perval3);
             discreteSeekBar3.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -290,8 +382,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar4 = (DiscreteSeekBar) view.findViewById(R.id.discrete4);
-            final TextView seekval4 = (TextView)view.findViewById(R.id.perval4);
+            discreteSeekBar4 = (DiscreteSeekBar) view.findViewById(R.id.discrete4);
+            seekval4 = (TextView)view.findViewById(R.id.perval4);
             discreteSeekBar4.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -299,17 +391,17 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar5 = (DiscreteSeekBar) view.findViewById(R.id.discrete5);
-            final TextView seekval5 = (TextView)view.findViewById(R.id.perval5);
-            discreteSeekBar4.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
+            discreteSeekBar5 = (DiscreteSeekBar) view.findViewById(R.id.discrete5);
+            seekval5 = (TextView)view.findViewById(R.id.perval5);
+            discreteSeekBar5.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
                     seekval5.setText(value*10+" %");
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar6 = (DiscreteSeekBar) view.findViewById(R.id.discrete6);
-            final TextView seekval6 = (TextView)view.findViewById(R.id.perval6);
+            discreteSeekBar6 = (DiscreteSeekBar) view.findViewById(R.id.discrete6);
+            seekval6 = (TextView)view.findViewById(R.id.perval6);
             discreteSeekBar6.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -317,8 +409,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar7 = (DiscreteSeekBar) view.findViewById(R.id.discrete7);
-            final TextView seekval7 = (TextView)view.findViewById(R.id.perval4);
+            discreteSeekBar7 = (DiscreteSeekBar) view.findViewById(R.id.discrete7);
+            seekval7 = (TextView)view.findViewById(R.id.perval7);
             discreteSeekBar7.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -326,8 +418,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar8 = (DiscreteSeekBar) view.findViewById(R.id.discrete8);
-            final TextView seekval8 = (TextView)view.findViewById(R.id.perval8);
+            discreteSeekBar8 = (DiscreteSeekBar) view.findViewById(R.id.discrete8);
+            seekval8 = (TextView)view.findViewById(R.id.perval8);
             discreteSeekBar8.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -335,8 +427,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar9 = (DiscreteSeekBar) view.findViewById(R.id.discrete9);
-            final TextView seekval9 = (TextView)view.findViewById(R.id.perval9);
+            discreteSeekBar9 = (DiscreteSeekBar) view.findViewById(R.id.discrete9);
+            seekval9 = (TextView)view.findViewById(R.id.perval9);
             discreteSeekBar9.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -344,8 +436,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar10 = (DiscreteSeekBar) view.findViewById(R.id.discrete10);
-            final TextView seekval10 = (TextView)view.findViewById(R.id.perval10);
+            discreteSeekBar10 = (DiscreteSeekBar) view.findViewById(R.id.discrete10);
+            seekval10 = (TextView)view.findViewById(R.id.perval10);
             discreteSeekBar10.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -353,8 +445,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar11 = (DiscreteSeekBar) view.findViewById(R.id.discrete11);
-            final TextView seekval11 = (TextView)view.findViewById(R.id.perval11);
+            discreteSeekBar11 = (DiscreteSeekBar) view.findViewById(R.id.discrete11);
+            seekval11 = (TextView)view.findViewById(R.id.perval11);
             discreteSeekBar11.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {
@@ -362,8 +454,8 @@ public class BuildProfile2 extends AppCompatActivity {
                     return value * 10;
                 }
             });
-            DiscreteSeekBar discreteSeekBar12 = (DiscreteSeekBar) view.findViewById(R.id.discrete12);
-            final TextView seekval12 = (TextView)view.findViewById(R.id.perval12);
+            discreteSeekBar12 = (DiscreteSeekBar) view.findViewById(R.id.discrete12);
+            seekval12 = (TextView)view.findViewById(R.id.perval12);
             discreteSeekBar12.setNumericTransformer(new DiscreteSeekBar.NumericTransformer() {
                 @Override
                 public int transform(int value) {

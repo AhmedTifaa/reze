@@ -34,11 +34,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.helper.PrefManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class BuildProfile1 extends AppCompatActivity {
@@ -61,6 +73,7 @@ public class BuildProfile1 extends AppCompatActivity {
     public Spinner spinnerFoot;
     public Button hplus;
     public Button hminus;
+    public RequestQueue requestQueue;
     public EditText heightPlayer;
     int maxHeight = 200;
     int minHeight = 100;
@@ -71,6 +84,7 @@ public class BuildProfile1 extends AppCompatActivity {
     int maxWeight = 80;
     int minWeight = 20;
     int inputWeight = 0;
+    public String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,19 +103,12 @@ public class BuildProfile1 extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_buildprofile);
-        //Bundle inBundle = getIntent().getExtras();
-        //fbname = inBundle.get("fbname").toString();
-        //fbpicurl = inBundle.get("fbpicurl").toString();
+        Bundle inBundle = getIntent().getExtras();
+        user_id = inBundle.get("user_id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-
+        requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        //btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
-        //btnSkip.setVisibility(View.GONE);
-
-
-        // layouts of all welcome sliders
-        // add few more layouts if you want
         layouts = new int[]{
                 R.layout.build_profile2,
                 /*R.layout.build_profile2,
@@ -128,23 +135,57 @@ public class BuildProfile1 extends AppCompatActivity {
                 if(!validate()){
 
                 }else{
-                    startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
-                    finish();
+//                    startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
+//                    finish();
+                    StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/bp1.php", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                            //hideDialog();
+                            try {
+                                JSONObject jsonObject;
+                                jsonObject = new JSONObject(response);
+                                //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                                if(jsonObject.getString("msg").equals("done")){
+                                    Intent intent = new Intent(BuildProfile1.this,BuildProfile2.class);
+                                    intent.putExtra("user_id",user_id);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> parameters  = new HashMap<String, String>();
+
+                            parameters.put("height",heightPlayer.getText().toString());
+                            parameters.put("weight",weightPlayer.getText().toString());
+                            parameters.put("nationality",spinnerNag.getSelectedItem().toString());
+                            parameters.put("position",spinnerPosition.getSelectedItem().toString());
+                            parameters.put("df",spinnerFoot.getSelectedItem().toString());
+                            parameters.put("id",user_id);
+
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(request);
                 }
 
-                // checking for last page
-                // if last page home screen will be launched
-//                int current = getItem(+1);
-//                //Toast.makeText(getBaseContext(),getItem(0)+"",Toast.LENGTH_LONG).show();
-//                if(current == layouts.length-2){
-//                    //Toast.makeText(getBaseContext(),"compelete",Toast.LENGTH_LONG).show();
-//                }
-//                if (current < layouts.length) {
-//                    // move to next screen
-//                    viewPager.setCurrentItem(current);
-//                } else {
-//                    launchHomeScreen();
-//                }
             }
         });
 

@@ -152,7 +152,9 @@ public class BuildProfile extends AppCompatActivity {
                                 jsonObject = new JSONObject(response);
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                                 if(jsonObject.getString("msg").equals("done")){
-                                    startActivity(new Intent(BuildProfile.this,BuildProfile1.class));
+                                    Intent intent = new Intent(BuildProfile.this,BuildProfile1.class);
+                                    intent.putExtra("user_id",user_id);
+                                    startActivity(intent);
                                     finish();
                                 }
                                 else {
@@ -177,7 +179,12 @@ public class BuildProfile extends AppCompatActivity {
                             parameters.put("city",spinnerCity.getSelectedItem().toString());
                             parameters.put("career",spinnerCarrer.getSelectedItem().toString());
                             parameters.put("address",address.getText().toString());
-                            parameters.put("phone",phone.getText().toString());
+                            if(phone.getVisibility() == View.GONE){
+
+                            }else{
+                                parameters.put("phone",phone.getText().toString());
+                            }
+
                             parameters.put("ptl",radioButtonptl.getText().toString());
                             parameters.put("id",user_id);
 
