@@ -48,12 +48,12 @@ public class Profile extends Fragment {
     private String mParam1;
     private String mParam2;
     //private User user;
-    public TextView playerNameTv;
-    public TextView playerCityTv;
-    public TextView playerPositionTv;
-    public TextView playerMatchesTv;
-    public TextView playerPointsTv;
-    public TextView playerLevelsTv;
+    private TextView playerNameTv;
+    private TextView playerCityTv;
+    private TextView playerPositionTv;
+    private TextView playerMatchesTv;
+    private TextView playerPointsTv;
+    private TextView playerLevelsTv;
     RequestQueue requestQueue;
 
     private OnFragmentInteractionListener mListener;
@@ -99,20 +99,12 @@ public class Profile extends Fragment {
         profile_menu.setOnClickListener(new optionProfile(getContext()));
         //getUser(userId);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String userName = null;
-        String userCity=null;
-        String userPosition=null;
-        String userMatches=null;
-        String userPoints=null;
-        String userLevel=null;
-
-        playerNameTv.setText(userName);
-        playerCityTv.setText(userCity);
-        playerPositionTv.setText(userPosition);
-        playerMatchesTv.setText(userMatches);
-        playerPointsTv.setText(userPoints);
-        playerLevelsTv.setText(userLevel);
-
+        playerNameTv=(TextView)v.findViewById(R.id.userNameTv);
+        playerCityTv=(TextView)v.findViewById(R.id.playerCityTv);
+        playerPositionTv=(TextView)v.findViewById(R.id.playerPositionTv);
+        playerMatchesTv=(TextView)v.findViewById(R.id.matchesNumbersTv);
+        playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
+        playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
 
         return v;
         // Inflate the layout for this fragment
@@ -235,10 +227,23 @@ class optionProfile implements View.OnClickListener {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                        // result.append(firstname + " " + lastname + " " + age + " \n");
                    // }
                     //result.append("===\n");
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -255,6 +260,5 @@ class optionProfile implements View.OnClickListener {
         //requestQueue.add(jsonObjectRequest);
 
     }
-
 
 }

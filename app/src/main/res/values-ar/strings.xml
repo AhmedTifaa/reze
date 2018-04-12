@@ -45,4 +45,5 @@
     <string name="booking">الحجز</string>
     <string name="your_news_feed">اضافة منشور</string>
     <string name="add_to_your_post">اضافة الى المنشور</string>
+    <string name="write_comment">اكتب تعليق...</string>
 </resources>
