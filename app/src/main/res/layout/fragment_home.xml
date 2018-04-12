@@ -26,7 +26,6 @@
 
             <RelativeLayout
                 android:background="@drawable/tell_something_background"
-
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
 
@@ -64,9 +63,9 @@
 
     </RelativeLayout>
 
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/homePostsRecyclerView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/homePostsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

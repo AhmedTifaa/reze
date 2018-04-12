@@ -99,12 +99,12 @@ public class Profile extends Fragment {
         profile_menu.setOnClickListener(new optionProfile(getContext()));
         //getUser(userId);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        playerNameTv=(TextView)v.findViewById(R.id.userNameTv);
+        /*playerNameTv=(TextView)v.findViewById(R.id.userNameTv);
         playerCityTv=(TextView)v.findViewById(R.id.playerCityTv);
         playerPositionTv=(TextView)v.findViewById(R.id.playerPositionTv);
         playerMatchesTv=(TextView)v.findViewById(R.id.matchesNumbersTv);
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
-        playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
+        playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);*/
 
         return v;
         // Inflate the layout for this fragment

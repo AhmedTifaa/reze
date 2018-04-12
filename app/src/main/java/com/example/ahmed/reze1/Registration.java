@@ -124,7 +124,7 @@ public class Registration extends AppCompatActivity {
                         try {
                             JSONObject jsonObject;
                             jsonObject = new JSONObject(response);
-                            //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("done")){
                                 Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);

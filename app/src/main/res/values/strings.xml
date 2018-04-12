@@ -68,6 +68,7 @@
     <string name="validate_nag">Select Your country</string>
     <string name="validate_foot">Select Dominant Foot</string>
     <string name="validate_position">Select Your Position</string>
+    <string name="write_comment">Write a comment&#8230;</string>
 
     <string-array name="object_array">
 
