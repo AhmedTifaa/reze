@@ -4,9 +4,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.Profile">
+    tools:context="com.example.ahmed.reze1.Home">
 
     <!-- TODO: Update blank fragment layout -->
+
+
+
+
+
+
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -3,13 +3,29 @@ package com.example.ahmed.reze1;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**
@@ -21,14 +37,24 @@ import android.widget.PopupMenu;
  * create an instance of this fragment.
  */
 public class Profile extends Fragment {
+    private static final String USER_ID = "user_id";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    ViewPager viewPager;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    //private User user;
+    private TextView playerNameTv;
+    private TextView playerCityTv;
+    private TextView playerPositionTv;
+    private TextView playerMatchesTv;
+    private TextView playerPointsTv;
+    private TextView playerLevelsTv;
+    RequestQueue requestQueue;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,10 +93,21 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+         viewPager = (ViewPager)v.findViewById(R.id.pager);
+
         View profile_menu = v.findViewById(R.id.profile_menu);
         profile_menu.setOnClickListener(new optionProfile(getContext()));
-        // Inflate the layout for this fragment
+        //getUser(userId);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        playerNameTv=(TextView)v.findViewById(R.id.userNameTv);
+        playerCityTv=(TextView)v.findViewById(R.id.playerCityTv);
+        playerPositionTv=(TextView)v.findViewById(R.id.playerPositionTv);
+        playerMatchesTv=(TextView)v.findViewById(R.id.matchesNumbersTv);
+        playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
+        playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
+
         return v;
+        // Inflate the layout for this fragment
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -166,4 +203,62 @@ class optionProfile implements View.OnClickListener {
 
         popupMenu.show();
     }
+    private void getUser(long userId) {
+        // Load product info
+        //String url = String.format(EndPoints.PRODUCTS_SINGLE_RELATED, SettingsMy.getActualNonNullShop(getActivity()).getId(), productId);
+        //setContentVisible(CONST.VISIBLE.PROGRESS);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                "", new JSONObject(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response.toString());
+                try {
+                    JSONArray students = response.getJSONArray("students");
+                   // for (int i = 0; i < students.length(); i++) {
+                        JSONObject student = students.getJSONObject(Integer.parseInt("users"));
+
+                        String userName = student.getString("userName");
+                        String userCity = student.getString("userCity");
+                        String userPosition = student.getString("userPosition");
+                        String userMatches = student.getString("userMatches");
+                        String userPoints = student.getString("userPoints");
+                        String userLevel = student.getString("userLevel");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       // result.append(firstname + " " + lastname + " " + age + " \n");
+                   // }
+                    //result.append("===\n");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.append(error.getMessage());
+
+            }
+        });
+        //requestQueue.add(jsonObjectRequest);
+
+    }
+
 }
