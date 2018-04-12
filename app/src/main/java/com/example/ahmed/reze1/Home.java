@@ -219,6 +219,7 @@ public class Home extends Fragment {
                         posts = response.getPosts();
                         nextCursor = response.getNextCursor();
                         updateUi(posts);
+
                     }
                 }, new Response.ErrorListener() {
             @Override
