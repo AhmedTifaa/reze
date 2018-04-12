@@ -244,7 +244,7 @@ public class BuildProfile2 extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(BuildProfile2.this, MainActivity.class));
+        startActivity(new Intent(BuildProfile2.this, BuildNetwork.class));
         finish();
     }
 
