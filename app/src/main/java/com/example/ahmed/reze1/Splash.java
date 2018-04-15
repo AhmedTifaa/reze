@@ -39,7 +39,8 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
                                       @Override
                                       public void run() {
-                                         Intent myIntent = new Intent(getApplicationContext(), Language.class);
+                                         Intent myIntent = new Intent(getApplicationContext(), BuildNetwork.class);
+                                         myIntent.putExtra("user_id",3101);
                                           startActivity(myIntent);
                                           finish();
                                       }

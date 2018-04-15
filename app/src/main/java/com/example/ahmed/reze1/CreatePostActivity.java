@@ -147,25 +147,25 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
                 new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("volley response", "onResponse: " + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    PostResponse postResponse = new PostResponse();
-                    //todo add username
-                    postResponse.setUsername("ahmed ali");
-                    postResponse.setCreatedAt(jsonObject.getString("createdAt"));
-                    postResponse.setText(jsonObject.getString("text"));
-                    Intent intent = new Intent();
-                    intent.putExtra("post", postResponse);
-                    setResult(RESULT_OK, intent);
-                    onBackPressed();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("volley response", "onResponse: " + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            PostResponse postResponse = new PostResponse();
+                            //todo add username
+                            postResponse.setUsername("ahmed ali");
+                            postResponse.setCreatedAt(jsonObject.getString("createdAt"));
+                            postResponse.setText(jsonObject.getString("text"));
+                            Intent intent = new Intent();
+                            intent.putExtra("post", postResponse);
+                            setResult(RESULT_OK, intent);
+                            onBackPressed();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("volley error", "onErrorResponse: " + error.getMessage());

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -201,6 +201,7 @@ public class Home extends Fragment {
         Button commentButton;
         TextView dateView;
         TextView usernameView;
+        ImageView ppView;
 
         public PostViewHolder(final View itemView) {
             super(itemView);
@@ -210,6 +211,7 @@ public class Home extends Fragment {
             commentButton = itemView.findViewById(R.id.postCommentButton);
             dateView = itemView.findViewById(R.id.postDateView);
             usernameView = itemView.findViewById(R.id.postUserName);
+            ppView = itemView.findViewById(R.id.ppView);
         }
 
         public void bind(final PostResponse post, final int pos) {
@@ -282,6 +284,26 @@ public class Home extends Fragment {
                     performLike(post, pos);
                 }
             });
+
+            usernameView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startOtherProfile();
+                }
+            });
+
+            ppView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startOtherProfile();
+                }
+            });
+
+        }
+
+        private void startOtherProfile(){
+            Intent intent = ProfileOthersActivity.createIntent(userId, getActivity());
+            startActivity(intent);
         }
 
         private void performLike(final PostResponse postResponse, final int pos){
