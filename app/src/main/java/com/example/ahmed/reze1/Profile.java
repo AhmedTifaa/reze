@@ -1,29 +1,40 @@
 package com.example.ahmed.reze1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -105,7 +116,7 @@ public class Profile extends Fragment {
         playerMatchesTv=(TextView)v.findViewById(R.id.matchesNumbersTv);
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
-
+        optionProfile.ViewPagerAdapter adapter = new optionProfile.ViewPagerAdapter(getChildFragmentManager() );
         return v;
         // Inflate the layout for this fragment
     }
@@ -260,5 +271,84 @@ class optionProfile implements View.OnClickListener {
         //requestQueue.add(jsonObjectRequest);
 
     }
+    public static class ViewPagerAdapter extends android.support.v4.view.PagerAdapter {
+        private LayoutInflater layoutInflater;
 
-}
+        public ViewPagerAdapter(FragmentManager childFragmentManager) {
+        }
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+           // layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+         //   View view = layoutInflater.inflate(layouts[position], container, false);
+           // suggestlist = (ListView) view.findViewById(R.id.contacts_list);
+           // values = new ArrayList<buildFriend>();
+            return null;
+            }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return false;
+        }
+
+        StringRequest request = new StringRequest(Request.Method.POST, "http://localhost/reze/user_post.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+
+                    try {
+                        JSONObject jsonObject;
+                        //jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = new JSONArray(response);
+                        jsonArray.length();
+                        for (int i = 0;i<jsonArray.length();i++){
+                            jsonObject = new JSONObject(jsonArray.get(i).toString());
+                            //values.add(new buildFriend(jsonObject.getString("name"),jsonObject.getString("id")));
+                        }
+                    //    contactAddapter contactAddapter = new contactAddapter(Profile.this,R.layout.item_friend);
+                        //suggestlist.setAdapter(contactAddapter);
+                        //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
+
+                       /* if(jsonObject.getString("msg").equals("done")){
+//                                Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
+//                                intent.putExtra("user_id",user_id);
+//                                startActivity(intent);
+//                                finish();
+                        }
+                        else {
+                            //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                        }*/
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                    //hideDialog();
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+
+
+            };
+
+        }
+
+
+
+    }
+
+

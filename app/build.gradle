@@ -38,6 +38,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile 'com.github.adhishlal:gifloader:1.1'
+    implementation 'com.android.support:cardview-v7:27.1.0'
 
 
 }
