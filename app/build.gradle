@@ -37,6 +37,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.28.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
+    compile 'com.github.adhishlal:gifloader:1.1'
 
 
 }

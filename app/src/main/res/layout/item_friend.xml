@@ -9,7 +9,7 @@
         android:src="@drawable/circle"/>
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/sugName"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:layout_weight="1"
