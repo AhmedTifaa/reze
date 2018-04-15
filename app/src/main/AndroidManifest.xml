@@ -77,7 +77,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".CommentActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CommentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreatePostActivity"></activity>
     </application>
 
 </manifest>

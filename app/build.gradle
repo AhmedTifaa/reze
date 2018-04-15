@@ -37,6 +37,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.28.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
-
-
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:1.12.0'
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.12.0'
+    implementation 'com.karumi:dexter:4.2.0'
 }

@@ -2,6 +2,7 @@ package com.example.ahmed.reze1;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import com.example.ahmed.reze1.GUI.CustomTextView;
 
 import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
+import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 import com.facebook.*;
 import com.facebook.Profile;
@@ -194,6 +196,12 @@ public class Login extends AppCompatActivity {
                             if(jsonObject.getString("msg").equals("enter")){
                                 //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+
+                                //shared preference for login
+                                SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE).edit();
+                                editor.putBoolean(AppConfig.LOGGED_IN_SHARED, true).
+                                putString(AppConfig.LOGGED_IN_USER_ID_SHARED, jsonObject.getString("id")).apply();
+
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("id",jsonObject.getString("id"));
                                 startActivityForResult(intent, 0);

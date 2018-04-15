@@ -17,6 +17,18 @@ public class ApiResponse {
     @Expose
     private PostResponse[] posts;
 
+    @SerializedName("now")
+    @Expose
+    private long now;
+
+    public long getNow() {
+        return now;
+    }
+
+    public void setNow(long now) {
+        this.now = now;
+    }
+
     public int getNextCursor() {
         return nextCursor;
     }
