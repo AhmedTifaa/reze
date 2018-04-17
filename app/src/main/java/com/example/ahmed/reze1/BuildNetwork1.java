@@ -3,9 +3,6 @@ package com.example.ahmed.reze1;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,23 +41,25 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.helper.PrefManager;
+import com.facebook.*;
+import com.facebook.Profile;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import lal.adhish.gifprogressbar.GifView;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
-public class BuildNetwork extends AppCompatActivity {
+public class BuildNetwork1 extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -94,6 +92,11 @@ public class BuildNetwork extends AppCompatActivity {
     public ListView suggestlist;
     public ArrayList<String>values;
     public ArrayAdapter<String> stringArrayAdapter;
+    private LoginButton fblogin;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
+    private Profile profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,18 +115,16 @@ public class BuildNetwork extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildnetwork);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("user_id").toString();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         //btnSkip.setVisibility(View.GONE);
-
-
         // layouts of all welcome sliders
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.build_network1,};
+                R.layout.build_network2,};
         changeStatusBarColor();
 
         myViewPagerAdapter = new MyViewPagerAdapter();
@@ -132,7 +133,7 @@ public class BuildNetwork extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+                Intent intent = new Intent(BuildNetwork1.this,MainActivity.class);
                 intent.putExtra("id",user_id);
                 startActivity(intent);
                 finish();
@@ -141,10 +142,7 @@ public class BuildNetwork extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
-                intent.putExtra("id",user_id);
-                startActivity(intent);
-                finish();
+
 
             }
         });
@@ -222,115 +220,6 @@ public class BuildNetwork extends AppCompatActivity {
 
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
-            suggestlist = (ListView) view.findViewById(R.id.contacts_list);
-            values = new ArrayList<>();
-
-            progress = new ProgressDialog(BuildNetwork.this);
-            progress.setTitle("Loading");
-            progress.setMessage("Wait while loading...");
-            progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
-            progress.show();
-
-            StoreContacts = new ArrayList<String>();
-            cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
-            while (cursor.moveToNext()) {
-
-                name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-
-                phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                phonenumber = phonenumber.replaceAll("\\s+","");
-                if (phonenumber.charAt(0) == '+'){
-                    phonenumber =   phonenumber.substring(2);
-                }
-                StoreContacts.add(phonenumber);
-            }
-            Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
-
-            cursor.close();
-
-            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/contacts.php", new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    progress.dismiss();
-                    //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-
-                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-                    if (response.equals("skip")){
-                        return;
-                    }
-                    try {
-                        JSONObject jsonObject;
-                        //jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray(response);
-                        jsonObject = new JSONObject(jsonArray.get(0).toString());
-                        //Toast.makeText(getBaseContext(),jsonObject.get("name").toString(),Toast.LENGTH_LONG).show();
-
-                        for (int i = 0;i<jsonArray.length();i++){
-                            values.add(jsonArray.get(i).toString());
-                        }
-
-                        //Toast.makeText(getBaseContext(),values.toString(),Toast.LENGTH_LONG).show();
-                        contactAddapter contactAddapter = new contactAddapter(BuildNetwork.this,R.layout.item_friend,values);
-                        //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
-
-                        suggestlist.setAdapter(contactAddapter);
-                        suggestlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    int position, long id) {
-                              final TextView ss = (TextView)view.findViewById(R.id.id);
-                              ss.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                   Toast.makeText(BuildNetwork.this,ss.getText() , Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-                            }
-                        });
-                        //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
-
-                       /* if(jsonObject.getString("msg").equals("done")){
-//                                Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
-//                                intent.putExtra("user_id",user_id);
-//                                startActivity(intent);
-//                                finish();
-                        }
-                        else {
-                            //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                        }*/
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        //Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                    //hideDialog();
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> parameters  = new HashMap<String, String>();
-                    for (int i = 0;i< StoreContacts.size();i++){
-                        parameters.put("contact"+i,StoreContacts.get(i));
-                    }
-                    parameters.put("id",user_id);
-
-
-                    return parameters;
-                }
-            };
-            requestQueue.add(request);
-            //new getFriendsContact().execute();
             container.addView(view);
             return view;
         }
