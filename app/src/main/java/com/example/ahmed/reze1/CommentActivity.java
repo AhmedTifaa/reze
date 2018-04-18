@@ -101,6 +101,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         now = getIntent().getExtras().getLong(TIME_NOW_EXTRA);
         commentsRecyclerView = findViewById(R.id.commentRecView);
         adapter = new CommentRecyclerAdapter();
+
         commentsRecyclerView.setAdapter(adapter);
         commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         sendCommentView = findViewById(R.id.sendCommentView);
