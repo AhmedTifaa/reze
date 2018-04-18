@@ -133,7 +133,7 @@ public class BuildNetwork extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+                Intent intent = new Intent(BuildNetwork.this, Login.class);
                 intent.putExtra("id",user_id);
                 startActivity(intent);
                 finish();

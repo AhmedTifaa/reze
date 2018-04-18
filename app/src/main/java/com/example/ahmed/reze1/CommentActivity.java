@@ -161,12 +161,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             long millisecondsFromNow = milliseconds - now;
             createdAtView.setText(DateUtils.getRelativeTimeSpanString(milliseconds, now, milliseconds-now));
             if (comment.getReplies() != null && comment.getReplies().length > 0){
-                commentReplayView.setText(comment.getReplies().length + replay);
+                commentReplayView.setText(comment.getReplies().length +  " " + replay);
             }
 
             if (comment.getLikes() != null && comment.getLikes().length > 0){
                 String like = getResources().getString(R.string.like);
-                commentLikeView.setText(comment.getLikes().length + like);
+                commentLikeView.setText(comment.getLikes().length + " " + like);
             }
 
             commentReplayView.setOnClickListener(new View.OnClickListener() {

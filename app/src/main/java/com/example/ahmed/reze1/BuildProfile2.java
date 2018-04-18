@@ -110,7 +110,7 @@ public class BuildProfile2 extends AppCompatActivity {
         //fbname = inBundle.get("fbname").toString();
         //fbpicurl = inBundle.get("fbpicurl").toString();
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("user_id").toString();
+        user_id = inBundle.getString("id");
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);

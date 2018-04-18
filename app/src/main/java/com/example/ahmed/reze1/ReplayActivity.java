@@ -113,7 +113,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.commentBackView:
+            case R.id.replayBackView:
                 /*if (replayResponse != null){
                     Intent intent = new Intent();
                     intent.putExtra("comment", replayResponse);
