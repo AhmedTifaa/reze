@@ -46,6 +46,7 @@ public class Splash extends AppCompatActivity {
         animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_17), duration);
         animationDrawable.setOneShot(false);
         imageView.setImageDrawable(animationDrawable);
+
         animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
                                       @Override
@@ -57,6 +58,7 @@ public class Splash extends AppCompatActivity {
                                           //myIntent.putExtra("user_id",3101);
                                           startActivity(myIntent);
                                           finish();
+
                                       }
                                   }
                 , 3400);
