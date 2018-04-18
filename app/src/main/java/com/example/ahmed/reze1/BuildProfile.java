@@ -153,7 +153,7 @@ public class BuildProfile extends AppCompatActivity {
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                                 if(jsonObject.getString("msg").equals("done")){
                                     Intent intent = new Intent(BuildProfile.this,BuildProfile1.class);
-                                    intent.putExtra("user_id",user_id);
+                                    intent.putExtra("id",user_id);
                                     startActivity(intent);
                                     finish();
                                 }

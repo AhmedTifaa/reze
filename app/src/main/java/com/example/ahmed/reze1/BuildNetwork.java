@@ -3,6 +3,9 @@ package com.example.ahmed.reze1;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,11 +51,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import lal.adhish.gifprogressbar.GifView;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class BuildNetwork extends AppCompatActivity {
 
@@ -84,7 +92,7 @@ public class BuildNetwork extends AppCompatActivity {
     public ProgressDialog progress;
     public String result;
     public ListView suggestlist;
-    public ArrayList<buildFriend>values;
+    public ArrayList<String>values;
     public ArrayAdapter<String> stringArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +132,20 @@ public class BuildNetwork extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+                intent.putExtra("id",user_id);
+                startActivity(intent);
+                finish();
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new network().execute();
+//                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+//                intent.putExtra("id",user_id);
+//                startActivity(intent);
+//                finish();
 
             }
         });
@@ -209,7 +224,7 @@ public class BuildNetwork extends AppCompatActivity {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(layouts[position], container, false);
             suggestlist = (ListView) view.findViewById(R.id.contacts_list);
-            values = new ArrayList<buildFriend>();
+            values = new ArrayList<>();
 
             progress = new ProgressDialog(BuildNetwork.this);
             progress.setTitle("Loading");
@@ -225,9 +240,15 @@ public class BuildNetwork extends AppCompatActivity {
 
                 phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 phonenumber = phonenumber.replaceAll("\\s+","");
+                if (phonenumber.charAt(0) == '+'){
+                    phonenumber =   phonenumber.substring(2);
+                }
                 StoreContacts.add(phonenumber);
             }
+            Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
+
             cursor.close();
+
             StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/contacts.php", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -235,18 +256,41 @@ public class BuildNetwork extends AppCompatActivity {
                     //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
 
                     Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-
+                    if (response.equals("skip")){
+                        return;
+                    }
                     try {
                         JSONObject jsonObject;
                         //jsonObject = new JSONObject(response);
                         JSONArray jsonArray = new JSONArray(response);
-                        jsonArray.length();
+                        jsonObject = new JSONObject(jsonArray.get(0).toString());
+                        //Toast.makeText(getBaseContext(),jsonObject.get("name").toString(),Toast.LENGTH_LONG).show();
+
                         for (int i = 0;i<jsonArray.length();i++){
-                            jsonObject = new JSONObject(jsonArray.get(i).toString());
-                            values.add(new buildFriend(jsonObject.getString("name"),jsonObject.getString("id")));
+                            values.add(jsonArray.get(i).toString());
                         }
+
+                        //Toast.makeText(getBaseContext(),values.toString(),Toast.LENGTH_LONG).show();
                         contactAddapter contactAddapter = new contactAddapter(BuildNetwork.this,R.layout.item_friend,values);
+                        //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
+
                         suggestlist.setAdapter(contactAddapter);
+//                        suggestlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view,
+//                                                    int position, long id) {
+//                              final TextView ss = (TextView)view.findViewById(R.id.id);
+//                              ss.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                   Toast.makeText(BuildNetwork.this,ss.getText() , Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//
+//
+//                            }
+//                        });
                         //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
 
                        /* if(jsonObject.getString("msg").equals("done")){
@@ -261,7 +305,7 @@ public class BuildNetwork extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
 
                     }
                     //hideDialog();
@@ -280,6 +324,7 @@ public class BuildNetwork extends AppCompatActivity {
                     for (int i = 0;i< StoreContacts.size();i++){
                         parameters.put("contact"+i,StoreContacts.get(i));
                     }
+                    parameters.put("id",user_id);
 
 
                     return parameters;
@@ -303,6 +348,51 @@ public class BuildNetwork extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
+        }
+    }
+    public class network extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/networkstate.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                    //hideDialog();
+                    try {
+                        JSONObject jsonObject;
+                        jsonObject = new JSONObject(response);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
+
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String> parameters  = new HashMap<String, String>();
+
+                    parameters.put("snet","1");
+                    parameters.put("id",user_id);
+                    return parameters;
+                }
+            };
+            requestQueue.add(request);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
         }
     }
 
