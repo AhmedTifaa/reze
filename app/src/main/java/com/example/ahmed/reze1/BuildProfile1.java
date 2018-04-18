@@ -104,7 +104,7 @@ public class BuildProfile1 extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildprofile);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("user_id").toString();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -150,7 +150,7 @@ public class BuildProfile1 extends AppCompatActivity {
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                                 if(jsonObject.getString("msg").equals("done")){
                                     Intent intent = new Intent(BuildProfile1.this,BuildProfile2.class);
-                                    intent.putExtra("user_id",user_id);
+                                    intent.putExtra("id",user_id);
                                     startActivity(intent);
                                     finish();
                                 }

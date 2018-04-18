@@ -113,60 +113,62 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validate();
-                //showDialog();
-                StringRequest request = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                        //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                if (!validate()) {
 
-                        //hideDialog();
-                        try {
-                            JSONObject jsonObject;
-                            jsonObject = new JSONObject(response);
-                            Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                            if(jsonObject.getString("msg").equals("done")){
-                                Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                                intent.putExtra("fbname",inputFullName.getText().toString());
-                                intent.putExtra("fbpicurl","null");
-                                intent.putExtra("id",jsonObject.getString("id"));
-                                startActivityForResult(intent, 0);
-                                finish();
-                            }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
-                                Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                } else {
+                    StringRequest request = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                            //hideDialog();
+                            try {
+                                JSONObject jsonObject;
+                                jsonObject = new JSONObject(response);
+                                Toast.makeText(getBaseContext(), jsonObject.getString("msg"), Toast.LENGTH_LONG).show();
+                                if (jsonObject.getString("msg").equals("done")) {
+                                    Toast.makeText(getApplicationContext(), jsonObject.getString("id"), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                                    intent.putExtra("fbname", inputFullName.getText().toString());
+                                    intent.putExtra("fbpicurl", "null");
+                                    intent.putExtra("id", jsonObject.getString("id"));
+                                    startActivityForResult(intent, 0);
+                                    finish();
+                                } else if (jsonObject.getString("msg").equals("This mail is already exsist you can log in")) {
+                                    Toast.makeText(getBaseContext(), R.string.exsistEmail, Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                }) {
+                        }
+                    }) {
 
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String,String> parameters  = new HashMap<String, String>();
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> parameters = new HashMap<String, String>();
 
-                        parameters.put("name",inputFullName.getText().toString());
-                        parameters.put("mobile",inputMobile.getText().toString());
-                        parameters.put("mail",inputEmail.getText().toString());
-                        parameters.put("birthday",inputDateOfBirth.getText().toString());
-                        parameters.put("password",inputPassword.getText().toString());
+                            parameters.put("name", inputFullName.getText().toString());
+                            parameters.put("mobile", inputMobile.getText().toString());
+                            parameters.put("mail", inputEmail.getText().toString());
+                            parameters.put("birthday", inputDateOfBirth.getText().toString());
+                            parameters.put("password", inputPassword.getText().toString());
 
-                        return parameters;
-                    }
-                };
-                requestQueue.add(request);
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(request);
+                }
             }
-
         });
 
 

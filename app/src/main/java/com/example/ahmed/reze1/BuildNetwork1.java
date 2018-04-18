@@ -1,7 +1,9 @@
 package com.example.ahmed.reze1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -37,19 +41,31 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.helper.PrefManager;
+import com.facebook.*;
+import com.facebook.Profile;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BuildNetwork extends AppCompatActivity {
+import lal.adhish.gifprogressbar.GifView;
+
+public class BuildNetwork1 extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     public int[] layouts;
     private Button btnNext;
+    private Button btnSkip;
     private PrefManager prefManager;
     private String fbname;
     private String fbpicurl;
@@ -66,7 +82,21 @@ public class BuildNetwork extends AppCompatActivity {
     public Spinner spinnerCarrer;
     public Spinner spinnerCity;
     public static final int PICK_IMAGE = 1;
-
+    public ListView listView ;
+    public ArrayList<String> StoreContacts ;
+    public ArrayAdapter<String> arrayAdapter ;
+    public Cursor cursor ;
+    public String name, phonenumber ;
+    public ProgressDialog progress;
+    public String result;
+    public ListView suggestlist;
+    public ArrayList<String>values;
+    public ArrayAdapter<String> stringArrayAdapter;
+    private LoginButton fblogin;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
+    private Profile profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,30 +113,32 @@ public class BuildNetwork extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
-        setContentView(R.layout.activity_buildprofile);
+        setContentView(R.layout.activity_buildnetwork);
         Bundle inBundle = getIntent().getExtras();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
-        //btnSkip = (Button) findViewById(R.id.btn_skip);
+        btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         //btnSkip.setVisibility(View.GONE);
-
-
         // layouts of all welcome sliders
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.build_network1,};
+                R.layout.build_network2,};
         changeStatusBarColor();
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-//        btnSkip.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //launchHomeScreen();
-//            }
-//        });
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuildNetwork1.this,MainActivity.class);
+                intent.putExtra("id",user_id);
+                startActivity(intent);
+                finish();
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
