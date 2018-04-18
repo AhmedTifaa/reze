@@ -43,6 +43,7 @@ public class Splash extends AppCompatActivity {
                                          myIntent.putExtra("user_id",3101);
                                           startActivity(myIntent);
                                           finish();
+
                                       }
                                   }
                 , 8500);
