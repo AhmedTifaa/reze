@@ -412,6 +412,7 @@ public class BuildProfile extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                     //hideDialog();
+
                     try {
                         JSONObject jsonObject;
                         jsonObject = new JSONObject(response);
