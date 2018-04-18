@@ -80,7 +80,7 @@
             android:id="@+id/horzLine"
             android:layout_below="@id/ArenaNavHeader"
             android:layout_width="match_parent"
-            android:layout_height="6dp"
+            android:layout_height="5dp"
             android:background="@color/green5"
             />
 

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,13 +20,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.app.AppConfig;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -69,7 +66,7 @@ public class contactAddapter extends ArrayAdapter<String> {
             e.printStackTrace();
         }*/
        // return super.getView(position, convertView, parent);
-        userId = context.getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE)
+        userId = context.getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
         rowView = inflater.inflate(R.layout.item_friend, null, true);

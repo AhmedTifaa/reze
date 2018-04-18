@@ -46,4 +46,8 @@
     <string name="your_news_feed">اضافة منشور</string>
     <string name="add_to_your_post">اضافة الى المنشور</string>
     <string name="write_comment">اكتب تعليق...</string>
+    <string name="users">مستخدمين</string>
+    <string name="groups">مجموعات</string>
+    <string name="search_result">لا توجد نتائج</string>
+    <string name="write_replay">اكتب تعليق...</string>
 </resources>

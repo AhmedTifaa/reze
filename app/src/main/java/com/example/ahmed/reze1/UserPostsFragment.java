@@ -46,6 +46,7 @@ public class UserPostsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     int nextCursor = 0;
+    long now;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -164,7 +165,7 @@ public class UserPostsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, getActivity());
+                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, getActivity());
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
                 }
@@ -206,6 +207,7 @@ public class UserPostsFragment extends Fragment {
                         Log.i("volley response", "onResponse: " + response.getPosts()[0].getCreatedAt());
                         posts = response.getPosts();
                         nextCursor = response.getNextCursor();
+                        now = response.getNow();
                         updateUi(posts);
 
                     }

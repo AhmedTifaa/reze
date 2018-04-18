@@ -18,14 +18,12 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
 import com.example.ahmed.reze1.api.post.PostResponse;
 import com.example.ahmed.reze1.app.AppConfig;
-import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -38,7 +36,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,7 +181,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 map.put("method", "create_post");
-                map.put("userId", getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE)
+                map.put("userId", getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                         .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "1"));
                 if (postTextView.getText().toString().length() > 0){
                     map.put("post_text", postTextView.getText().toString());

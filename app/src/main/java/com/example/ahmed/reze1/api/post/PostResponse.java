@@ -39,6 +39,18 @@ public class PostResponse implements Serializable {
     @Expose
     private String username;
 
+    @SerializedName("user_id")
+    @Expose
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUsername() {
         return username;
     }

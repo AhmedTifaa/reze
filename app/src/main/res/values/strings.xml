@@ -69,6 +69,10 @@
     <string name="validate_foot">Select Dominant Foot</string>
     <string name="validate_position">Select Your Position</string>
     <string name="write_comment">Write a comment&#8230;</string>
+    <string name="write_replay">Write a replay&#8230;</string>
+    <string name="users">Users</string>
+    <string name="groups">Groups</string>
+    <string name="search_result">No result</string>
 
     <string-array name="object_array">
 

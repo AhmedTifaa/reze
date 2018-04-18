@@ -1,0 +1,36 @@
+<LinearLayout android:id="@+id/searchHeaderLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/green5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/userSearchFilter"
+            android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="@string/users"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/groupSearchFilter"
+            android:textAllCaps="false"
+            android:layout_gravity="center_vertical"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="@string/groups"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,18 +23,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.GUI.CustomEditText;
-import com.example.ahmed.reze1.api.post.ApiResponse;
+import com.example.ahmed.reze1.api.post.CommentReplyResponse;
 import com.example.ahmed.reze1.api.post.CommentResponse;
 import com.example.ahmed.reze1.app.AppConfig;
-import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -83,7 +80,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         postLikesView = findViewById(R.id.postLikesCommentView);
 
-        userId = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE)
+        userId = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
 
         comments = (ArrayList<CommentResponse>) getIntent().getExtras().getSerializable(COMMENTS_EXTRA);
@@ -134,17 +131,25 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         TextView commentTextView;
         TextView createdAtView;
+        TextView commenterView;
+        TextView commentReplayView;
+        TextView commentLikeView;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
 
             commentTextView = itemView.findViewById(R.id.commentTextView);
             createdAtView = itemView.findViewById(R.id.commentCreatedAtView);
+            commenterView = itemView.findViewById(R.id.commenterView);
+            commentReplayView = itemView.findViewById(R.id.commentReplayView);
+            commentLikeView = itemView.findViewById(R.id.commentLikeView);
         }
 
-        public void bind(CommentResponse comment){
+        public void bind(final CommentResponse comment){
             commentTextView.setText(comment.getCommentText());
             createdAtView.setText(comment.getCreatedAt());
+            commenterView.setText(comment.getCommenterName());
+            String replay = getResources().getString(R.string.replay);
 
             Date date = null;
             try {
@@ -155,6 +160,31 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             long milliseconds = date.getTime();
             long millisecondsFromNow = milliseconds - now;
             createdAtView.setText(DateUtils.getRelativeTimeSpanString(milliseconds, now, milliseconds-now));
+            if (comment.getReplies() != null && comment.getReplies().length > 0){
+                commentReplayView.setText(comment.getReplies().length + replay);
+            }
+
+            if (comment.getLikes() != null && comment.getLikes().length > 0){
+                String like = getResources().getString(R.string.like);
+                commentLikeView.setText(comment.getLikes().length + like);
+            }
+
+            commentReplayView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<CommentReplyResponse> replies = new ArrayList<>(Arrays.asList(comment.getReplies()));
+                    Intent intent = ReplayActivity.createIntent(
+                            replies,
+                            comment.getLikes(),
+                            postId,
+                            comment.getCommentId(),
+                            now,
+                            CommentActivity.this
+                    );
+
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -199,6 +229,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     commentResponse.setCommentText(jsonObject.getString("commentText"));
                                     commentResponse.setReplies(null);
                                     commentResponse.setCreatedAt(jsonObject.getString("createdAt"));
+                                    commentResponse.setCommenterName(jsonObject.getString("commenterName"));
 
                                     comments.add(commentResponse);
                                     adapter.notifyItemInserted(comments.size()-1);
@@ -230,7 +261,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
             Volley.newRequestQueue(CommentActivity.this).add(stringRequest);
         } else {
-            Toast.makeText(this, "Empty post!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Empty comment!", Toast.LENGTH_SHORT).show();
         }
     }
 }

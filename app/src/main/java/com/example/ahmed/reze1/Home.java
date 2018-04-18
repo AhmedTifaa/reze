@@ -2,7 +2,6 @@ package com.example.ahmed.reze1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -55,7 +54,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Home.OnFragmentInteractionListener} interface
+ * {@link OnCallback} interface
  * to handle interaction events.
  * Use the {@link Home#newInstance} factory method to
  * create an instance of this fragment.
@@ -86,7 +85,7 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnCallback mListener;
 
     public Home() {
         // Required empty public constructor
@@ -126,7 +125,7 @@ public class Home extends Fragment {
         recyclerView = view.findViewById(R.id.homePostsRecyclerView);
         commentEditText = view.findViewById(R.id.commentEditText);
 
-        userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE)
+        userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
 
         requestQueue = Volley.newRequestQueue(getActivity());
@@ -134,21 +133,14 @@ public class Home extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnCallback) {
+            mListener = (OnCallback) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnCallback");
         }
     }
 
@@ -158,19 +150,9 @@ public class Home extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+    public interface OnCallback {
+        void onProfile();
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder{
@@ -288,21 +270,29 @@ public class Home extends Fragment {
             usernameView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startOtherProfile();
+                    if (post.getUserId().contentEquals(userId)){
+                        mListener.onProfile();
+                    } else {
+                        startOtherProfile(pos);
+                    }
                 }
             });
 
             ppView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startOtherProfile();
+                    if (post.getUserId().contentEquals(userId)){
+                        mListener.onProfile();
+                    } else {
+                        startOtherProfile(pos);
+                    }
                 }
             });
 
         }
 
-        private void startOtherProfile(){
-            Intent intent = ProfileOthersActivity.createIntent(userId, getActivity());
+        private void startOtherProfile(int position){
+            Intent intent = OtherProfileActivity.createIntent(posts[position].getUserId(), posts[position].getUsername(), getActivity());
             startActivity(intent);
         }
 
