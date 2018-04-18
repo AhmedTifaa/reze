@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -45,6 +46,10 @@ public class contactAddapter extends ArrayAdapter<String> {
     String userId;
     String btnId;
     TextView id;
+    View rowView;
+    Button button;
+    View entireBtn;
+    Button buttonC;
     public contactAddapter(@NonNull Context context, int resource,ArrayList<String> vals) {
         super(context, resource, vals);
         this.context = context;
@@ -67,62 +72,73 @@ public class contactAddapter extends ArrayAdapter<String> {
         userId = context.getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
-        View rowView= inflater.inflate(R.layout.item_friend, null, true);
+        rowView = inflater.inflate(R.layout.item_friend, null, true);
         TextView textView = (TextView)rowView.findViewById(R.id.sugName);
-        id = (TextView)rowView.findViewById(R.id.id);
-        Button button = (Button)rowView.findViewById(R.id.sendAdd);
+        button = (Button)rowView.findViewById(R.id.sendAdd);
+
         requestQueue = Volley.newRequestQueue(context);
         try {
             jsonObject = new JSONObject(vals.get(position));
             textView.setText(jsonObject.get("name").toString());
+            button.setId(Integer.parseInt(jsonObject.get("id").toString()));
             btnId = jsonObject.get("id").toString();
-            id.setText(btnId);
-//            ((Button)rowView.findViewById(R.id.sendAdd)).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
-//                            try {
-//                                JSONObject jsonObject;
-//                                jsonObject = new JSONObject(response);
-//
-//                                if(jsonObject.getString("msg").equals("added")){
-//                                    //button.setText("Remove");
-//                                    //button.setBackgroundColor(R.color.red);
-//                                }
-//                                else {
-//                                    //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-//                                }
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//
-//                        }
-//                    }) {
-//
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            Map<String,String> parameters  = new HashMap<String, String>();
-//                            parameters.put("add","add");
-//                            parameters.put("from",userId);
-//                            parameters.put("to",id.getText().toString());
-//
-//
-//
-//                            return parameters;
-//                        }
-//                    };
-//                    requestQueue.add(request);
-//                }
-//            });
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   entireBtn = v;
+                   buttonC = (Button)v.findViewById(entireBtn.getId());
+                   if (buttonC.getText().equals("Add")){
+                    StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+                            buttonC.setText("Remove");
+                            buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_dark));
+                            try {
+                                JSONObject jsonObject;
+                                jsonObject = new JSONObject(response);
+
+                                if(jsonObject.getString("msg").equals("added")){
+
+                                }
+                                else {
+                                    //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> parameters  = new HashMap<String, String>();
+                            parameters.put("add","add");
+                            parameters.put("from",userId);
+                            parameters.put("to",entireBtn.getId()+"");
+
+
+
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(request);
+                   }
+                   else if(buttonC.getText().equals("Remove")){
+                       buttonC.setText("Add");
+                       buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_green));
+
+                       Toast.makeText(getContext(),"remove freind",Toast.LENGTH_LONG).show();
+                   }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

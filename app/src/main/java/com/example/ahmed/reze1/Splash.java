@@ -50,11 +50,11 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
                                       @Override
                                       public void run() {
-                                          SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE).edit();
-                                          editor.putBoolean(AppConfig.LOGGED_IN_SHARED, true).
-                                                  putString(AppConfig.LOGGED_IN_USER_ID_SHARED, "3101").apply();
-                                         Intent myIntent = new Intent(getApplicationContext(), BuildNetwork.class);
-                                          myIntent.putExtra("user_id",3101);
+//                                          SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE).edit();
+//                                          editor.putBoolean(AppConfig.LOGGED_IN_SHARED, true).
+//                                                  putString(AppConfig.LOGGED_IN_USER_ID_SHARED, "3101").apply();
+                                         Intent myIntent = new Intent(getApplicationContext(), Login.class);
+                                          //myIntent.putExtra("user_id",3101);
                                           startActivity(myIntent);
                                           finish();
                                       }

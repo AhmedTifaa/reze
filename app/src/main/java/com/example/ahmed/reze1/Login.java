@@ -226,11 +226,21 @@ public class Login extends AppCompatActivity {
                                     finish();
                                 }
                                 else if(jsonObject.getString("state").equals("3")){
-                                    Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra("id",jsonObject.getString("id"));
-                                    startActivityForResult(intent, 0);
-                                    finish();
+                                    if(jsonObject.getString("snet").equals("0")){
+                                        Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getApplicationContext(), BuildNetwork.class);
+                                        intent.putExtra("id",jsonObject.getString("id"));
+                                        startActivityForResult(intent, 0);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("id",jsonObject.getString("id"));
+                                        startActivityForResult(intent, 0);
+                                        finish();
+                                    }
+
                                 }
 
                                 } else if (jsonObject.getString("msg").equals("no")) {

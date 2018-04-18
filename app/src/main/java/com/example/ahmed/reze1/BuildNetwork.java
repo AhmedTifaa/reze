@@ -141,10 +141,11 @@ public class BuildNetwork extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
-                intent.putExtra("id",user_id);
-                startActivity(intent);
-                finish();
+                new network().execute();
+//                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+//                intent.putExtra("id",user_id);
+//                startActivity(intent);
+//                finish();
 
             }
         });
@@ -274,22 +275,22 @@ public class BuildNetwork extends AppCompatActivity {
                         //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
 
                         suggestlist.setAdapter(contactAddapter);
-                        suggestlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    int position, long id) {
-                              final TextView ss = (TextView)view.findViewById(R.id.id);
-                              ss.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                   Toast.makeText(BuildNetwork.this,ss.getText() , Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-                            }
-                        });
+//                        suggestlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view,
+//                                                    int position, long id) {
+//                              final TextView ss = (TextView)view.findViewById(R.id.id);
+//                              ss.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                   Toast.makeText(BuildNetwork.this,ss.getText() , Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//
+//
+//                            }
+//                        });
                         //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
 
                        /* if(jsonObject.getString("msg").equals("done")){
@@ -347,6 +348,51 @@ public class BuildNetwork extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
+        }
+    }
+    public class network extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/networkstate.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                    //hideDialog();
+                    try {
+                        JSONObject jsonObject;
+                        jsonObject = new JSONObject(response);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
+
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String> parameters  = new HashMap<String, String>();
+
+                    parameters.put("snet","1");
+                    parameters.put("id",user_id);
+                    return parameters;
+                }
+            };
+            requestQueue.add(request);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
         }
     }
 
