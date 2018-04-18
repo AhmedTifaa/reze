@@ -106,6 +106,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         sendCommentView = findViewById(R.id.sendCommentView);
         commentEditText = findViewById(R.id.commentEditText);
 
+        //todo
         sendCommentView.setOnClickListener(this);
     }
 
