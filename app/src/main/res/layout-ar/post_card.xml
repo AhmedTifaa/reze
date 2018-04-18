@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout
-    android:layout_margin="@dimen/dimen_10"
-    android:background="@drawable/post_background"
+    android:layout_margin="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,11 +9,11 @@
 
     <ImageView
         android:id="@+id/ppView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@drawable/post_pp_circle"
         android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
+        android:layout_marginEnd="@dimen/dimen_10"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginBottom="@dimen/dimen_10"/>
 
@@ -38,15 +37,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="0dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="عمرو طارق"
+                    android:textSize="14sp"
+                    android:text="Amro Tarek"
                     android:textColor="@android:color/black"/>
 
                 <ImageView
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_gravity="center"
                     android:layout_width="8dp"
                     android:layout_height="8dp"
@@ -56,9 +55,10 @@
 
 
             <TextView
+                android:textSize="10sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="منذ 2 ساعة"/>
+                android:text="2 hrs ago"/>
         </LinearLayout>
 
         <ImageView
@@ -71,16 +71,16 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/postView"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
+        android:id="@+id/postTextView"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_below="@id/ppView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour"
         android:textColor="@android:color/black"
-        android:layout_marginBottom="20dp"
-        android:textSize="10sp"
+        android:layout_marginBottom="5dp"
+        android:textSize="12sp"
         android:maxLines="6"/>
 
     <ImageView
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/postView"
+        android:layout_below="@id/postTextView"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 
@@ -101,6 +101,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/postLikeButton"
             android:drawableStart="@drawable/ic_star"
             android:textSize="13sp"
             android:textAllCaps="false"
@@ -111,8 +112,6 @@
             android:layout_width="0dp"
             android:layout_height="40dp" />
 
-
-
         <ImageView
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
@@ -122,6 +121,7 @@
             android:background="@android:color/darker_gray"/>
 
         <Button
+            android:id="@+id/postCommentButton"
             android:textSize="13sp"
             android:textAllCaps="false"
             android:text="@string/comment"
@@ -131,7 +131,6 @@
             android:layout_height="40dp"
             android:drawableStart="@drawable/ic_comment"/>
 
-
         <ImageView
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
@@ -139,6 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/darker_gray"/>
+
 
         <Button
             android:textSize="13sp"
@@ -149,7 +149,6 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:drawableStart="@drawable/ic_share"/>
-
 
     </LinearLayout>
 

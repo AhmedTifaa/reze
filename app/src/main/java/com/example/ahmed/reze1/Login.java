@@ -2,7 +2,6 @@ package com.example.ahmed.reze1;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +29,6 @@ import com.example.ahmed.reze1.GUI.CustomTextView;
 
 import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
-import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 import com.facebook.*;
 import com.facebook.Profile;
@@ -72,7 +70,7 @@ public class Login extends AppCompatActivity {
         pDialog.setCancelable(false);
         // If using in a fragment
         /*fblogin.setFragment(this);*/
-        // Callback registration*/
+        // Callback registration
         callbackManager = CallbackManager.Factory.create();
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -111,7 +109,6 @@ public class Login extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // App code
                         profile = Profile.getCurrentProfile();
-                        //Toast.makeText(getBaseContext(),profile.getName(),Toast.LENGTH_LONG).show();
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
@@ -124,6 +121,7 @@ public class Login extends AppCompatActivity {
 
                                             //String email = object.getString("email");
                                             //String birthday = object.getString("birthday"); // 01/31/1980 format
+
                                             fbRegister(profile.getName(),object.getString("email"),object.getString("birthday"),profile.getProfilePictureUri(200,200).toString());
 
                                             //Toast.makeText(getBaseContext(),email+" "+birthday,Toast.LENGTH_LONG).show();
@@ -185,96 +183,53 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (!validate()) {
+                validate();
 
-
-                } else {
-
-                    request = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonObject;
-                                jsonObject = new JSONObject(response);
-                                //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                                if (jsonObject.getString("msg").equals("enter")) {
-                                    SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE).edit();
-                                    editor.putBoolean(AppConfig.LOGGED_IN_SHARED, true).
-                                            putString(AppConfig.LOGGED_IN_USER_ID_SHARED, jsonObject.getString("id")).apply();
-                                    Toast.makeText(getApplicationContext(), jsonObject.getString("state"), Toast.LENGTH_SHORT).show();
-                                if(jsonObject.getString("state").equals("0")){
-                                    Intent intent = new Intent(getApplicationContext(), BuildProfile.class);
-                                    intent.putExtra("fbname", jsonObject.getString("name"));
-                                    intent.putExtra("fbpicurl", "null");
-                                    intent.putExtra("id",jsonObject.getString("id"));
-                                    startActivityForResult(intent, 0);
-                                    finish();
-                                }
-                                else if(jsonObject.getString("state").equals("1")){
-                                    Intent intent = new Intent(getApplicationContext(), BuildProfile1.class);
-                                    intent.putExtra("fbname", jsonObject.getString("name"));
-                                    intent.putExtra("fbpicurl", "null");
-                                    intent.putExtra("id",jsonObject.getString("id"));
-                                    startActivityForResult(intent, 0);
-                                    finish();
-                                }
-                                else if(jsonObject.getString("state").equals("2")){
-                                    Intent intent = new Intent(getApplicationContext(), BuildProfile2.class);
-                                    intent.putExtra("fbname", jsonObject.getString("name"));
-                                    intent.putExtra("fbpicurl", "null");
-                                    intent.putExtra("id",jsonObject.getString("id"));
-                                    startActivityForResult(intent, 0);
-                                    finish();
-                                }
-                                else if(jsonObject.getString("state").equals("3")){
-                                    if(jsonObject.getString("snet").equals("0")){
-                                        Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(getApplicationContext(), BuildNetwork.class);
-                                        intent.putExtra("id",jsonObject.getString("id"));
-                                        startActivityForResult(intent, 0);
-                                        finish();
-                                    }
-                                    else{
-                                        Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.putExtra("id",jsonObject.getString("id"));
-                                        startActivityForResult(intent, 0);
-                                        finish();
-                                    }
-
-                                }
-
-                                } else if (jsonObject.getString("msg").equals("no")) {
-                                    Toast.makeText(getBaseContext(), R.string.wronglogin, Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                request = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject;
+                            jsonObject = new JSONObject(response);
+                            //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                            if(jsonObject.getString("msg").equals("enter")){
+                                //Toast.makeText(getApplicationContext(),jsonObject.getString("success"),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("id",jsonObject.getString("id"));
+                                startActivityForResult(intent, 0);
+                                finish();
                             }
+                            else if(jsonObject.getString("msg").equals("no")){
+                                Toast.makeText(getBaseContext(),R.string.wronglogin,Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();                            }
 
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getBaseContext(), R.string.checkingNetwork, Toast.LENGTH_LONG).show();
 
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String, String> hashMap = new HashMap<String, String>();
-                            hashMap.put("mail", name.getText().toString());
-                            hashMap.put("login", "login");
-                            hashMap.put("password", password.getText().toString());
-                            return hashMap;
-                        }
-                    };
 
-                    requestQueue.add(request);
-                }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getBaseContext(),R.string.checkingNetwork,Toast.LENGTH_LONG).show();
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> hashMap = new HashMap<String, String>();
+                        hashMap.put("mail",name.getText().toString());
+                        hashMap.put("login","login");
+                        hashMap.put("password",password.getText().toString());
+                        return hashMap;
+                    }
+                };
+
+                requestQueue.add(request);
             }
         });
     }
@@ -374,5 +329,4 @@ public class Login extends AppCompatActivity {
         return valid;
     }
 }
-
 

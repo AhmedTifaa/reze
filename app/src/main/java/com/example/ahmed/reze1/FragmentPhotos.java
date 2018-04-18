@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.api.post.ApiResponse;
+import com.example.ahmed.reze1.api.post.MediaResponse;
 import com.example.ahmed.reze1.api.post.PhotoResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class FragmentPhotos extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private WebView webview;
     String distfile = "";
-    private PhotoResponse[] photos;
+    private ArrayList<MediaResponse> finalPhotos;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     int nextCursor = 0;
@@ -180,11 +182,15 @@ public class FragmentPhotos extends Fragment {
                 new Response.Listener<ApiResponse>() {
                     @Override
                     public void onResponse(ApiResponse response) {
-                        Log.i("volley response", "onResponse: " + response.getPhotos()[0].getUser_id());
-                        photos = response.getPhotos();
+                        Log.i("volley response", "onResponse: " + response.getPosts()[0].getUserId());
+                        if (response.getPosts() != null && response.getPosts().length > 0){
+                            finalPhotos = new ArrayList<>();
+                            for (int i = 0; i < response.getPosts().length; i++) {
+                                MediaResponse[] images =  response.getPosts()[i].getAttachment().getImages();
+                                finalPhotos.addAll(new ArrayList<>(Arrays.asList(images)));
+                            }
+                        }
                         nextCursor = response.getNextCursor();
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override

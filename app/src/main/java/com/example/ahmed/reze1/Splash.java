@@ -1,26 +1,15 @@
 package com.example.ahmed.reze1;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.widget.ImageView;
-
-import com.example.ahmed.reze1.app.AppConfig;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class Splash extends AppCompatActivity {
  private ImageView imageView;
- int duration = 200;
+ int duration = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +40,14 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
                                       @Override
                                       public void run() {
-//                                          SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERECE_NAME, MODE_PRIVATE).edit();
-//                                          editor.putBoolean(AppConfig.LOGGED_IN_SHARED, true).
-//                                                  putString(AppConfig.LOGGED_IN_USER_ID_SHARED, "3101").apply();
-                                         Intent myIntent = new Intent(getApplicationContext(), Login.class);
-                                          //myIntent.putExtra("user_id",3101);
+                                         Intent myIntent = new Intent(getApplicationContext(), BuildNetwork.class);
+                                         myIntent.putExtra("user_id",3101);
                                           startActivity(myIntent);
                                           finish();
 
                                       }
                                   }
-                , 3400);
+                , 8500);
     }
 }
 

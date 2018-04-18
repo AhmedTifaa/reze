@@ -29,7 +29,7 @@ public class VolleyCustomRequest extends Request {
     @Override
     protected Response parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+            String jsonString = new String(response.data, "UTF-8");
 
             return Response.success(gson.fromJson(jsonString,responseClass), HttpHeaderParser.parseCacheHeaders(response));
 

@@ -20,8 +20,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.AttachmentResponse;
+import com.example.ahmed.reze1.api.post.MediaResponse;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +39,7 @@ public class FragmentVideos extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private WebView webview;
     String distfile = "";
-    private AttachmentResponse[] videos;
+    private ArrayList<MediaResponse> finalVideos;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     int nextCursor = 0;
@@ -178,11 +181,15 @@ public class FragmentVideos extends Fragment {
                 new Response.Listener<ApiResponse>() {
                     @Override
                     public void onResponse(ApiResponse response) {
-                        Log.i("volley response", "onResponse: " + response.getPhotos()[0].getUser_id());
-                        videos = response.getVideos();
+                        Log.i("volley response", "onResponse: " + response.getPosts()[0].getUserId());
+                        if (response.getPosts() != null && response.getPosts().length > 0){
+                            finalVideos = new ArrayList<>();
+                            for (int i = 0; i < response.getPosts().length; i++) {
+                                MediaResponse[] videos =  response.getPosts()[i].getAttachment().getVideos();
+                                finalVideos.addAll(new ArrayList<>(Arrays.asList(videos)));
+                            }
+                        }
                         nextCursor = response.getNextCursor();
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override

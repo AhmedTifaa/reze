@@ -17,6 +17,10 @@
         app:srcCompat="@drawable/post_placeholder" />
 
 
+
+
+
+
     <EditText
         android:id="@+id/new_post_desc"
         android:layout_width="0dp"

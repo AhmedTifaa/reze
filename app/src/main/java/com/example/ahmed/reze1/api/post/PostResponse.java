@@ -3,11 +3,13 @@ package com.example.ahmed.reze1.api.post;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Mona Abdallh on 4/11/2018.
  */
 
-public class PostResponse {
+public class PostResponse implements Serializable {
 
     @SerializedName("post_id")
     @Expose
@@ -32,6 +34,30 @@ public class PostResponse {
     @SerializedName("likes")
     @Expose
     private int[] likes;
+
+    @SerializedName("username")
+    @Expose
+    private String username;
+
+    @SerializedName("user_id")
+    @Expose
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int[] getLikes() {
         return likes;

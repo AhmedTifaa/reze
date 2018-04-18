@@ -27,10 +27,33 @@ public class CommentResponse implements Serializable{
     @Expose
     private CommentReplyResponse[] replies;
 
+    @SerializedName("commenterName")
+    @Expose
+    private String commenterName;
+
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
 
+    @SerializedName("likes")
+    @Expose
+    private int[] likes;
+
+    public int[] getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int[] likes) {
+        this.likes = likes;
+    }
+
+    public String getCommenterName() {
+        return commenterName;
+    }
+
+    public void setCommenterName(String commenterName) {
+        this.commenterName = commenterName;
+    }
 
     public int getCommentId() {
         return commentId;

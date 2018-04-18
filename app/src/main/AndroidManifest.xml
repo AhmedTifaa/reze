@@ -77,7 +77,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".ForgetPassword" />
-        <activity android:name=".CommentActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CommentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreatePostActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OtherProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ReplayActivity"  android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

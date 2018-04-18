@@ -16,8 +16,11 @@ public class ApiResponse {
     @SerializedName("posts")
     @Expose
     private PostResponse[] posts;
-    private PhotoResponse[] photos;
-    private AttachmentResponse[]videos;
+
+    @SerializedName("now")
+    @Expose
+    private long now;
+
     public int getNextCursor() {
         return nextCursor;
     }
@@ -34,16 +37,11 @@ public class ApiResponse {
         this.posts = posts;
     }
 
-    public PhotoResponse[] getPhotos() {
-        return photos;
-    }
-    public void setPhotos(PhotoResponse[] posts) {
-        this.photos = photos;
+    public long getNow() {
+        return now;
     }
 
-    public AttachmentResponse[] getVideos() {
-        return videos;
-    } public void setVideos(AttachmentResponse[] videos) {
-        this.videos = videos;
+    public void setNow(long now) {
+        this.now = now;
     }
 }
