@@ -19,7 +19,13 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+        <service android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -78,6 +84,6 @@
         </activity>
         <activity android:name=".ForgetPassword" />
         <activity android:name=".CommentActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ChatActivity"></activity>
     </application>
-
 </manifest>
