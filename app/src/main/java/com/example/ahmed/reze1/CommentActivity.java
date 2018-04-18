@@ -87,6 +87,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
 
         comments = (ArrayList<CommentResponse>) getIntent().getExtras().getSerializable(COMMENTS_EXTRA);
+
         likes = getIntent().getExtras().getIntArray(LIKES_EXTRA);
 
         if (likes != null && likes.length > 0){
