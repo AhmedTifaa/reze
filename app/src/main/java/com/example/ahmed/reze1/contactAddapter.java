@@ -124,8 +124,6 @@ public class contactAddapter extends ArrayAdapter<String> {
                             parameters.put("from",userId);
                             parameters.put("to",entireBtn.getId()+"");
 
-
-
                             return parameters;
                         }
                     };

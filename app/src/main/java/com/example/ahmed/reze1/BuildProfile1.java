@@ -129,6 +129,7 @@ public class BuildProfile1 extends AppCompatActivity {
 //                //launchHomeScreen();
 //            }
 //        });
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

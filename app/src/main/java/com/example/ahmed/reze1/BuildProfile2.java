@@ -162,6 +162,7 @@ public class BuildProfile2 extends AppCompatActivity {
                                 intent.putExtra("id",user_id);
                                 startActivity(intent);
                                 finish();
+
                             }
                             else {
                                 Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
