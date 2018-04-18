@@ -13,6 +13,8 @@ public class SearchGroupsResponse {
     @Expose
     private int groupId;
 
+    //
+
     @SerializedName("group_name")
     @Expose
     private String group_name;
