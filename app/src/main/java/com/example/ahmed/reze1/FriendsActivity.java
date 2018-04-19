@@ -109,7 +109,7 @@ public class FriendsActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("volley response", "onResponse: " + response);
+                        Log.i("response", "onResponse: " + response);
                         users = new ArrayList<>();
                         try {
                             JSONArray jsonArray = new JSONArray(response);
@@ -119,10 +119,13 @@ public class FriendsActivity extends AppCompatActivity {
                                 userResponse.setName(object.getString("username"));
                                 userResponse.setId(object.getInt("id"));
                                 users.add(userResponse);
+                                friendsRecyclerView.setLayoutManager(new LinearLayoutManager(FriendsActivity.this));
+                                friendsRecyclerView.setAdapter(adapter);
                             }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
+
                         }
                     }
                 }, new Response.ErrorListener() {
