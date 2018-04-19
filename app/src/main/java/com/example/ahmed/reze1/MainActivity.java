@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     String q;
     int searchBoxWidth = 300;
     int currentTab = 0;
-
+    ImageView chatButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         mCustomView = mInflater.inflate(R.layout.action_bar, null);
         searchBox = mCustomView.findViewById(R.id.searchbox);
         searchIcon = mCustomView.findViewById(R.id.searchIcon);
+        chatButton = mCustomView.findViewById(R.id.imageButton);
 
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         mActionBar.setCustomView(mCustomView,layout);
@@ -76,6 +77,14 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
 
         inflateMainView(currentTab);
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FriendsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void active(View view){

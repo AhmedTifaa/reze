@@ -87,7 +87,7 @@
             android:name=".OtherProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ReplayActivity"  android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".FriendsActivity"/>
         <service
             android:name=".FirebaseMessagingService">
             <intent-filter>
