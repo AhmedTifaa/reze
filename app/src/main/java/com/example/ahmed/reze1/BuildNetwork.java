@@ -113,7 +113,7 @@ public class BuildNetwork extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildnetwork);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("user_id").toString();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         btnSkip = (Button) findViewById(R.id.btn_skip);

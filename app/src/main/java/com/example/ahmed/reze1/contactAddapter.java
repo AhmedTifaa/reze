@@ -127,10 +127,46 @@ public class contactAddapter extends ArrayAdapter<String> {
                     requestQueue.add(request);
                    }
                    else if(buttonC.getText().equals("Remove")){
-                       buttonC.setText("Add");
-                       buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_green));
+                     Toast.makeText(getContext(),"remove freind",Toast.LENGTH_LONG).show();
+                       StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/removefriend.php", new Response.Listener<String>() {
+                           @Override
+                           public void onResponse(String response) {
+                               Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+                               buttonC.setText("Add");
+                               buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_green));
+                               try {
+                                   JSONObject jsonObject;
+                                   jsonObject = new JSONObject(response);
 
-                       Toast.makeText(getContext(),"remove freind",Toast.LENGTH_LONG).show();
+                                   if(jsonObject.getString("msg").equals("removed")){
+
+                                   }
+                                   else {
+                                       //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                   }
+
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
+                               }
+
+                           }
+                       }, new Response.ErrorListener() {
+                           @Override
+                           public void onErrorResponse(VolleyError error) {
+
+                           }
+                       }) {
+
+                           @Override
+                           protected Map<String, String> getParams() throws AuthFailureError {
+                               Map<String,String> parameters  = new HashMap<String, String>();
+                               parameters.put("add","remoev");
+                               parameters.put("from",userId);
+
+                               return parameters;
+                           }
+                       };
+                       requestQueue.add(request);
                    }
                 }
             });

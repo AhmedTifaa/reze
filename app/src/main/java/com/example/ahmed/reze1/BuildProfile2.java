@@ -158,8 +158,8 @@ public class BuildProfile2 extends AppCompatActivity {
                             jsonObject = new JSONObject(response);
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("done")){
-                                Intent intent = new Intent(BuildProfile2.this,MainActivity.class);
-                                intent.putExtra("user_id",user_id);
+                                Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
+                                intent.putExtra("id",user_id);
                                 startActivity(intent);
                                 finish();
 
