@@ -16,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -45,6 +47,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.helper.PrefManager;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +62,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lal.adhish.gifprogressbar.GifView;
@@ -97,7 +105,6 @@ public class BuildNetwork extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
@@ -143,10 +150,10 @@ public class BuildNetwork extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new network().execute();
-//                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
-//                intent.putExtra("id",user_id);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
+                intent.putExtra("id",user_id);
+                startActivity(intent);
+                finish();
 
             }
         });
@@ -209,6 +216,103 @@ public class BuildNetwork extends AppCompatActivity {
 
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 200: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
+                    while (cursor.moveToNext()) {
+
+                        name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+
+                        phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        phonenumber = phonenumber.replaceAll("\\s+","");
+                        if (phonenumber.charAt(0) == '+'){
+                            phonenumber =   phonenumber.substring(2);
+                        }
+                        StoreContacts.add(phonenumber);
+                    }
+                    Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
+
+                    cursor.close();
+
+                    StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/contacts.php", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            progress.dismiss();
+                            //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                            if (response.equals("skip")){
+                                return;
+                            }
+                            try {
+                                JSONObject jsonObject;
+                                //jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = new JSONArray(response);
+                                jsonObject = new JSONObject(jsonArray.get(0).toString());
+                                //Toast.makeText(getBaseContext(),jsonObject.get("name").toString(),Toast.LENGTH_LONG).show();
+
+                                for (int i = 0;i<jsonArray.length();i++){
+                                    values.add(jsonArray.get(i).toString());
+                                }
+
+                                //Toast.makeText(getBaseContext(),values.toString(),Toast.LENGTH_LONG).show();
+                                contactAddapter contactAddapter = new contactAddapter(BuildNetwork.this,R.layout.item_friend,values);
+                                //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
+
+                                suggestlist.setAdapter(contactAddapter);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                //Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
+
+                            }
+                            //hideDialog();
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> parameters  = new HashMap<String, String>();
+                            for (int i = 0;i< StoreContacts.size();i++){
+                                parameters.put("contact"+i,StoreContacts.get(i));
+                            }
+                            parameters.put("id",user_id);
+
+
+                            return parameters;
+                        }
+                    };
+                    requestQueue.add(request);
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    finish();
+                    System.exit(0);
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
 
     /**
      * View pager adapter
@@ -226,7 +330,6 @@ public class BuildNetwork extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             suggestlist = (ListView) view.findViewById(R.id.contacts_list);
             values = new ArrayList<>();
-
             progress = new ProgressDialog(BuildNetwork.this);
             progress.setTitle("Loading");
             progress.setMessage("Wait while loading...");
@@ -234,104 +337,111 @@ public class BuildNetwork extends AppCompatActivity {
             progress.show();
 
             StoreContacts = new ArrayList<String>();
-            cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
-            while (cursor.moveToNext()) {
+            if (ContextCompat.checkSelfPermission(BuildNetwork.this,
+                    android.Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED) {
 
-                name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                // Permission is not granted
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(BuildNetwork.this,
+                        android.Manifest.permission.READ_CONTACTS)) {
 
-                phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                phonenumber = phonenumber.replaceAll("\\s+","");
-                if (phonenumber.charAt(0) == '+'){
-                    phonenumber =   phonenumber.substring(2);
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+                    Toast.makeText(getBaseContext(),"try again",Toast.LENGTH_LONG).show();
+                    ActivityCompat.requestPermissions(BuildNetwork.this,
+                            new String[]{android.Manifest.permission.READ_CONTACTS},
+                            200);
+                    Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    // No explanation needed; request the permission
+                    ActivityCompat.requestPermissions(BuildNetwork.this,
+                            new String[]{android.Manifest.permission.READ_CONTACTS},
+                            200);
+                    Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
                 }
-                StoreContacts.add(phonenumber);
+            } else {
+                // Permission has already been granted
+                cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
+                while (cursor.moveToNext()) {
+
+                    name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+
+                    phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    phonenumber = phonenumber.replaceAll("\\s+","");
+                    if (phonenumber.charAt(0) == '+'){
+                        phonenumber =   phonenumber.substring(2);
+                    }
+                    StoreContacts.add(phonenumber);
+                }
+                //Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
+
+                cursor.close();
+
+                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/contacts.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progress.dismiss();
+                        //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
+
+                        //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                        if (response.equals("skip")){
+                            return;
+                        }
+                        try {
+                            JSONObject jsonObject;
+                            //jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = new JSONArray(response);
+                            jsonObject = new JSONObject(jsonArray.get(0).toString());
+                            //Toast.makeText(getBaseContext(),jsonObject.get("name").toString(),Toast.LENGTH_LONG).show();
+
+                            for (int i = 0;i<jsonArray.length();i++){
+                                values.add(jsonArray.get(i).toString());
+                            }
+
+                            //Toast.makeText(getBaseContext(),values.toString(),Toast.LENGTH_LONG).show();
+                            contactAddapter contactAddapter = new contactAddapter(BuildNetwork.this,R.layout.item_friend,values);
+                            //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
+
+                            suggestlist.setAdapter(contactAddapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            //Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
+
+                        }
+                        //hideDialog();
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> parameters  = new HashMap<String, String>();
+                        for (int i = 0;i< StoreContacts.size();i++){
+                            parameters.put("contact"+i,StoreContacts.get(i));
+                        }
+                        parameters.put("id",user_id);
+
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
             }
-            Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
 
-            cursor.close();
-
-            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/contacts.php", new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    progress.dismiss();
-                    //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-
-                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-                    if (response.equals("skip")){
-                        return;
-                    }
-                    try {
-                        JSONObject jsonObject;
-                        //jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray(response);
-                        jsonObject = new JSONObject(jsonArray.get(0).toString());
-                        //Toast.makeText(getBaseContext(),jsonObject.get("name").toString(),Toast.LENGTH_LONG).show();
-
-                        for (int i = 0;i<jsonArray.length();i++){
-                            values.add(jsonArray.get(i).toString());
-                        }
-
-                        //Toast.makeText(getBaseContext(),values.toString(),Toast.LENGTH_LONG).show();
-                        contactAddapter contactAddapter = new contactAddapter(BuildNetwork.this,R.layout.item_friend,values);
-                        //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(BuildNetwork.this,R.layout.item_friend,values);
-
-                        suggestlist.setAdapter(contactAddapter);
-//                        suggestlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view,
-//                                                    int position, long id) {
-//                              final TextView ss = (TextView)view.findViewById(R.id.id);
-//                              ss.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                   Toast.makeText(BuildNetwork.this,ss.getText() , Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//
-//
-//                            }
-//                        });
-                        //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
-
-                       /* if(jsonObject.getString("msg").equals("done")){
-//                                Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
-//                                intent.putExtra("user_id",user_id);
-//                                startActivity(intent);
-//                                finish();
-                        }
-                        else {
-                            //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                        }*/
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        //Toast.makeText(getBaseContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                    //hideDialog();
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> parameters  = new HashMap<String, String>();
-                    for (int i = 0;i< StoreContacts.size();i++){
-                        parameters.put("contact"+i,StoreContacts.get(i));
-                    }
-                    parameters.put("id",user_id);
-
-
-                    return parameters;
-                }
-            };
-            requestQueue.add(request);
             //new getFriendsContact().execute();
             container.addView(view);
             return view;

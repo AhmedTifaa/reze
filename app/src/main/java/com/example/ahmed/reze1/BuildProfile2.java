@@ -1,5 +1,6 @@
 package com.example.ahmed.reze1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -88,6 +89,8 @@ public class BuildProfile2 extends AppCompatActivity {
    public DiscreteSeekBar discreteSeekBar10;
    public DiscreteSeekBar discreteSeekBar11;
    public DiscreteSeekBar discreteSeekBar12;
+
+    public ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -116,6 +119,10 @@ public class BuildProfile2 extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         //btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
+        progress = new ProgressDialog(BuildProfile2.this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         //btnSkip.setVisibility(View.GONE);
 
 
@@ -146,6 +153,7 @@ public class BuildProfile2 extends AppCompatActivity {
             public void onClick(View v) {
 //                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
 //                finish();
+                progress.show();
                 StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/us.php", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -153,6 +161,7 @@ public class BuildProfile2 extends AppCompatActivity {
                         Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                         //hideDialog();
+                        progress.dismiss();
                         try {
                             JSONObject jsonObject;
                             jsonObject = new JSONObject(response);

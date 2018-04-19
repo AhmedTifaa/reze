@@ -1,5 +1,6 @@
 package com.example.ahmed.reze1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -85,6 +86,7 @@ public class BuildProfile1 extends AppCompatActivity {
     int minWeight = 20;
     int inputWeight = 0;
     public String user_id;
+    public ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,10 @@ public class BuildProfile1 extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnNext = (Button) findViewById(R.id.btn_next);
+        progress = new ProgressDialog(BuildProfile1.this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         layouts = new int[]{
                 R.layout.build_profile2,
                 /*R.layout.build_profile2,
@@ -136,6 +142,7 @@ public class BuildProfile1 extends AppCompatActivity {
                 if(!validate()){
 
                 }else{
+                    progress.show();
 //                    startActivity(new Intent(BuildProfile1.this,BuildProfile2.class));
 //                    finish();
                     StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/bp1.php", new Response.Listener<String>() {
@@ -145,6 +152,7 @@ public class BuildProfile1 extends AppCompatActivity {
                             //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                             //hideDialog();
+                            progress.dismiss();
                             try {
                                 JSONObject jsonObject;
                                 jsonObject = new JSONObject(response);

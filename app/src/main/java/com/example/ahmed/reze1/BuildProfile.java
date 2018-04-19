@@ -1,5 +1,6 @@
 package com.example.ahmed.reze1;
 
+        import android.app.ProgressDialog;
         import android.content.Context;
         import android.content.Intent;
         import android.graphics.Bitmap;
@@ -66,6 +67,7 @@ public class BuildProfile extends AppCompatActivity {
     public Spinner spinnerCarrer;
     public Spinner spinnerCity;
     public static final int PICK_IMAGE = 1;
+    public ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,10 @@ public class BuildProfile extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         //btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
+        progress = new ProgressDialog(BuildProfile.this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         //btnSkip.setVisibility(View.GONE);
 
 
@@ -136,6 +142,7 @@ public class BuildProfile extends AppCompatActivity {
 
                 }
                 else{
+                    progress.show();
                     radioButtonptl = (RadioButton)findViewById(radioGroupptl.getCheckedRadioButtonId());
                     radioButtonr = (RadioButton)findViewById(radioGroupr.getCheckedRadioButtonId());
                     Bitmap per_img = ((BitmapDrawable) user_img.getDrawable()).getBitmap();
@@ -145,7 +152,7 @@ public class BuildProfile extends AppCompatActivity {
                         public void onResponse(String response) {
                             //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
                             Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-
+                            progress.dismiss();
                             //hideDialog();
                             try {
                                 JSONObject jsonObject;

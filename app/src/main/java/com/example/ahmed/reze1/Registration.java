@@ -52,6 +52,7 @@ public class Registration extends AppCompatActivity {
     private Calendar myCalendar;
     RequestQueue requestQueue;
     public static String URL_REGISTER = "https://rezetopia.com/app/register.php";
+    public ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,10 @@ public class Registration extends AppCompatActivity {
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
+        progress = new ProgressDialog(Registration.this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -117,6 +122,7 @@ public class Registration extends AppCompatActivity {
 
 
                 } else {
+                    progress.show();
                     StringRequest request = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -124,6 +130,7 @@ public class Registration extends AppCompatActivity {
                             //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                             //hideDialog();
+                            progress.dismiss();
                             try {
                                 JSONObject jsonObject;
                                 jsonObject = new JSONObject(response);
