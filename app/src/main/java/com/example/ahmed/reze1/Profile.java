@@ -2,7 +2,11 @@ package com.example.ahmed.reze1;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -10,12 +14,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +34,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ahmed.reze1.app.AppConfig;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
@@ -65,12 +76,16 @@ public class Profile extends Fragment {
     private TextView playerMatchesTv;
     private TextView playerPointsTv;
     private TextView playerLevelsTv;
-    RequestQueue requestQueue;
+    private ImageView playerImg;
+    public RequestQueue requestQueue;
+    public String userId;
+    private RelativeLayout probar;
 
     private OnFragmentInteractionListener mListener;
 
     public Profile() {
         // Required empty public constructor
+
     }
 
     /**
@@ -94,10 +109,24 @@ public class Profile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestQueue = Volley.newRequestQueue(getContext());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+
+        }
+       // Toast.makeText(getContext(),"first",Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+
+        //Save the fragment's state here
     }
 
     @Override
@@ -107,6 +136,8 @@ public class Profile extends Fragment {
          viewPager = (ViewPager)v.findViewById(R.id.pager);
 
         View profile_menu = v.findViewById(R.id.profile_menu);
+        userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         profile_menu.setOnClickListener(new optionProfile(getContext()));
         //getUser(userId);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -116,7 +147,12 @@ public class Profile extends Fragment {
         playerMatchesTv=(TextView)v.findViewById(R.id.matchesNumbersTv);
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
+        playerImg= (ImageView)v.findViewById(R.id.imageView2);
+        probar = (RelativeLayout)v.findViewById(R.id.loadingPanel) ;
+        getUser(userId,requestQueue);
         optionProfile.ViewPagerAdapter adapter = new optionProfile.ViewPagerAdapter(getChildFragmentManager() );
+        //Toast.makeText(getContext(),userId,Toast.LENGTH_LONG).show();
+
         return v;
         // Inflate the layout for this fragment
     }
@@ -159,6 +195,84 @@ public class Profile extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    private void getUser(final String id,RequestQueue requestQueue) {
+        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(response);
+                    //Toast.makeText(getApplicationContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    if(jsonObject.getString("msg").equals("succ")){
+
+                        playerCityTv.setText(jsonObject.getString("city"));
+                        playerPositionTv.setText(jsonObject.getString("position"));
+                        playerNameTv.setText(jsonObject.getString("name"));
+                        playerMatchesTv.setText("0");
+                        playerLevelsTv.setText("0");
+                        playerPointsTv.setText("0");
+                        Picasso.with(getApplicationContext())
+                                .load("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG")
+                                .placeholder(R.drawable.circle).into(playerImg);
+                        probar.setVisibility(View.GONE);
+                       // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                    }
+                    else {
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parameters  = new HashMap<String, String>();
+
+                parameters.put("id",id);
+                parameters.put("getInfo","");
+
+
+                return parameters;
+            }
+        };
+        requestQueue.add(request);
+
+    }
+}
+class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+    ImageView bmImage;
+
+    public DownloadImage(ImageView bmImage){
+        this.bmImage = bmImage;
+    }
+
+    protected Bitmap doInBackground(String... urls){
+        String urldisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try{
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
+    protected void onPostExecute(Bitmap result){
+        bmImage.setImageBitmap(result);
+    }
+
 }
 class optionProfile implements View.OnClickListener {
     private Profile profile;
@@ -214,63 +328,6 @@ class optionProfile implements View.OnClickListener {
 
         popupMenu.show();
     }
-    private void getUser(long userId) {
-        // Load product info
-        //String url = String.format(EndPoints.PRODUCTS_SINGLE_RELATED, SettingsMy.getActualNonNullShop(getActivity()).getId(), productId);
-        //setContentVisible(CONST.VISIBLE.PROGRESS);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "", new JSONObject(), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                System.out.println(response.toString());
-                try {
-                    JSONArray students = response.getJSONArray("students");
-                   // for (int i = 0; i < students.length(); i++) {
-                        JSONObject student = students.getJSONObject(Integer.parseInt("users"));
-
-                        String userName = student.getString("userName");
-                        String userCity = student.getString("userCity");
-                        String userPosition = student.getString("userPosition");
-                        String userMatches = student.getString("userMatches");
-                        String userPoints = student.getString("userPoints");
-                        String userLevel = student.getString("userLevel");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                       // result.append(firstname + " " + lastname + " " + age + " \n");
-                   // }
-                    //result.append("===\n");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.append(error.getMessage());
-
-            }
-        });
-        //requestQueue.add(jsonObjectRequest);
-
-    }
     public static class ViewPagerAdapter extends android.support.v4.view.PagerAdapter {
         private LayoutInflater layoutInflater;
 
@@ -302,7 +359,7 @@ class optionProfile implements View.OnClickListener {
                 public void onResponse(String response) {
                     //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
 
                     try {
                         JSONObject jsonObject;
@@ -332,7 +389,7 @@ class optionProfile implements View.OnClickListener {
                         Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
 
                     }
-                    //hideDialog();
+
 
                 }
             }, new Response.ErrorListener() {
