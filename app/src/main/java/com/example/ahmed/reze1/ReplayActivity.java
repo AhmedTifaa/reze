@@ -183,7 +183,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
         if (replayEditText.getText().toString().length() > 0){
             final String replayText = replayEditText.getText().toString();
             replayEditText.setText(null);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

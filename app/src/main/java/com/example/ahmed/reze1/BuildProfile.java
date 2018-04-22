@@ -136,7 +136,7 @@ public class BuildProfile extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(),phone.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonptl.getText(),Toast.LENGTH_LONG).show();
                // Toast.makeText(getBaseContext(),radioButtonr.getText(),Toast.LENGTH_LONG).show();
-               Toast.makeText(getBaseContext(),validate()+"",Toast.LENGTH_LONG).show();
+              // Toast.makeText(getBaseContext(),validate()+"",Toast.LENGTH_LONG).show();
                 if(!validate()){
 
 
@@ -165,7 +165,7 @@ public class BuildProfile extends AppCompatActivity {
                                     finish();
                                 }
                                 else {
-                                    Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                   // Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
                                 }
 
                             } catch (JSONException e) {
@@ -323,7 +323,7 @@ public class BuildProfile extends AppCompatActivity {
                 spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(getBaseContext(),spinnerCity.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),spinnerCity.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -347,7 +347,7 @@ public class BuildProfile extends AppCompatActivity {
                 spinnerCarrer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(getBaseContext(),spinnerCarrer.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),spinnerCarrer.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -416,7 +416,7 @@ public class BuildProfile extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                     //hideDialog();
                     try {
@@ -425,14 +425,14 @@ public class BuildProfile extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
 
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {
@@ -469,7 +469,7 @@ public class BuildProfile extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void aVoid) {
-            Toast.makeText(getBaseContext(),"image sent",Toast.LENGTH_LONG).show();
+           // Toast.makeText(getBaseContext(),"image sent",Toast.LENGTH_LONG).show();
         }
     }
 //    private HttpParams httpRequest(){

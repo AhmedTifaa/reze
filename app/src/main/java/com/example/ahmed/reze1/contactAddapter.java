@@ -88,7 +88,7 @@ public class contactAddapter extends ArrayAdapter<String> {
                     StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
                             buttonC.setText("Remove");
                             buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_dark));
                             try {
@@ -127,11 +127,11 @@ public class contactAddapter extends ArrayAdapter<String> {
                     requestQueue.add(request);
                    }
                    else if(buttonC.getText().equals("Remove")){
-                     Toast.makeText(getContext(),"remove freind",Toast.LENGTH_LONG).show();
+                   //  Toast.makeText(getContext(),"remove freind",Toast.LENGTH_LONG).show();
                        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/removefriend.php", new Response.Listener<String>() {
                            @Override
                            public void onResponse(String response) {
-                               Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+                             //  Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
                                buttonC.setText("Add");
                                buttonC.setBackground(context.getResources().getDrawable(R.drawable.roundone_green));
                                try {

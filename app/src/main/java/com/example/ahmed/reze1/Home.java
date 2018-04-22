@@ -298,7 +298,7 @@ public class Home extends Fragment {
 
         private void performLike(final PostResponse postResponse, final int pos){
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

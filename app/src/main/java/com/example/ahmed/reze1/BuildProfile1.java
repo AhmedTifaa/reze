@@ -164,7 +164,7 @@ public class BuildProfile1 extends AppCompatActivity {
                                     finish();
                                 }
                                 else {
-                                    Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
                                 }
 
                             } catch (JSONException e) {
@@ -493,7 +493,7 @@ public class BuildProfile1 extends AppCompatActivity {
             spinnerPosition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(getBaseContext(),spinnerPosition.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),spinnerPosition.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -504,7 +504,7 @@ public class BuildProfile1 extends AppCompatActivity {
             spinnerFoot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(getBaseContext(),spinnerFoot.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),spinnerFoot.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -515,7 +515,7 @@ public class BuildProfile1 extends AppCompatActivity {
             spinnerNag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(getBaseContext(),spinnerNag.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),spinnerNag.getSelectedItemPosition()+"",Toast.LENGTH_LONG).show();
                 }
 
                 @Override

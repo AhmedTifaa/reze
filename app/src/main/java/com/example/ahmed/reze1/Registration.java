@@ -134,9 +134,9 @@ public class Registration extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject;
                                 jsonObject = new JSONObject(response);
-                                Toast.makeText(getBaseContext(), jsonObject.getString("msg"), Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getBaseContext(), jsonObject.getString("msg"), Toast.LENGTH_LONG).show();
                                 if (jsonObject.getString("msg").equals("done")) {
-                                    Toast.makeText(getApplicationContext(), jsonObject.getString("id"), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), jsonObject.getString("id"), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                     intent.putExtra("fbname", inputFullName.getText().toString());
                                     intent.putExtra("fbpicurl", "null");
@@ -144,9 +144,9 @@ public class Registration extends AppCompatActivity {
                                     startActivityForResult(intent, 0);
                                     finish();
                                 } else if (jsonObject.getString("msg").equals("This mail is already exsist you can log in")) {
-                                    Toast.makeText(getBaseContext(), R.string.exsistEmail, Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getBaseContext(), R.string.exsistEmail, Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
                                 }
 
                             } catch (JSONException e) {

@@ -239,7 +239,7 @@ public class BuildNetwork extends AppCompatActivity {
                         }
                         StoreContacts.add(phonenumber);
                     }
-                    Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),StoreContacts.toString(),Toast.LENGTH_LONG).show();
 
                     cursor.close();
 
@@ -249,7 +249,7 @@ public class BuildNetwork extends AppCompatActivity {
                             progress.dismiss();
                             //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
 
-                            Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
                             if (response.equals("skip")){
                                 return;
                             }
@@ -349,11 +349,11 @@ public class BuildNetwork extends AppCompatActivity {
                     // Show an explanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
                     // sees the explanation, try again to request the permission.
-                    Toast.makeText(getBaseContext(),"try again",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),"try again",Toast.LENGTH_LONG).show();
                     ActivityCompat.requestPermissions(BuildNetwork.this,
                             new String[]{android.Manifest.permission.READ_CONTACTS},
                             200);
-                    Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -361,7 +361,7 @@ public class BuildNetwork extends AppCompatActivity {
                     ActivityCompat.requestPermissions(BuildNetwork.this,
                             new String[]{android.Manifest.permission.READ_CONTACTS},
                             200);
-                    Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getBaseContext(),"hay here",Toast.LENGTH_LONG).show();
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
@@ -468,7 +468,7 @@ public class BuildNetwork extends AppCompatActivity {
             StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/networkstate.php", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                     //hideDialog();
                     try {
@@ -477,14 +477,14 @@ public class BuildNetwork extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),e.toString(),Toast.LENGTH_LONG).show();
 
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {

@@ -200,7 +200,7 @@ public class UserPostsFragment extends Fragment {
     }
 
     private void fetchPosts(){
-        VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php", ApiResponse.class,
+        VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php", ApiResponse.class,
                 new Response.Listener<ApiResponse>() {
                     @Override
                     public void onResponse(ApiResponse response) {
