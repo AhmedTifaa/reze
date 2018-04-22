@@ -9,5 +9,6 @@ public class PremiumProfileAccountFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.premium_profile_account_fragment);
+
     }
 }
