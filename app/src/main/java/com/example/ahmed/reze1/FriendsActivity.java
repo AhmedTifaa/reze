@@ -115,7 +115,7 @@ public class FriendsActivity extends AppCompatActivity {
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 UserResponse userResponse = new UserResponse();
-                                JSONObject object = new JSONObject((Map) jsonArray.getJSONObject(i));
+                                JSONObject object = jsonArray.getJSONObject(i);
                                 userResponse.setName(object.getString("username"));
                                 userResponse.setId(object.getInt("id"));
                                 users.add(userResponse);

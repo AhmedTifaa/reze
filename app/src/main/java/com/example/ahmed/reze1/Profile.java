@@ -1,26 +1,22 @@
 package com.example.ahmed.reze1;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +27,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.app.AppConfig;
@@ -42,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +60,9 @@ public class Profile extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ViewPager viewPager;
+    ViewPager viewPager2;
+    TabLayout tabLayout;
+    private ProfilePagerAdapter adapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -76,6 +73,10 @@ public class Profile extends Fragment {
     private TextView playerMatchesTv;
     private TextView playerPointsTv;
     private TextView playerLevelsTv;
+    private TextView overview;
+    private TextView posts;
+    private TextView videos;
+    private TextView photos;
     private ImageView playerImg;
     public RequestQueue requestQueue;
     public String userId;
@@ -148,14 +149,101 @@ public class Profile extends Fragment {
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
         playerImg= (ImageView)v.findViewById(R.id.imageView2);
-        probar = (RelativeLayout)v.findViewById(R.id.loadingPanel) ;
+//        overview=(TextView)v.findViewById(R.id.overview_tab);
+//        posts=(TextView)v.findViewById(R.id.posts_tab);
+//        videos=(TextView)v.findViewById(R.id.videos_tab);
+//        photos=(TextView)v.findViewById(R.id.photos_tab);
+//        overview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // do something when the corky2 is clicked
+//                viewPager2.setCurrentItem(0);
+//
+//            }
+//        });
+//        posts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // do something when the corky2 is clicked
+//                viewPager2.setCurrentItem(1);
+//            }
+//        });
+//        videos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // do something when the corky2 is clicked
+//                viewPager2.setCurrentItem(2);
+//            }
+//        });
+//        photos.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // do something when the corky2 is clicked
+//                viewPager2.setCurrentItem(3);
+//            }
+//        });
+        //probar = (RelativeLayout)v.findViewById(R.id.loadingPanel) ;
         getUser(userId,requestQueue);
-        optionProfile.ViewPagerAdapter adapter = new optionProfile.ViewPagerAdapter(getChildFragmentManager() );
+        getIDs(v);
+        setEvents();
+        addPage("overview");
+        addPage("posts");
+        addPage("videos");
+        addPage("photos");
+        viewPager2.setCurrentItem(0);
+        //tabLayout.setTabTextColors(getResources().getColor(R.color.tabs),getResources().getColor(R.color.tabs));
         //Toast.makeText(getContext(),userId,Toast.LENGTH_LONG).show();
 
         return v;
         // Inflate the layout for this fragment
     }
+    private void getIDs(View view) {
+        viewPager2 = (ViewPager) view.findViewById(R.id.profile_perview);
+        tabLayout = (TabLayout) view.findViewById(R.id.profile_tablayout);
+        adapter = new ProfilePagerAdapter(getFragmentManager(), getActivity(), viewPager2, tabLayout);
+        viewPager2.setAdapter(adapter);
+    }
+
+    int selectedTabPosition;
+
+    private void setEvents() {
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager2) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                viewPager2.setCurrentItem(tab.getPosition());
+                selectedTabPosition = viewPager2.getCurrentItem();
+                Log.d("Selected", "Selected " + tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                super.onTabUnselected(tab);
+                Log.d("Unselected", "Unselected " + tab.getPosition());
+            }
+        });
+    }
+
+    public void addPage(String pagename) {
+        Bundle bundle = new Bundle();
+        bundle.putString("data", pagename);
+        OverviewProfile inner = new OverviewProfile();
+        inner.setArguments(bundle);
+        adapter.addFrag(inner, pagename);
+        adapter.notifyDataSetChanged();
+        if (adapter.getCount() > 0) tabLayout.setupWithViewPager(viewPager2);
+
+        viewPager2.setCurrentItem(adapter.getCount() - 1);
+       // setupTabLayout();
+    }
+
+//    public void setupTabLayout() {
+//        selectedTabPosition = viewPager2.getCurrentItem();
+//        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+//            tabLayout.getTabAt(i).setCustomView(adapter.getTabView(i));
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -216,7 +304,7 @@ public class Profile extends Fragment {
                         Picasso.with(getApplicationContext())
                                 .load("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG")
                                 .placeholder(R.drawable.circle).into(playerImg);
-                        probar.setVisibility(View.GONE);
+                       // probar.setVisibility(View.GONE);
                        // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                     }
                     else {
@@ -287,36 +375,20 @@ class optionProfile implements View.OnClickListener {
     public void onClick(View v) {
         // This is an android.support.v7.widget.PopupMenu;
         PopupMenu popupMenu = new PopupMenu(mContext, v) {
-//            public boolean onMenuItemSelected(MenuItem item) {
-//                switch (item.getItemId()) {
-////                    case R.id.album_overflow_delete:
-////                        deleteAlbum(mAlbum);
-////                        return true;
-////
-////                    case R.id.album_overflow_rename:
-////                        renameAlbum(mAlbum);
-////                        return true;
-////
-////                    case R.id.album_overflow_lock:
-////                        lockAlbum(mAlbum);
-////                        return true;
-////
-////                    case R.id.album_overflow_unlock:
-////                        unlockAlbum(mAlbum);
-////                        return true;
-////
-////                    case R.id.album_overflow_set_cover:
-////                        setAlbumCover(mAlbum);
-////                        return true;
-//
-//                    default:
-//                        //return true;
-//                        return super.onMenuItemSelected(item);
-//                }
-//            }
+                        public boolean onMenuItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_item_network:
+                        Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_LONG).show();
+                        return true;
+                    default:
+                        return true;
+                        //return super.onMenuItemSelected(item);
+                }
+            }
         };
 
         popupMenu.inflate(R.menu.profile_menu);
+
 
 //        if (mAlbum.isLocked()) {
 //            popupMenu.getMenu().removeItem(R.id.album_overflow_lock);
@@ -407,5 +479,6 @@ class optionProfile implements View.OnClickListener {
 
 
     }
+
 
 

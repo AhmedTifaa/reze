@@ -4,24 +4,24 @@
 
 
         <item
-            android:id="@+id/album_overflow_rename"
-            android:title="1" />
+            android:id="@+id/menu_item_network"
+            android:title="Network" />
 
-        <item
-            android:id="@+id/album_overflow_lock"
-            android:title="2" />
+        <!--<item-->
+            <!--android:id="@+id/album_overflow_lock"-->
+            <!--android:title="2" />-->
 
-        <item
-            android:id="@+id/album_overflow_unlock"
-            android:title="3" />
+        <!--<item-->
+            <!--android:id="@+id/album_overflow_unlock"-->
+            <!--android:title="3" />-->
 
-        <item
-            android:id="@+id/album_overflow_delete"
-            android:title="4" />
+        <!--<item-->
+            <!--android:id="@+id/album_overflow_delete"-->
+            <!--android:title="4" />-->
 
-        <item
-            android:id="@+id/album_overflow_set_cover"
-            android:title="5" />
+        <!--<item-->
+            <!--android:id="@+id/album_overflow_set_cover"-->
+            <!--android:title="5" />-->
 
 
 </menu>
