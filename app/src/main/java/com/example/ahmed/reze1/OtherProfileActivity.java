@@ -159,6 +159,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra(USER_ID_EXTRA);
         username = getIntent().getStringExtra(USERNAME_EXTRA);
         requestQueue = Volley.newRequestQueue(this);
+        searchBox.setFocusable(false);
         fetchPosts();
     }
 
@@ -242,7 +243,8 @@ public class OtherProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, OtherProfileActivity.this);
+                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now,
+                            Integer.parseInt(post.getUserId()), OtherProfileActivity.this);
                     adapterPos = pos;
                     startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
 

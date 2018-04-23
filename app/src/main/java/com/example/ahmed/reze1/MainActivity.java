@@ -443,5 +443,10 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
         Volley.newRequestQueue(this).add(customRequest);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
 

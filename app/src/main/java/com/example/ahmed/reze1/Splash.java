@@ -42,8 +42,8 @@ public class Splash extends AppCompatActivity {
                                       public void run() {
                                          Intent myIntent = new Intent(getApplicationContext(), Login.class);
                                          //myIntent.putExtra("user_id",3101);
-                                          startActivity(myIntent);
-                                          finish();
+                                         startActivity(myIntent);
+                                         finish();
 
                                       }
                                   }

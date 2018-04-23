@@ -11,5 +11,7 @@ public class AppConfig {
 
 	public static final String LOGGED_IN_USER_ID_SHARED = "reze_logged_in_user";
 
+	public static final String DEVICE_TOKEN_SHARED = "device_token_shared";
+
 }
 

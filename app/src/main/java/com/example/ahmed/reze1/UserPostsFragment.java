@@ -165,7 +165,8 @@ public class UserPostsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, getActivity());
+                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now,
+                            Integer.parseInt(post.getUserId()), getActivity());
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
                 }

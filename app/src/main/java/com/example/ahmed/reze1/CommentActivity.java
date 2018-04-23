@@ -45,6 +45,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private static final String POST_ID_EXTRA = "comment_activity.post_id_extra";
     private static final String TIME_NOW_EXTRA = "comment_activity.time_now_extra";
     private static final String LIKES_EXTRA = "comment_activity.likes_extra";
+    private static final String POST_OWNER_EXTRA = "comment_activity.post_owner_extra";
 
     ImageView backView;
     ArrayList<CommentResponse> comments;
@@ -58,14 +59,16 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     CommentResponse commentResponse;
     long now;
     String userId;
+    int ownerId;
 
-    public static Intent createIntent(ArrayList<CommentResponse> commentItems, int[] likeItems, int postId, long now, Context context){
+    public static Intent createIntent(ArrayList<CommentResponse> commentItems, int[] likeItems, int postId, long now, int postOwnerId, Context context){
         Intent intent = new Intent(context, CommentActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(COMMENTS_EXTRA, commentItems);
         bundle.putIntArray(LIKES_EXTRA, likeItems);
         bundle.putInt(POST_ID_EXTRA, postId);
         bundle.putLong(TIME_NOW_EXTRA, now);
+        bundle.putInt(POST_OWNER_EXTRA, postOwnerId);
         intent.putExtras(bundle);
         return intent;
     }
@@ -84,6 +87,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
 
         comments = (ArrayList<CommentResponse>) getIntent().getExtras().getSerializable(COMMENTS_EXTRA);
+        ownerId = getIntent().getExtras().getInt(POST_OWNER_EXTRA, 0);
 
         likes = getIntent().getExtras().getIntArray(LIKES_EXTRA);
 
@@ -253,6 +257,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                     map.put("method", "add_comment");
                     map.put("post_id", String.valueOf(postId));
                     map.put("comment", commentText);
+                    map.put("owner_id",  String.valueOf(ownerId));
                     map.put("userId", userId);
 
                     return map;

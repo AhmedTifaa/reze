@@ -3,11 +3,8 @@ package com.example.ahmed.reze1;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.example.ahmed.reze1.GUI.CustomButton;
@@ -42,11 +38,6 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 public class Login extends AppCompatActivity {
     CustomButton btnSignUp;
@@ -62,7 +53,6 @@ public class Login extends AppCompatActivity {
     private ProgressDialog pDialog;
     private Profile profile;
     private Object fbobject;
-    public ProgressDialog progress;
 
     private static final int REQUEST_SIGNUP = 0;
 
@@ -78,26 +68,8 @@ public class Login extends AppCompatActivity {
         fblogin.setReadPermissions("user_friends");
         fblogin.setReadPermissions("user_birthday");
 
-//        Dexter.withActivity(Login.this)
-//                .withPermissions(
-//                        android.Manifest.permission.READ_CONTACTS,
-//                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                        android.Manifest.permission.READ_EXTERNAL_STORAGE)
-//                .withListener(new MultiplePermissionsListener() {
-//            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                Toast.makeText(getBaseContext(),"apply",Toast.LENGTH_LONG).show();
-//            }
-//            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//
-//            }
-//        }).check();
-
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        progress = new ProgressDialog(Login.this);
-        progress.setTitle("Loading");
-        progress.setMessage("Wait while loading...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
         // If using in a fragment
         /*fblogin.setFragment(this);*/
         // Callback registration*/
@@ -216,7 +188,7 @@ public class Login extends AppCompatActivity {
 
 
                 } else {
-                    progress.show();
+
                     request = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -224,12 +196,10 @@ public class Login extends AppCompatActivity {
                                 JSONObject jsonObject;
                                 jsonObject = new JSONObject(response);
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                                progress.dismiss();
                                 if (jsonObject.getString("msg").equals("enter")) {
                                     SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
                                             editor.putString(AppConfig.LOGGED_IN_USER_ID_SHARED, jsonObject.getString("id")).apply();
                                     Toast.makeText(getApplicationContext(), jsonObject.getString("state"), Toast.LENGTH_SHORT).show();
-
                                     if(jsonObject.getString("state").equals("0")){
                                         Intent intent = new Intent(getApplicationContext(), BuildProfile.class);
                                         intent.putExtra("fbname", jsonObject.getString("name"));

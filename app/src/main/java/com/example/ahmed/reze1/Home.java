@@ -32,6 +32,7 @@ import com.example.ahmed.reze1.api.post.CommentResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,6 +128,7 @@ public class Home extends Fragment {
 
         userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
+
 
         requestQueue = Volley.newRequestQueue(getActivity());
         fetchPosts();
@@ -243,7 +245,9 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View v) {
                     ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, getActivity());
+                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, Integer.parseInt(post.getUserId()),
+                            getActivity());
+
                     adapterPos = pos;
                     startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
 
@@ -333,6 +337,7 @@ public class Home extends Fragment {
 
                     map.put("method", "post_like");
                     map.put("userId", userId);
+                    map.put("owner_id", postResponse.getUserId());
                     map.put("post_id", String.valueOf(postResponse.getPostId()));
                     map.put("add_like", String.valueOf(true));
 
@@ -396,6 +401,7 @@ public class Home extends Fragment {
 
                     map.put("method", "post_like");
                     map.put("userId", userId);
+                    map.put("owner_id", postResponse.getUserId());
                     map.put("post_id", String.valueOf(postResponse.getPostId()));
                     map.put("remove_like", String.valueOf(true));
 
