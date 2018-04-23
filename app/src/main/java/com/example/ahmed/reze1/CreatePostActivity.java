@@ -150,7 +150,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             PostResponse postResponse = new PostResponse();
-                            //todo add username
+                            //todo add
                             postResponse.setUsername(jsonObject.getString("username"));
                             postResponse.setCreatedAt(jsonObject.getString("createdAt"));
                             postResponse.setText(jsonObject.getString("text"));
