@@ -1,6 +1,7 @@
 package com.example.ahmed.reze1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -79,6 +80,7 @@ public class Profile extends Fragment {
     private TextView photos;
     private ImageView playerImg;
     public RequestQueue requestQueue;
+    public static PopupMenu popupMenu;
     public String userId;
     private RelativeLayout probar;
 
@@ -106,7 +108,6 @@ public class Profile extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +150,7 @@ public class Profile extends Fragment {
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
         playerImg= (ImageView)v.findViewById(R.id.imageView2);
+
 //        overview=(TextView)v.findViewById(R.id.overview_tab);
 //        posts=(TextView)v.findViewById(R.id.posts_tab);
 //        videos=(TextView)v.findViewById(R.id.videos_tab);
@@ -336,149 +338,48 @@ public class Profile extends Fragment {
         requestQueue.add(request);
 
     }
-}
-class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+    class optionProfile implements View.OnClickListener {
+        private Profile profile;
+        private Context mContext;
 
-    public DownloadImage(ImageView bmImage){
-        this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls){
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
-        try{
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        }catch (Exception e){
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return mIcon11;
-    }
-
-    protected void onPostExecute(Bitmap result){
-        bmImage.setImageBitmap(result);
-    }
-
-}
-class optionProfile implements View.OnClickListener {
-    private Profile profile;
-    private Context mContext;
-
-    public optionProfile(Context context) {
-        mContext = context;
-        profile = profile;
-    }
-
-    @Override
-    public void onClick(View v) {
-        // This is an android.support.v7.widget.PopupMenu;
-        PopupMenu popupMenu = new PopupMenu(mContext, v) {
-                        public boolean onMenuItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_item_network:
-                        Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_LONG).show();
-                        return true;
-                    default:
-                        return true;
-                        //return super.onMenuItemSelected(item);
-                }
-            }
-        };
-
-        popupMenu.inflate(R.menu.profile_menu);
-
-
-//        if (mAlbum.isLocked()) {
-//            popupMenu.getMenu().removeItem(R.id.album_overflow_lock);
-//            popupMenu.getMenu().removeItem(R.id.album_overflow_rename);
-//            popupMenu.getMenu().removeItem(R.id.album_overflow_delete);
-//        } else {
-//            popupMenu.getMenu().removeItem(R.id.album_overflow_unlock);
-//        }
-
-        popupMenu.show();
-    }
-    public static class ViewPagerAdapter extends android.support.v4.view.PagerAdapter {
-        private LayoutInflater layoutInflater;
-
-        public ViewPagerAdapter(FragmentManager childFragmentManager) {
+        public optionProfile(Context context) {
+            mContext = context;
+            profile = profile;
         }
 
         @Override
-        public int getCount() {
-            return 0;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-           // layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-         //   View view = layoutInflater.inflate(layouts[position], container, false);
-           // suggestlist = (ListView) view.findViewById(R.id.contacts_list);
-           // values = new ArrayList<buildFriend>();
-            return null;
-            }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return false;
-        }
-
-        StringRequest request = new StringRequest(Request.Method.POST, "http://localhost/reze/user_post.php", new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-
-                    //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-
-                    try {
-                        JSONObject jsonObject;
-                        //jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray(response);
-                        jsonArray.length();
-                        for (int i = 0;i<jsonArray.length();i++){
-                            jsonObject = new JSONObject(jsonArray.get(i).toString());
-                            //values.add(new buildFriend(jsonObject.getString("name"),jsonObject.getString("id")));
-                        }
-                    //    contactAddapter contactAddapter = new contactAddapter(Profile.this,R.layout.item_friend);
-                        //suggestlist.setAdapter(contactAddapter);
-                        //Toast.makeText(getBaseContext(),jsonArray.get(0).toString(),Toast.LENGTH_LONG).show();
-
-                       /* if(jsonObject.getString("msg").equals("done")){
-//                                Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
-//                                intent.putExtra("user_id",user_id);
-//                                startActivity(intent);
-//                                finish();
-                        }
-                        else {
-                            //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                        }*/
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(),e.getMessage().toString(),Toast.LENGTH_LONG).show();
-
-                    }
-
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }) {
-
-
+        public void onClick(View v) {
+            // This is an android.support.v7.widget.PopupMenu;
+            popupMenu = new PopupMenu(mContext, v) {
             };
 
+            popupMenu.inflate(R.menu.profile_menu);
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.menu_item_network:
+                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(), NetworkList.class);
+                            startActivity(intent);
+                            return true;
+                        default:
+                            return false;
+                        //return super.onMenuItemSelected(item);
+                    }
+                    //return false;
+                }
+            });
         }
 
 
 
+
+
     }
+}
+
 
 
 
