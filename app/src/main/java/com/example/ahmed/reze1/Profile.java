@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -81,6 +82,7 @@ public class Profile extends Fragment {
     private ImageView playerImg;
     public RequestQueue requestQueue;
     public static PopupMenu popupMenu;
+    public Button btnNetwork;
     public String userId;
     private RelativeLayout probar;
 
@@ -150,6 +152,14 @@ public class Profile extends Fragment {
         playerPointsTv=(TextView)v.findViewById(R.id.pointsNumbersTv);
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
         playerImg= (ImageView)v.findViewById(R.id.imageView2);
+        btnNetwork=(Button)v.findViewById(R.id.btn_friends);
+        btnNetwork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NetworkList.class);
+                startActivity(intent);
+            }
+        });
 
 //        overview=(TextView)v.findViewById(R.id.overview_tab);
 //        posts=(TextView)v.findViewById(R.id.posts_tab);
@@ -204,6 +214,7 @@ public class Profile extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.profile_tablayout);
         adapter = new ProfilePagerAdapter(getFragmentManager(), getActivity(), viewPager2, tabLayout);
         viewPager2.setAdapter(adapter);
+
     }
 
     int selectedTabPosition;

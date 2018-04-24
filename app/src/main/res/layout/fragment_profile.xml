@@ -1,6 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="20dp"
+    android:fillViewport="true">
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,15 +24,8 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp"
-                    android:fillViewport="true">
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -245,13 +244,15 @@
                             android:layout_width="32dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="4dp"
+                            android:id="@+id/btn_friends"
                             android:background="@drawable/ic_me_btn3" />
                     </LinearLayout>
                 </LinearLayout>
 
                 </LinearLayout>
-                </ScrollView>
-            </FrameLayout>
+
+
+
 
 
     <LinearLayout
@@ -264,60 +265,6 @@
         android:background="@color/holo_gray"
         android:gravity="center"
         >
-
-        <!--<TextView-->
-            <!--android:id="@+id/overview_tab"-->
-            <!--android:layout_marginEnd="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="overview"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:textColor="#000"-->
-            <!--android:textStyle="bold"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.5"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/posts_tab"-->
-            <!--android:layout_marginEnd="5dp"-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="posts"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/videos_tab"-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:layout_marginEnd="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="videos"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/photos_tab"-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="photos"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"/>-->
-        <!--<TextView-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="events"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"/>-->
-        <!--<TextView-->
-            <!--android:layout_marginStart="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="network"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"/>-->
         <android.support.design.widget.TabLayout
             android:id="@+id/profile_tablayout"
             android:weightSum="6"
@@ -333,13 +280,5 @@
         android:id="@+id/profile_perview"
         android:layout_height="wrap_content"
         android:layout_below="@id/pagerHeader"/>
-
-
-
-
-
-
-
-
-
 </LinearLayout>
+    </ScrollView>
