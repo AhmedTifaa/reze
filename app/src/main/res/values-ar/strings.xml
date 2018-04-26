@@ -50,4 +50,13 @@
     <string name="groups">مجموعات</string>
     <string name="search_result">لا توجد نتائج</string>
     <string name="write_replay">اكتب تعليق...</string>
+
+    <string name="edit">تعديل</string>
+    <string name="remove">حذف</string>
+    <string name="save_post">حفظ المنشور</string>
+    <string name="report_post">بلاغ</string>
+    <string name="image">صورة</string>
+    <string name="video">فيديو</string>
+    <string name="check_in">موقعك فين</string>
+    <string name="tag">اشارة الى</string>
 </resources>

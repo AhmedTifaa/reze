@@ -63,6 +63,12 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/hiddenMenuPositionView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_20"/>
+        <ImageView
+            android:id="@+id/postSideMenu"
             android:layout_marginEnd="@dimen/dimen_20"
             android:layout_weight="0.1"
             android:layout_width="wrap_content"
@@ -70,6 +76,8 @@
             android:layout_gravity="end"
             android:src="@drawable/ic_more_horz"/>
     </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/postTextView"

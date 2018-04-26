@@ -6,16 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +36,9 @@ import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.CommentResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
 import com.example.ahmed.reze1.app.AppConfig;
+import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
+import com.example.ahmed.reze1.helper.MenuCustomItem;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +52,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**
@@ -177,7 +185,6 @@ public class Home extends Fragment {
         }
     }
 
-
     private class PostViewHolder extends RecyclerView.ViewHolder{
 
         TextView postTextView;
@@ -186,7 +193,8 @@ public class Home extends Fragment {
         TextView dateView;
         TextView usernameView;
         ImageView ppView;
-
+        ImageView postSideMenu;
+        ImageView hiddenMenuPositionView;
         public PostViewHolder(final View itemView) {
             super(itemView);
 
@@ -196,6 +204,8 @@ public class Home extends Fragment {
             dateView = itemView.findViewById(R.id.postDateView);
             usernameView = itemView.findViewById(R.id.postUserName);
             ppView = itemView.findViewById(R.id.ppView);
+            postSideMenu = itemView.findViewById(R.id.postSideMenu);
+            hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
         }
 
         public void bind(final PostResponse post, final int pos) {
@@ -293,6 +303,16 @@ public class Home extends Fragment {
                 }
             });
 
+            postSideMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (String.valueOf(post.getUserId()).contentEquals(String.valueOf(userId))) {
+                        showPostPopupWindow(postSideMenu, true, post.getPostId(), Integer.parseInt(post.getUserId()));
+                    } else {
+                        showPostPopupWindow(postSideMenu, false, post.getPostId(), Integer.parseInt(post.getUserId()));
+                    }
+                }
+            });
         }
 
         private void startOtherProfile(int position){
@@ -540,5 +560,191 @@ public class Home extends Fragment {
                 adapter.notifyItemInserted(0);
             }
         }
+    }
+
+    class OptionPost implements View.OnClickListener {
+        private PopupMenu popupMenu;
+        private Context mContext;
+        private boolean owner;
+        private int postId;
+
+        public OptionPost(Context context, boolean owner, int postId) {
+            mContext = context;
+            this.owner = owner;
+            this.postId = postId;
+        }
+
+        @Override
+        public void onClick(View v) {
+            popupMenu = new PopupMenu(mContext, v) {
+            };
+
+            int menuId = (owner) ? R.menu.post_menu_owner : R.menu.menu_post_viewer;
+
+
+            popupMenu.inflate(menuId);
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.menu_post_edit:
+                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                            return true;
+                        case R.id.menu_report_post:
+                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                            reportPost(postId);
+                            return true;
+                        case R.id.menu_post_save_post:
+                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                            savePost(postId);
+                            return true;
+                        case R.id.menu_remove_post:
+                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                            removePost(postId);
+                            return true;
+                        default:
+                            return false;
+                        //return super.onMenuItemSelected(item);
+                    }
+                    //return false;
+                }
+            });
+        }
+    }
+
+    private void removePost(final int postId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("remove_post", response);
+                        ArrayList<PostResponse> newPosts = new ArrayList<>(Arrays.asList(posts));
+                        for (int i = 0; i < newPosts.size(); i++) {
+                            if (newPosts.get(i).getPostId() == postId){
+                                newPosts.remove(i);
+                                posts = newPosts.toArray(new PostResponse[newPosts.size()]);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("method", "remove_post");
+                map.put("user_id", userId);
+                map.put("post_id", String.valueOf(postId));
+
+                return map;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void savePost(final int postId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("save_post", response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("method", "save_post");
+                map.put("user_id", userId);
+                map.put("post_id", String.valueOf(postId));
+
+                return map;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void reportPost(final int postId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("report_post", response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("method", "report_post");
+                map.put("user_id", userId);
+                map.put("post_id", String.valueOf(postId));
+
+                return map;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void showPostPopupWindow(View anchor, final boolean owner, final int postId, final int postOwnerId) {
+        final ListPopupWindow popupWindow = new ListPopupWindow(getActivity());
+
+        List<MenuCustomItem> itemList = new ArrayList<>();
+        if (owner){
+            itemList.add(new MenuCustomItem(getActivity().getResources().getString(R.string.edit), R.drawable.ic_edit));
+            itemList.add(new MenuCustomItem(getActivity().getResources().getString(R.string.save_post), R.drawable.ic_save));
+            itemList.add(new MenuCustomItem(getActivity().getResources().getString(R.string.remove), R.drawable.ic_remove));
+        } else {
+            itemList.add(new MenuCustomItem(getActivity().getResources().getString(R.string.save_post), R.drawable.ic_save));
+            itemList.add(new MenuCustomItem(getActivity().getResources().getString(R.string.report_post), R.drawable.ic_report));
+        }
+
+
+        ListAdapter adapter = new ListPopupWindowAdapter(getActivity(), itemList);
+        popupWindow.setAnchorView(anchor);
+        popupWindow.setAdapter(adapter);
+        popupWindow.setWidth(400);
+        popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (String.valueOf(postOwnerId).contentEquals(String.valueOf(userId))){
+                    if (i == 0){
+                        //todo edit post
+                    } else if (i == 1){
+                        savePost(postId);
+                    } else if (i == 2){
+                        removePost(postId);
+                    }
+                } else {
+                    if (i == 0){
+                        savePost(postId);
+                    } else if (i == 1){
+                        reportPost(postId);
+                    }
+                }
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.show();
     }
 }

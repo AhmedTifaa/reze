@@ -73,6 +73,14 @@
     <string name="users">Users</string>
     <string name="groups">Groups</string>
     <string name="search_result">No result</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="save_post">Save post</string>
+    <string name="report_post">Report</string>
+    <string name="image">Image</string>
+    <string name="video">Video</string>
+    <string name="check_in">Check in</string>
+    <string name="tag">Tag friend</string>
 
     <string-array name="object_array">
 
