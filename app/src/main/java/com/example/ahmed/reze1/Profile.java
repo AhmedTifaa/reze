@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -15,12 +17,16 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +90,8 @@ public class Profile extends Fragment {
     public static PopupMenu popupMenu;
     public Button btnNetwork;
     public String userId;
+    public ScrollView topScroll;
+    public LinearLayout wraper;
     private RelativeLayout probar;
 
     private OnFragmentInteractionListener mListener;
@@ -153,6 +161,8 @@ public class Profile extends Fragment {
         playerLevelsTv=(TextView)v.findViewById(R.id.levelsNumbersTv);
         playerImg= (ImageView)v.findViewById(R.id.imageView2);
         btnNetwork=(Button)v.findViewById(R.id.btn_friends);
+        topScroll = (ScrollView)v.findViewById(R.id.topScroll);
+        wraper = (LinearLayout)v.findViewById(R.id.wraper);
         btnNetwork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +170,13 @@ public class Profile extends Fragment {
                 startActivity(intent);
             }
         });
+
+        Toast.makeText(getContext(),wraper.getHeight()+"",Toast.LENGTH_LONG).show();
+        //params.height = 200;
+       // wraper.setLayoutParams(params);
+        //topScroll.setMinimumHeight(500);
+       // topScroll.smoothScrollTo(0,topScroll.getBottom());
+
 
 //        overview=(TextView)v.findViewById(R.id.overview_tab);
 //        posts=(TextView)v.findViewById(R.id.posts_tab);
@@ -214,6 +231,15 @@ public class Profile extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.profile_tablayout);
         adapter = new ProfilePagerAdapter(getFragmentManager(), getActivity(), viewPager2, tabLayout);
         viewPager2.setAdapter(adapter);
+        viewPager2.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                viewPager2.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
 
     }
 
@@ -228,7 +254,9 @@ public class Profile extends Fragment {
                 viewPager2.setCurrentItem(tab.getPosition());
                 selectedTabPosition = viewPager2.getCurrentItem();
                 Log.d("Selected", "Selected " + tab.getPosition());
+
             }
+
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -237,6 +265,7 @@ public class Profile extends Fragment {
             }
         });
     }
+
 
     public void addPage(String pagename) {
         Bundle bundle = new Bundle();

@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/topScroll"
     android:layout_marginBottom="20dp"
     android:fillViewport="true">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/wraper"
     tools:context="com.example.ahmed.reze1.Home">
     <!--<RelativeLayout-->
         <!--android:id="@+id/loadingPanel"-->
@@ -275,10 +277,16 @@
             app:tabTextColor="#848484">
         </android.support.design.widget.TabLayout>
     </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/profile_perview"-->
+        <!--android:layout_height="1000dp"-->
+        <!--android:layout_below="@id/pagerHeader"/>-->
+    <com.example.ahmed.reze1.CustomViewPager
+        android:layout_width="wrap_content"
         android:id="@+id/profile_perview"
         android:layout_height="wrap_content"
         android:layout_below="@id/pagerHeader"/>
+
 </LinearLayout>
     </ScrollView>
