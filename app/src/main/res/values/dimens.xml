@@ -138,4 +138,6 @@
     <dimen name="btn_xlarge_layout">260dp</dimen>
 
     <dimen name="cover_height">150dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

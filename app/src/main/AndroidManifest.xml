@@ -101,8 +101,13 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".PostActivity" />
         <activity android:name=".NetworkList" />
+        <activity
+            android:name=".VendorActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

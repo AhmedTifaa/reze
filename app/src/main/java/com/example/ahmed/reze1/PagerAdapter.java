@@ -11,11 +11,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int mNoOfTabs;
+    String type;
 
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs)
+    public PagerAdapter(FragmentManager fm, int NumberOfTabs, String type)
     {
         super(fm);
         this.mNoOfTabs = NumberOfTabs;
+        this.type = type;
     }
 
 
@@ -34,8 +36,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 Requests requests = new Requests();
                 return  requests;
             case 3:
-                Profile profile = new Profile();
-                return  profile;
+                if (type.equals("user")) {
+                    Profile profile = new Profile();
+                    return profile;
+                } else if (type.equals("vendor")){
+                    VendorProfile vendorProfile = new VendorProfile();
+                    return vendorProfile;
+                }
             default:
                 return null;
         }

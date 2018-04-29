@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -194,11 +195,16 @@ public class Login extends AppCompatActivity {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jsonObject;
+                                Log.i("login_response", response);
+                                //JSONArray jsonArray = new JSONArray(response);
                                 jsonObject = new JSONObject(response);
-                                //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                                if (jsonObject.getString("msg").equals("enter")) {
-                                    SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
-                                            editor.putString(AppConfig.LOGGED_IN_USER_ID_SHARED, jsonObject.getString("id")).apply();
+                                //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+
+                                SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
+                                editor.putString(AppConfig.LOGGED_IN_USER_ID_SHARED, jsonObject.getString("id"))
+                                        .putString(AppConfig.LOGGED_IN_USER_NAME_SHARED, jsonObject.getString("name")).apply();
+
+                                if (jsonObject.getString("msg").equals("user")) {
                                     Toast.makeText(getApplicationContext(), jsonObject.getString("state"), Toast.LENGTH_SHORT).show();
                                     if(jsonObject.getString("state").equals("0")){
                                         Intent intent = new Intent(getApplicationContext(), BuildProfile.class);
@@ -236,6 +242,7 @@ public class Login extends AppCompatActivity {
                                             Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("id",jsonObject.getString("id"));
+                                            intent.putExtra("type", jsonObject.getString("msg"));
                                             startActivityForResult(intent, 0);
                                             finish();
                                         }
@@ -244,7 +251,15 @@ public class Login extends AppCompatActivity {
 
                                 } else if (jsonObject.getString("msg").equals("no")) {
                                     Toast.makeText(getBaseContext(), R.string.wronglogin, Toast.LENGTH_LONG).show();
-                                } else {
+                                } else if (jsonObject.getString("msg").equals("vendor")){
+                                    Toast.makeText(getBaseContext(), "vendor", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra("id",jsonObject.getString("id"));
+                                    intent.putExtra("type", jsonObject.getString("msg"));
+                                    startActivityForResult(intent, 0);
+                                    finish();
+                                }
+                                else {
                                     Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
                                 }
 

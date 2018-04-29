@@ -226,6 +226,7 @@ public class Profile extends Fragment {
         return v;
         // Inflate the layout for this fragment
     }
+
     private void getIDs(View view) {
         viewPager2 = (ViewPager) view.findViewById(R.id.profile_perview);
         tabLayout = (TabLayout) view.findViewById(R.id.profile_tablayout);

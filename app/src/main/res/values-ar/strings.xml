@@ -59,4 +59,18 @@
     <string name="video">فيديو</string>
     <string name="check_in">موقعك فين</string>
     <string name="tag">اشارة الى</string>
+    <string name="product">منتج</string>
+    <string name="title">العنوان</string>
+    <string name="description">الوصف</string>
+    <string name="price">السعر</string>
+    <string name="discount">الخصم</string>
+    <string name="post">نشر</string>
+    <string name="upload">صورة</string>
+    <string name="amount">الكمية</string>
+    <string name="available">متاح</string>
+    <string name="unavailable">غير متاح</string>
+    <string name="point">نقطة</string>
+
+
+
 </resources>

@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     int searchBoxWidth = 300;
     int currentTab = 0;
     ImageView chatButton;
+    String userType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         backView = mCustomView.findViewById(R.id.searchBackView);
 
 
+        userType = getIntent().getStringExtra("type");
         inflateMainView(currentTab);
 
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.getTabAt(0).getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark),PorterDuff.Mode.SRC_IN);
         final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount(), userType);
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -308,6 +311,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
                             startActivity(intent);
                         }
+                    } else if(item.getType().contentEquals("group")){
+                            //Intent intent = new Intent(MainActivity.this, VendorActivity.class);
+                            //startActivity(intent);
                     }
                 }
             });
