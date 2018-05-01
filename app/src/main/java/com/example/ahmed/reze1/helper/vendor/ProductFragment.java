@@ -120,6 +120,7 @@ public class ProductFragment extends Fragment {
 
 
     private void fetchProducts(){
+        //todo
         VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/vendor_operation.php",
                 ApiResponse.class,
                 new Response.Listener<ApiResponse>() {
