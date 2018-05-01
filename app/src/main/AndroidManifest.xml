@@ -108,6 +108,13 @@
             android:name=".VendorActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ImageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GroupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateGroupPostActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

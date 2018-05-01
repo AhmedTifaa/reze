@@ -13,16 +13,32 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <ImageView
-            android:id="@+id/coverView"
+        <FrameLayout
+            android:id="@+id/coverHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cover_height"
-            android:background="@color/colorPrimary"
-            />
+            android:layout_height="@dimen/cover_height">
+
+            <ImageView
+                android:id="@+id/coverPpView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cover_height"
+                android:background="@color/colorPrimary"
+                />
+
+            <ImageView
+                android:id="@+id/updateCoverView"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/dimen_20"
+                android:src="@drawable/ic_upload"/>
+        </FrameLayout>
+
+
 
         <RelativeLayout
             android:id="@+id/vendorDataLayout"
-            android:layout_below="@id/coverView"
+            android:layout_below="@id/coverHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -66,6 +82,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/vendorAddressView"
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

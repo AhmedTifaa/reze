@@ -92,6 +92,15 @@
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
     <string name="point">Point</string>
+    <string name="buy">Buy now</string>
+    <string name="sold_out">Sold out</string>
+    <string name="member">member</string>
+    <string name="home">Home</string>
+    <string name="report">Report</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="secret">Secret</string>
+    <string name="closed">Closed</string>
+    <string name="public_">Public</string>
 
     <string-array name="object_array">
 

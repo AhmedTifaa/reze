@@ -70,6 +70,15 @@
     <string name="available">متاح</string>
     <string name="unavailable">غير متاح</string>
     <string name="point">نقطة</string>
+    <string name="buy">اشترى الان</string>
+    <string name="sold_out">نفذ</string>
+    <string name="member">عضو</string>
+    <string name="home">الرئيسية</string>
+    <string name="report">بلاغ</string>
+    <string name="add_friend">اضافة صديق</string>
+    <string name="secret">خفى</string>
+    <string name="closed">مغلق</string>
+    <string name="public_">عام</string>
 
 
 

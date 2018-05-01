@@ -1,5 +1,6 @@
 package com.example.ahmed.reze1.api.post;
 
+import com.example.ahmed.reze1.api.product.ProductResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -17,9 +18,21 @@ public class ApiResponse {
     @Expose
     private PostResponse[] posts;
 
+    @SerializedName("products")
+    @Expose
+    private ProductResponse[] products;
+
     @SerializedName("now")
     @Expose
     private long now;
+
+    public ProductResponse[] getProducts() {
+        return products;
+    }
+
+    public void setProducts(ProductResponse[] products) {
+        this.products = products;
+    }
 
     public int getNextCursor() {
         return nextCursor;

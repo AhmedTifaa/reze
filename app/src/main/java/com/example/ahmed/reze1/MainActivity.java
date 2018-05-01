@@ -29,6 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.ahmed.reze1.api.search.SearchItem;
 import com.example.ahmed.reze1.api.search.SearchResponse;
 import com.example.ahmed.reze1.app.AppConfig;
@@ -312,8 +313,8 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                             startActivity(intent);
                         }
                     } else if(item.getType().contentEquals("group")){
-                            //Intent intent = new Intent(MainActivity.this, VendorActivity.class);
-                            //startActivity(intent);
+                            Intent intent = GroupActivity.createIntent(item.getId(), item.getName(), MainActivity.this);
+                            startActivity(intent);
                     }
                 }
             });

@@ -85,10 +85,14 @@ public class ProductFragment extends Fragment {
         public void bind(ProductResponse product){
             productTitleView.setText(product.getTitle());
             productDetailView.setText(product.getDescription());
-            priceView.setText(String.valueOf(product.getPrice()));
+
+            String point = getActivity().getResources().getString(R.string.point);
+            priceView.setText(String.valueOf(product.getPrice()) + " " + point);
 
             if (product.getAmount() > product.getSoldAmount()){
                 avilView.setText(R.string.available);
+            } else {
+                avilView.setText(R.string.unavailable);
             }
         }
     }
@@ -123,7 +127,10 @@ public class ProductFragment extends Fragment {
                     public void onResponse(ApiResponse response) {
                         Log.i("product_response", "onResponse: " + response.getProducts()[0].getTitle());
                         products = response.getProducts();
-                        updateUi();
+                        adapter = new ProductRecyclerAdapter();
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        //updateUi();
                     }
                 }, new Response.ErrorListener() {
             @Override
