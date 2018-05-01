@@ -29,11 +29,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ahmed.reze1.api.news_feed.NewsFeedItem;
 import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.CommentResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
-import com.example.ahmed.reze1.api.product.ProductResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
 import com.example.ahmed.reze1.helper.MenuCustomItem;
@@ -49,7 +47,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -196,15 +193,17 @@ public class GroupHome extends Fragment {
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(item.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getPostId(), now, Integer.parseInt(item.getUserId()),
-                            getActivity());
+                    if (item.getComments() != null) {
+                        ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(item.getComments()));
+                        Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getPostId(), now, Integer.parseInt(item.getUserId()),
+                                getActivity());
 
-                    adapterPos = pos;
-                    startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
+                        adapterPos = pos;
+                        startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
 
-                    //startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                        //startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                    }
                 }
             });
 
@@ -212,10 +211,12 @@ public class GroupHome extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    for (int i = 0; i < item.getLikes().length; i++) {
-                        if (item.getLikes()[i] == Integer.parseInt(userId)){
-                            reverseLike(item, pos);
-                            return;
+                    if (item.getLikes() != null) {
+                        for (int i = 0; i < item.getLikes().length; i++) {
+                            if (item.getLikes()[i] == Integer.parseInt(userId)) {
+                                reverseLike(item, pos);
+                                return;
+                            }
                         }
                     }
 

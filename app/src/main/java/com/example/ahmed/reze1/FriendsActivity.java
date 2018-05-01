@@ -19,11 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ahmed.reze1.api.post.CommentResponse;
-import com.example.ahmed.reze1.api.user.ApiResponse;
 import com.example.ahmed.reze1.api.user.UserResponse;
 import com.example.ahmed.reze1.app.AppConfig;
-import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +39,6 @@ public class FriendsActivity extends AppCompatActivity {
     private static final String User_NAME = "User_NAME";
     ArrayList<UserResponse> users;
     int user_id;
-    String user_name;
     RecyclerView friendsRecyclerView;
     UserRecyclerAdapter adapter;
 
@@ -68,41 +64,42 @@ public class FriendsActivity extends AppCompatActivity {
         getUsers();
 
     }
-        private class CommentViewHolder extends RecyclerView.ViewHolder{
 
-            TextView username;
+    private class FriendsViewHolder extends RecyclerView.ViewHolder{
 
-            public CommentViewHolder(View itemView) {
-                super(itemView);
-                username=itemView.findViewById(R.id.UserName);
+        TextView username;
 
-            }
+        public FriendsViewHolder(View itemView) {
+            super(itemView);
+            username=itemView.findViewById(R.id.UserName);
 
-            public void bind(final UserResponse user){
-                username.setText(user.getName());
-            }
         }
 
-        private class UserRecyclerAdapter extends RecyclerView.Adapter<CommentViewHolder>{
-
-            @NonNull
-            @Override
-            public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-             View view= LayoutInflater.from(FriendsActivity.this).inflate(R.layout.friend_card,parent,false);
-                return new CommentViewHolder(view);
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-                holder.bind(users.get(position));
-            }
-
-            @Override
-            public int getItemCount() {
-                return users.size();
-            }
+        public void bind(final UserResponse user){
+            username.setText(user.getName());
         }
+    }
+
+    private class UserRecyclerAdapter extends RecyclerView.Adapter<FriendsViewHolder>{
+
+        @NonNull
+        @Override
+        public FriendsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+            View view= LayoutInflater.from(FriendsActivity.this).inflate(R.layout.friend_card,parent,false);
+            return new FriendsViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull FriendsViewHolder holder, int position) {
+            holder.bind(users.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return users.size();
+        }
+    }
 
     private void getUsers(){
         StringRequest stringRequest = new  StringRequest(Request.Method.POST, "https://rezetopia.com/app/friendlist.php",

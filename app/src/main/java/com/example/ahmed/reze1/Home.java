@@ -289,7 +289,7 @@ public class Home extends Fragment {
                 public void onClick(View v) {
                     if (item.getOwnerId() == Integer.parseInt(userId)){
                         mListener.onProfile();
-                    } else {
+                    } else if (item.getType() == NewsFeedItem.POST_TYPE){
                         startOtherProfile(pos);
                     }
                 }
@@ -300,7 +300,7 @@ public class Home extends Fragment {
                 public void onClick(View v) {
                     if (item.getOwnerId() == Integer.parseInt(userId)){
                         mListener.onProfile();
-                    } else {
+                    } else if (item.getType() == NewsFeedItem.POST_TYPE){
                         startOtherProfile(pos);
                     }
                 }
@@ -462,10 +462,11 @@ public class Home extends Fragment {
             ppView = itemView.findViewById(R.id.ppView);
         }
 
-        public void bind(NewsFeedItem item){
+        public void bind(final NewsFeedItem item){
             productTitleView.setText(item.getProductTitle());
             productDetailView.setText(item.getProductDescription());
             priceView.setText(String.valueOf(item.getProductPrice()));
+            postUserName.setText(item.getOwnerName());
             if (item.getProductSoldAmount() < item.getProductAmount()){
                 avilView.setText(R.string.available);
                 productBuyNow.setText(R.string.buy);
@@ -478,14 +479,22 @@ public class Home extends Fragment {
             ppView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                        Intent intent = new Intent(getActivity(), VendorActivity.class);
+                        intent.putExtra("vendor_id", item.getOwnerId());
+                        startActivity(intent);
+                    }
                 }
             });
 
             postUserName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                        Intent intent = new Intent(getActivity(), VendorActivity.class);
+                        intent.putExtra("vendor_id", item.getOwnerId());
+                        startActivity(intent);
+                    }
                 }
             });
         }
@@ -578,6 +587,7 @@ public class Home extends Fragment {
                                     item.setProductTitle(productResponse.getTitle());
                                     item.setId(productResponse.getId());
                                     item.setOwnerId(productResponse.getVendorId());
+                                    item.setOwnerName(productResponse.getName());
                                     item.setType(NewsFeedItem.PRODUCT_TYPE);
                                     newsFeedItems.add(item);
                                 }
