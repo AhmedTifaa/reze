@@ -319,7 +319,7 @@ public class Home extends Fragment {
         }
 
         private void startOtherProfile(int position){
-            Intent intent = OtherProfileActivity.createIntent(posts[position].getUserId(), posts[position].getUsername(), getActivity());
+            Intent intent = OtherProfileActivity.createIntent(String.valueOf(newsFeedItems.get(position).getOwnerId()), newsFeedItems.get(position).getOwnerName(), getActivity());
             startActivity(intent);
         }
 

@@ -45,7 +45,6 @@ public class ChatFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private List<Message> mMessages = new ArrayList<Message>();
     private RecyclerView.Adapter mAdapter;
-
     private Socket socket;
     {
         try{

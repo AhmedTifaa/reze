@@ -69,7 +69,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     EditText searchBox;
 
     long now;
-    String userId;
+    String profileId;
     String username;
     int adapterPos;
     PostResponse[] posts;
@@ -77,6 +77,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     int nextCursor = 0;
     String q;
     int searchBoxWidth = 300;
+    String userId;
 
     private RecyclerView.Adapter postsAdapter;
     RecyclerView postsRecyclerView;
@@ -101,7 +102,8 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         searchBox = findViewById(R.id.searchView);
         backView = findViewById(R.id.searchBackArrow);
-
+        userId = OtherProfileActivity.this.getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -156,7 +158,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         });
 
 
-        userId = getIntent().getStringExtra(USER_ID_EXTRA);
+        profileId = getIntent().getStringExtra(USER_ID_EXTRA);
         username = getIntent().getStringExtra(USERNAME_EXTRA);
         requestQueue = Volley.newRequestQueue(this);
         searchBox.setFocusable(false);
@@ -388,11 +390,138 @@ public class OtherProfileActivity extends AppCompatActivity {
             if (viewType == VIEW_HEADER){
                 View view = LayoutInflater.from(OtherProfileActivity.this).inflate(R.layout.other_header_layout, parent, false);
                 Button msgBtn = (Button)view.findViewById(R.id.msgSend);
+                final Button addBtn = (Button)view.findViewById(R.id.addfBtn);
+                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject;
+                            jsonObject = new JSONObject(response);
+
+                            if(jsonObject.getString("msg").equals("true")){
+                                addBtn.setText("Remove");
+                            }
+                            else {
+                                //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> parameters  = new HashMap<String, String>();
+                        parameters.put("isFriend","isFriend");
+                        parameters.put("from",userId);
+                        parameters.put("to",profileId);
+
+                        return parameters;
+                    }
+                };
+                requestQueue.add(request);
                 msgBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(OtherProfileActivity.this, SocketActivity.class);
                         startActivity(intent);
+                    }
+                });
+                addBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (addBtn.getText().equals("add +")){
+                            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    //  Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+
+                                    try {
+                                        JSONObject jsonObject;
+                                        jsonObject = new JSONObject(response);
+
+                                        if(jsonObject.getString("msg").equals("added")){
+                                            addBtn.setText("Remove");
+                                        }
+                                        else {
+                                            //Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            }) {
+
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String,String> parameters  = new HashMap<String, String>();
+                                    parameters.put("add","add");
+                                    parameters.put("from",userId);
+                                    parameters.put("to",profileId);
+
+                                    return parameters;
+                                }
+                            };
+                            requestQueue.add(request);
+
+                        }
+                        else if(addBtn.getText().equals("Remove")){
+                            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/removefriend.php", new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                     Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+
+                                    try {
+                                        JSONObject jsonObject;
+                                        jsonObject = new JSONObject(response);
+
+                                        if(jsonObject.getString("msg").equals("removed")){
+                                            addBtn.setText("add +");
+                                        }
+                                        else {
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            }) {
+
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String,String> parameters  = new HashMap<String, String>();
+                                    parameters.put("remove","remoe");
+                                    parameters.put("from",userId);
+                                    parameters.put("to",profileId);
+                                    return parameters;
+                                }
+                            };
+                            requestQueue.add(request);
+
+                        }
+
                     }
                 });
                 return new OtherProfileActivity.HeaderViewHolder(view);
@@ -624,8 +753,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String userId = OtherProfileActivity.this.getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
-                            .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
+
 
 
                     if (item.getType().contentEquals("user")) {
