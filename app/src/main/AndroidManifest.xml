@@ -104,6 +104,7 @@
 
         <activity android:name=".PostActivity" />
         <activity android:name=".NetworkList" />
+        <activity android:name=".SocketActivity" />
         <activity
             android:name=".VendorActivity"
             android:label=""

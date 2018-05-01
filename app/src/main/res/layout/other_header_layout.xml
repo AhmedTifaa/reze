@@ -209,6 +209,7 @@
                     <Button
                         android:textAllCaps="false"
                         android:textSize="12sp"
+                        android:id="@+id/msgSend"
                         android:layout_width="70dp"
                         android:layout_height="20dp"
                         android:layout_marginTop="@dimen/dividerlist"

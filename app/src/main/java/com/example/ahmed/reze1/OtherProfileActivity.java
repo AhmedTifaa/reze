@@ -271,7 +271,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         private void performLike(final PostResponse postResponse, final int pos){
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -317,7 +317,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         }
 
         private void reverseLike(final PostResponse postResponse, final int pos){
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -387,6 +387,14 @@ public class OtherProfileActivity extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == VIEW_HEADER){
                 View view = LayoutInflater.from(OtherProfileActivity.this).inflate(R.layout.other_header_layout, parent, false);
+                Button msgBtn = (Button)view.findViewById(R.id.msgSend);
+                msgBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(OtherProfileActivity.this, SocketActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 return new OtherProfileActivity.HeaderViewHolder(view);
             } else {
                 View view = LayoutInflater.from(OtherProfileActivity.this).inflate(R.layout.post_card, parent, false);
@@ -425,7 +433,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     }
 
     private void fetchPosts(){
-        VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php", ApiResponse.class,
+        VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php", ApiResponse.class,
                 new Response.Listener<ApiResponse>() {
                     @Override
                     public void onResponse(ApiResponse response) {
@@ -679,7 +687,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     }
 
     private void performSearch(final String query){
-        VolleyCustomRequest customRequest = new VolleyCustomRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_search.php", SearchResponse.class,
+        VolleyCustomRequest customRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_search.php", SearchResponse.class,
                 new Response.Listener<SearchResponse>() {
                     @Override
                     public void onResponse(SearchResponse response) {
