@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.R;
+import com.example.ahmed.reze1.VendorProfile;
 import com.example.ahmed.reze1.api.product.ApiResponse;
 import com.example.ahmed.reze1.api.product.ProductResponse;
 import com.example.ahmed.reze1.app.AppConfig;
@@ -46,6 +47,14 @@ public class ProductFragment extends Fragment {
     ProductResponse[] products;
     RecyclerView.Adapter adapter;
 
+    public static ProductFragment createFragment(String vendor_id){
+        Bundle bundle = new Bundle();
+        bundle.putString("vendor_id", vendor_id);
+        ProductFragment fragment = new ProductFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,8 +63,11 @@ public class ProductFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getActivity());
 
-        vendorId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
-                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
+        if (getArguments() != null){
+            vendorId = getArguments().getString("vendor_id");
+        } else
+            vendorId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+                    .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
 
         fetchProducts();
         return v;

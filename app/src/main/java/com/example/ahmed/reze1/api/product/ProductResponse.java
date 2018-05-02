@@ -15,6 +15,10 @@ public class ProductResponse implements Serializable {
     @Expose
     private int id;
 
+    @SerializedName("name")
+    @Expose
+    private String name;
+
     @SerializedName("vendor_id")
     @Expose
     private int vendorId;
@@ -50,6 +54,14 @@ public class ProductResponse implements Serializable {
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;

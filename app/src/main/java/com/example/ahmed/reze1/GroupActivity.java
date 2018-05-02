@@ -51,6 +51,8 @@ public class GroupActivity extends AppCompatActivity {
     int groupId;
     String groupName;
     boolean isMember;
+    GroupResponse group;
+
 
     public static Intent createIntent(int itemId, String itemName, Context context){
         Intent intent = new Intent(context, GroupActivity.class);
@@ -96,13 +98,13 @@ public class GroupActivity extends AppCompatActivity {
                         GroupHome home = GroupHome.createFragment(String.valueOf(groupId), groupName);
                         return home;
                     case 1:
-                        GroupDescription description = new GroupDescription();
-                        return description;
-                    case 2:
                         GroupReport report = new GroupReport();
                         return report;
+                    case 2:
+                        GroupDescription description = GroupDescription.createFragment(String.valueOf(groupId));
+                        return description;
                     case 3:
-                        GroupAddFriend addFriend = new GroupAddFriend();
+                        GroupAddFriend addFriend = GroupAddFriend.createFragment(String.valueOf(groupId));
                         return addFriend;
                     default:
                         return null;
@@ -147,7 +149,7 @@ public class GroupActivity extends AppCompatActivity {
                 switch(position)
                 {
                     case 0:
-                        GroupDescription description = new GroupDescription();
+                        GroupDescription description =GroupDescription.createFragment(String.valueOf(groupId));
                         return description;
                     default:
                         return null;
@@ -233,6 +235,7 @@ public class GroupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(GroupResponse response) {
                         Log.i("get_group", "onResponse: " + response.getDescription());
+                        group = response;
                         if (response.getPrivacy().contentEquals("closed")){
                             groupStatusView.setText(R.string.closed);
                         } else if (response.getPrivacy().contentEquals("public")){

@@ -7,43 +7,58 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.*;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.example.ahmed.reze1.api.vendor.VendorResponse;
+import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 import com.example.ahmed.reze1.helper.vendor.AmenitiesFragment;
 import com.example.ahmed.reze1.helper.vendor.DetailsFragment;
 import com.example.ahmed.reze1.helper.vendor.ReviewsFragment;
 import com.example.ahmed.reze1.helper.vendor.ProductFragment;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class VendorActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
     PagerAdapter adapter;
-    RelativeLayout createProductHeader;
+    ImageView vendorPpView;
+    ImageView coverPpView;
+    TextView vendorNameView;
+    TextView vendorAddressView;
+
+    String vendorId;
+    RequestQueue requestQueue;
+    VendorResponse vendor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+
+        vendorId = getIntent().getStringExtra("vendor_id");
 
         tabLayout = findViewById(R.id.vendorTabLayout);
         viewPager = findViewById(R.id.vendorViewPager);
-        /*createProductHeader = findViewById(R.id.createHeader);
-
-        createProductHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateProductFragment fragment = CreateProductFragment.createFragment(0);
-                fragment.show(getFragmentManager(), null);
-            }
-        });*/
+        vendorPpView = findViewById(R.id.vendorPpView);
+        coverPpView = findViewById(R.id.coverPpView);
+        vendorNameView = findViewById(R.id.vendorNameView);
+        vendorAddressView = findViewById(R.id.vendorAddressView);
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.product));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.details));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.amenities));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.review));
 
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -52,15 +67,12 @@ public class VendorActivity extends AppCompatActivity {
                 switch(position)
                 {
                     case 0:
-                        ProductFragment schedule = new ProductFragment();
-                        return schedule;
+                        ProductFragment product = ProductFragment.createFragment(vendorId);
+                        return product;
                     case 1:
                         DetailsFragment details = new DetailsFragment();
                         return details;
                     case 2:
-                        AmenitiesFragment amenities = new AmenitiesFragment();
-                        return amenities;
-                    case 3:
                         ReviewsFragment reviews = new ReviewsFragment();
                         return reviews;
                     default:
@@ -92,6 +104,48 @@ public class VendorActivity extends AppCompatActivity {
             }
         });
 
+        performGetVendor();
         viewPager.setAdapter(adapter);
     }
+
+    private void performGetVendor(){
+        VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/vendor_operation.php",
+                VendorResponse.class,
+                new Response.Listener<VendorResponse>() {
+                    @Override
+                    public void onResponse(VendorResponse response) {
+                        if (response != null){
+                            Log.i("onResponseVendor", "onResponse: " + response.getName());
+                            vendor = response;
+                            updateUi();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("method", "get_vendor");
+                map.put("vendor_id", vendorId);
+
+                return map;
+            }
+        };
+
+
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void updateUi(){
+        vendorAddressView.setText(vendor.getAddress());
+        if (vendor.getImageUrl() != null) {
+            Picasso.with(this).load(vendor.getImageUrl()).into(vendorPpView);
+        }
+    }
+
 }

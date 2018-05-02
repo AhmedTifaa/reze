@@ -24,7 +24,17 @@
                 android:layout_height="@dimen/cover_height"
                 android:background="@color/colorPrimary"
                 />
+
+            <ImageView
+                android:id="@+id/updateCoverView"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/dimen_20"
+                android:src="@drawable/ic_upload"/>
         </FrameLayout>
+
+
 
         <RelativeLayout
             android:id="@+id/vendorDataLayout"
@@ -90,11 +100,92 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/postLayout"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vendorDataLayout">
+
+
+            <RelativeLayout
+                android:id="@+id/createVendorHeader"
+                android:layout_width="match_parent"
+                android:layout_height="65dp">
+
+                <RelativeLayout
+                    android:background="@drawable/tell_something_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dimen_20"
+                        android:text="@string/your_news_feed"/>
+
+                    <ImageView
+                        android:id="@+id/ballView"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/ic_ball"
+                        android:padding="0dp"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/postPlusView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/plus_circle"
+                    android:layout_marginEnd="@dimen/dimen_45"
+                    android:src="@drawable/ic_plus"/>
+
+                <Button
+                    android:id="@+id/createProductButton"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@id/postPlusView"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/product"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/light_post_button"/>
+
+                <Button
+                    android:id="@+id/createPostButton"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@id/createProductButton"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/post"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/light_post_button"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/pagerHeader"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@id/vendorDataLayout"
+            android:layout_below="@id/postLayout"
             android:orientation="horizontal"
             android:background="@color/holo_gray"
             android:gravity="center"

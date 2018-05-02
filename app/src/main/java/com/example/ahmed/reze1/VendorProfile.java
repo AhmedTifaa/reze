@@ -1,11 +1,8 @@
 package com.example.ahmed.reze1;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.*;
 import android.support.v7.widget.ListPopupWindow;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,28 +27,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.model.Image;
 import com.example.ahmed.reze1.api.vendor.VendorResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
 import com.example.ahmed.reze1.helper.MenuCustomItem;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
-import com.example.ahmed.reze1.helper.vendor.AmenitiesFragment;
 import com.example.ahmed.reze1.helper.vendor.DetailsFragment;
 import com.example.ahmed.reze1.helper.vendor.ProductFragment;
 import com.example.ahmed.reze1.helper.vendor.ReviewsFragment;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,11 +54,11 @@ public class VendorProfile extends Fragment {
     ViewPager viewPager;
     android.support.v4.view.PagerAdapter adapter;
     RelativeLayout createHeader;
-    TextView vendorNameView;
     Button createPostButton;
     Button createProductButton;
     ImageView vendorPpView;
     ImageView coverPpView;
+    TextView vendorNameView;
     TextView vendorAddressView;
 
 
@@ -84,16 +69,16 @@ public class VendorProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_vendor, container, false);
+        View v = inflater.inflate(R.layout.fragment_vendor, container, false);
 
         tabLayout = v.findViewById(R.id.vendorTabLayout);
         viewPager = v.findViewById(R.id.vendorViewPager);
         createHeader = v.findViewById(R.id.createVendorHeader);
-        vendorNameView = v.findViewById(R.id.vendorNameView);
         createPostButton = v.findViewById(R.id.createPostButton);
         createProductButton = v.findViewById(R.id.createProductButton);
         vendorPpView = v.findViewById(R.id.vendorPpView);
         coverPpView = v.findViewById(R.id.coverPpView);
+        vendorNameView = v.findViewById(R.id.vendorNameView);
         vendorAddressView = v.findViewById(R.id.vendorAddressView);
 
         vendorNameView.setText(getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -103,7 +88,7 @@ public class VendorProfile extends Fragment {
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
 
         requestQueue = Volley.newRequestQueue(getActivity());
-        getVendor();
+        performGetVendor();
 
         createHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +172,7 @@ public class VendorProfile extends Fragment {
         return v;
     }
 
-    private void getVendor(){
+    private void performGetVendor(){
         VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/vendor_operation.php",
                 VendorResponse.class,
                 new Response.Listener<VendorResponse>() {
