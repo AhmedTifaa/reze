@@ -35,9 +35,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 layout = R.layout.item_action;
                 break;
         }*/
-        View v = LayoutInflater
-                .from(parent.getContext())
-                .inflate(R.layout.layout_message, parent, false);
+
+            View v = LayoutInflater
+                    .from(parent.getContext())
+                    .inflate(R.layout.layout_message, parent, false);
+
         return new ViewHolder(v);
     }
 
