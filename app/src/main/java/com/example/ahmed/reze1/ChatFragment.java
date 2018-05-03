@@ -48,7 +48,7 @@ public class ChatFragment extends Fragment {
     private Socket socket;
     {
         try{
-            socket = IO.socket("http://192.168.1.4:3000/");
+            socket = IO.socket("http://192.168.1.25:3000/");
         }catch(URISyntaxException e){
             throw new RuntimeException(e);
         }
@@ -142,6 +142,7 @@ public class ChatFragment extends Fragment {
             sendText.put("text",message);
             socket.emit("message", sendText);
         }catch(JSONException e){
+            Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
 
         }
 
@@ -165,7 +166,7 @@ public class ChatFragment extends Fragment {
         mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
                 .message(message).build());
         // mAdapter = new MessageAdapter(mMessages);
-        mAdapter = new MessageAdapter( mMessages);
+        mAdapter = new MessageAdapter(mMessages);
         mAdapter.notifyItemInserted(0);
         scrollToBottom();
     }
@@ -218,15 +219,19 @@ public class ChatFragment extends Fragment {
                     try {
                         message = data.getString("text").toString();
                         addMessage(message);
-                        Toast.makeText(getActivity(),"another",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"another   :"+message,Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         // return;
+                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
+
                     }
                     try {
                         imageText = data.getString("image");
                         addImage(decodeImage(imageText));
                     } catch (JSONException e) {
                         //retur
+                        Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
+
                     }
 
                 }
