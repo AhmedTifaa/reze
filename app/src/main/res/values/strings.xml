@@ -72,6 +72,13 @@
     <string name="write_replay">Write a replay&#8230;</string>
     <string name="users">Users</string>
     <string name="groups">Groups</string>
+    <string name="events">Events</string>
+    <string name="my_teams">My Teams</string>
+    <string name="my_coins">My Pounds</string>
+    <string name="my_orders">My Orders</string>
+    <string name="setting">Settings</string>
+    <string name="report_to_rezetopia">Report to Rezetopia</string>
+    <string name="log_out">Logout</string>
     <string name="search_result">No result</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
@@ -101,6 +108,8 @@
     <string name="secret">Secret</string>
     <string name="closed">Closed</string>
     <string name="public_">Public</string>
+    <string name="create_team">Create Team</string>
+    <string name="owner">Owner</string>
 
     <string-array name="object_array">
 

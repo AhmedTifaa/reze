@@ -115,7 +115,10 @@
         <activity
             android:name=".GroupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateGroupPostActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".CreateGroupPostActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewTeamsActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

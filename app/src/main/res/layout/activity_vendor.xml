@@ -98,6 +98,7 @@
             android:orientation="horizontal"
             android:background="@color/holo_gray"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_10"
             >
             <android.support.design.widget.TabLayout
                 android:id="@+id/vendorTabLayout"

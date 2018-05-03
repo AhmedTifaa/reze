@@ -40,6 +40,8 @@ import java.util.Map;
 
 public class ProductFragment extends Fragment {
 
+    private static final String VENDOR_ID_EXTRA = "vendor_id";
+
     RecyclerView recyclerView;
 
     RequestQueue requestQueue;
@@ -49,7 +51,7 @@ public class ProductFragment extends Fragment {
 
     public static ProductFragment createFragment(String vendor_id){
         Bundle bundle = new Bundle();
-        bundle.putString("vendor_id", vendor_id);
+        bundle.putString(VENDOR_ID_EXTRA, vendor_id);
         ProductFragment fragment = new ProductFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -64,10 +66,19 @@ public class ProductFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity());
 
         if (getArguments() != null){
-            vendorId = getArguments().getString("vendor_id");
-        } else
+            if (getArguments().getString(VENDOR_ID_EXTRA) != null) {
+                vendorId = getArguments().getString(VENDOR_ID_EXTRA);
+                Log.i("vendor_id_arg_string", "onCreate: " + vendorId);
+            } else {
+                vendorId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+                        .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
+                Log.i("vendor_id_arg", "onCreate: " + vendorId);
+            }
+        } else {
             vendorId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
                     .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
+            Log.i("vendor_id_no_arg", "onCreate: " + vendorId);
+        }
 
         fetchProducts();
         return v;
@@ -121,7 +132,7 @@ public class ProductFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-            holder.bind(products[0]);
+            holder.bind(products[position]);
         }
 
         @Override

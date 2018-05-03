@@ -48,6 +48,13 @@
     <string name="write_comment">اكتب تعليق...</string>
     <string name="users">مستخدمين</string>
     <string name="groups">مجموعات</string>
+    <string name="events">حدث</string>
+    <string name="my_teams">فريق</string>
+    <string name="my_coins">فلوسى</string>
+    <string name="my_orders">الطلبات</string>
+    <string name="setting">اعدادات</string>
+    <string name="report_to_rezetopia">شكوى الى ريزيتوبيا</string>
+    <string name="log_out">تسجيل خروج</string>
     <string name="search_result">لا توجد نتائج</string>
     <string name="write_replay">اكتب تعليق...</string>
 
@@ -79,6 +86,9 @@
     <string name="secret">خفى</string>
     <string name="closed">مغلق</string>
     <string name="public_">عام</string>
+    <string name="create_team">انشاء فريق</string>
+    <string name="owner">مالك</string>
+
 
 
 

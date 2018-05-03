@@ -1,5 +1,7 @@
 package com.example.ahmed.reze1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.api.vendor.VendorResponse;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
@@ -31,6 +34,7 @@ import java.util.Map;
 
 public class VendorActivity extends AppCompatActivity {
 
+    private static final String VENDOR_ID_EXTRA = "vendor_id";
     TabLayout tabLayout;
     ViewPager viewPager;
     PagerAdapter adapter;
@@ -43,12 +47,20 @@ public class VendorActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     VendorResponse vendor;
 
+    public static Intent createIntent(String id , Context context){
+        Intent intent = new Intent(context, VendorActivity.class);
+        intent.putExtra(VENDOR_ID_EXTRA, id);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor);
 
-        vendorId = getIntent().getStringExtra("vendor_id");
+        vendorId = getIntent().getStringExtra(VENDOR_ID_EXTRA);
+        Log.i("vendor_id", "onCreate: " + vendorId);
+        performGetVendor();
 
         tabLayout = findViewById(R.id.vendorTabLayout);
         viewPager = findViewById(R.id.vendorViewPager);
@@ -67,6 +79,7 @@ public class VendorActivity extends AppCompatActivity {
                 switch(position)
                 {
                     case 0:
+                        Log.i("create_vendor_id", "onCreate: " + vendorId);
                         ProductFragment product = ProductFragment.createFragment(vendorId);
                         return product;
                     case 1:
@@ -104,11 +117,10 @@ public class VendorActivity extends AppCompatActivity {
             }
         });
 
-        performGetVendor();
         viewPager.setAdapter(adapter);
     }
 
-    private void performGetVendor(){
+    private void performGetVendor1(){
         VolleyCustomRequest stringRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/vendor_operation.php",
                 VendorResponse.class,
                 new Response.Listener<VendorResponse>() {
@@ -123,7 +135,7 @@ public class VendorActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+                Log.i("onErrorResponseVendor", "onErrorResponse: " + error.getMessage());
             }
         }){
             @Override
@@ -146,6 +158,36 @@ public class VendorActivity extends AppCompatActivity {
         if (vendor.getImageUrl() != null) {
             Picasso.with(this).load(vendor.getImageUrl()).into(vendorPpView);
         }
+    }
+
+    private void performGetVendor(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/vendor_operation.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response != null){
+                            Log.i("onResponseVendor", "onResponse: " + response);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("onErrorResponseVendor", "onErrorResponse: " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("method", "get_vendor");
+                map.put("vendor_id", vendorId);
+
+                return map;
+            }
+        };
+
+
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 
 }

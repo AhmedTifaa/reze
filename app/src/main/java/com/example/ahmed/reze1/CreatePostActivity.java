@@ -129,7 +129,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
     private void performUserUpload(){
         dialog.show();
         encodedImages = new ArrayList<>();
-        if (encodedImages.size() > 0){
+        if (selectedImages.size() > 0){
             for (Image image: selectedImages) {
                 Bitmap bm = null;
                 bm = BitmapFactory.decodeFile(image.getPath());
@@ -177,9 +177,9 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
 
                 if (encodedImages.size() > 0){
                     for (String value : encodedImages) {
-                        map.put(encodedImages.indexOf(value) + "", value);
+                        map.put(String.valueOf(encodedImages.indexOf(value)), value);
                     }
-                    map.put("images_size", encodedImages.size() + "");
+                    map.put("images_size", String.valueOf(encodedImages.size()));
                 }
 
                 map.put("method", "create_post");

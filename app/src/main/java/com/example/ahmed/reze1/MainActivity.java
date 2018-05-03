@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_notification_tab));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_requests_tab));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_profile_tab));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_side_menu));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.getTabAt(0).getIcon().setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark),PorterDuff.Mode.SRC_IN);
         final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
