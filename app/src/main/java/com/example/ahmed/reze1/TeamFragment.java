@@ -92,6 +92,7 @@ public class TeamFragment extends Fragment {
         @Override
         public TeamsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view= LayoutInflater.from(getActivity()).inflate(R.layout.team_name_card,parent,false);
+            //todo
             return new TeamsViewHolder(view);
         }
 
