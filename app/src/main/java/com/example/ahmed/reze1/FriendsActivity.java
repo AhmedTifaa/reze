@@ -99,6 +99,7 @@ public class FriendsActivity extends AppCompatActivity {
             username.setText(user.getName());
             for (int i = 0;i < data.length();i++){
                 if (Integer.toString(user.getId()).equals(data.get(i))){
+
                     imageView.setVisibility(View.VISIBLE);
                 }
                 else{
