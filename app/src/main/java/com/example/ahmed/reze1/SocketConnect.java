@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
  * Created by tifaa on 05/05/18.
  */
 
+
 public class SocketConnect {
     public static Socket socket;
     {
