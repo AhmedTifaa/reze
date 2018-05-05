@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SocketConnect socketConnect = new SocketConnect();
+
         /*FontRequest fontRequest = new FontRequest(
                 "com.example.fontprovider",
                 "com.example",
