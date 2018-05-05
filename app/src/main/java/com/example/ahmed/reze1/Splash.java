@@ -15,28 +15,28 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         imageView = (ImageView)findViewById(R.id.loading_bar);
-        AnimationDrawable animationDrawable = new AnimationDrawable();
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_1), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_2), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_3), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_4), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_5), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_6), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_7), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_8), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_9), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_10), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_11), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_12), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_13), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_14), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_15), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_16), duration);
-        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_17), duration);
-        animationDrawable.setOneShot(false);
-        imageView.setImageDrawable(animationDrawable);
+ //       AnimationDrawable animationDrawable = new AnimationDrawable();
+ //       animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_1), duration);
+ //       animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_2), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_3), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_4), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_5), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_6), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_7), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_8), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_9), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_10), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_11), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_12), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_13), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_14), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_15), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_16), duration);
+//        animationDrawable.addFrame(getResources().getDrawable(R.drawable.ic_image2vector_17), duration);
+//        animationDrawable.setOneShot(false);
+//        imageView.setImageDrawable(animationDrawable);
 
-        animationDrawable.start();
+//        animationDrawable.start();
         new Handler().postDelayed(new Runnable() {
                                       @Override
                                       public void run() {

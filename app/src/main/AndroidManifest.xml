@@ -47,9 +47,6 @@
             android:name=".Language"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Login"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
             android:name=".Registration"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
@@ -118,7 +115,16 @@
         <activity
             android:name=".CreateGroupPostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewTeamsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ViewTeamsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewEventActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MyEventsActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

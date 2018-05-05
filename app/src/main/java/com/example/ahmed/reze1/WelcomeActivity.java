@@ -55,7 +55,7 @@ public class WelcomeActivity extends AppCompatActivity {
         
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
-        id = inBundle.get("id").toString();
+        id = inBundle.get("eventId").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
@@ -133,7 +133,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = new Intent(WelcomeActivity.this, BuildProfile.class);
         intent.putExtra("fbname",fbname);
         intent.putExtra("fbpicurl",fbpicurl);
-        intent.putExtra("id",id);
+        intent.putExtra("eventId",id);
         startActivityForResult(intent,0);
         finish();
     }

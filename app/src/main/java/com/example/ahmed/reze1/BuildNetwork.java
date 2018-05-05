@@ -120,7 +120,7 @@ public class BuildNetwork extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildnetwork);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("id").toString();
+        user_id = inBundle.get("eventId").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         btnSkip = (Button) findViewById(R.id.btn_skip);
@@ -141,7 +141,7 @@ public class BuildNetwork extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildNetwork.this, Login.class);
-                intent.putExtra("id",user_id);
+                intent.putExtra("eventId",user_id);
                 startActivity(intent);
                 finish();
             }
@@ -151,7 +151,7 @@ public class BuildNetwork extends AppCompatActivity {
             public void onClick(View v) {
                 new network().execute();
                 Intent intent = new Intent(BuildNetwork.this,MainActivity.class);
-                intent.putExtra("id",user_id);
+                intent.putExtra("eventId",user_id);
                 startActivity(intent);
                 finish();
 
@@ -291,7 +291,7 @@ public class BuildNetwork extends AppCompatActivity {
                             for (int i = 0;i< StoreContacts.size();i++){
                                 parameters.put("contact"+i,StoreContacts.get(i));
                             }
-                            parameters.put("id",user_id);
+                            parameters.put("eventId",user_id);
 
 
                             return parameters;
@@ -433,7 +433,7 @@ public class BuildNetwork extends AppCompatActivity {
                         for (int i = 0;i< StoreContacts.size();i++){
                             parameters.put("contact"+i,StoreContacts.get(i));
                         }
-                        parameters.put("id",user_id);
+                        parameters.put("eventId",user_id);
 
 
                         return parameters;
@@ -494,7 +494,7 @@ public class BuildNetwork extends AppCompatActivity {
                     Map<String,String> parameters  = new HashMap<String, String>();
 
                     parameters.put("snet","1");
-                    parameters.put("id",user_id);
+                    parameters.put("eventId",user_id);
                     return parameters;
                 }
             };

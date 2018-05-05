@@ -113,11 +113,11 @@ public class BuildProfile2 extends AppCompatActivity {
         //fbname = inBundle.get("fbname").toString();
         //fbpicurl = inBundle.get("fbpicurl").toString();
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.getString("id");
+        user_id = inBundle.getString("eventId");
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        //btnSkip = (Button) findViewById(R.id.btn_skip);
+        //btnSkip = (Button) findViewById(R.eventId.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         progress = new ProgressDialog(BuildProfile2.this);
         progress.setTitle("Loading");
@@ -168,7 +168,7 @@ public class BuildProfile2 extends AppCompatActivity {
                             //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("done")){
                                 Intent intent = new Intent(BuildProfile2.this,BuildNetwork.class);
-                                intent.putExtra("id",user_id);
+                                intent.putExtra("eventId",user_id);
                                 startActivity(intent);
                                 finish();
 
@@ -204,7 +204,7 @@ public class BuildProfile2 extends AppCompatActivity {
                         parameters.put("freekick",discreteSeekBar10.getProgress()*10+"");
                         parameters.put("header",discreteSeekBar11.getProgress()*10+"");
                         parameters.put("jump",discreteSeekBar12.getProgress()*10+"");
-                        parameters.put("id",user_id);
+                        parameters.put("eventId",user_id);
 
                         return parameters;
                     }
@@ -283,15 +283,15 @@ public class BuildProfile2 extends AppCompatActivity {
                 //btnSkip.setVisibility(View.GONE);
             }
 //            if(position == 0){
-//                user_namae = (TextView)findViewById(R.id.user_build_name);
+//                user_namae = (TextView)findViewById(R.eventId.user_build_name);
 //                user_namae.setText(fbname);
 //                if (fbpicurl != "null"){
-//                    new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+//                    new DownloadImage((ImageView)findViewById(R.eventId.profile_upload_image)).execute(fbpicurl);
 //                }
 //                else{
-//                    ((ImageView)findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
+//                    ((ImageView)findViewById(R.eventId.profile_upload_image)).setImageResource(R.drawable.default_avatar);
 //                }
-//                Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
+//                Spinner spinnerCity = (Spinner) findViewById(R.eventId.spinner_city);
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //                ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
 //                        R.array.spinner_city, android.R.layout.simple_spinner_item);
@@ -301,7 +301,7 @@ public class BuildProfile2 extends AppCompatActivity {
 //                spinnerCity.setAdapter(adapterSpinnerCity);
 //
 //
-//                Spinner spinnerCarrer = (Spinner) findViewById(R.id.spinner_carrer);
+//                Spinner spinnerCarrer = (Spinner) findViewById(R.eventId.spinner_carrer);
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //                ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
 //                        R.array.spinner_carrer, android.R.layout.simple_spinner_item);

@@ -89,10 +89,10 @@ public class BuildProfile extends AppCompatActivity {
         Bundle inBundle = getIntent().getExtras();
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
-        user_id = inBundle.get("id").toString();
+        user_id = inBundle.get("eventId").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
-        //btnSkip = (Button) findViewById(R.id.btn_skip);
+        //btnSkip = (Button) findViewById(R.eventId.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
         progress = new ProgressDialog(BuildProfile.this);
         progress.setTitle("Loading");
@@ -160,7 +160,7 @@ public class BuildProfile extends AppCompatActivity {
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                                 if(jsonObject.getString("msg").equals("done")){
                                     Intent intent = new Intent(BuildProfile.this,BuildProfile1.class);
-                                    intent.putExtra("id",user_id);
+                                    intent.putExtra("eventId",user_id);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -193,7 +193,7 @@ public class BuildProfile extends AppCompatActivity {
                             }
 
                             parameters.put("ptl",radioButtonptl.getText().toString());
-                            parameters.put("id",user_id);
+                            parameters.put("eventId",user_id);
 
                             return parameters;
                         }
@@ -299,7 +299,7 @@ public class BuildProfile extends AppCompatActivity {
                 //Toast.makeText(getBaseContext(),position+"",Toast.LENGTH_LONG).show();
                 user_namae = (TextView)view.findViewById(R.id.user_build_name);
                 user_namae.setText(fbname);
-                //((ImageView)findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
+                //((ImageView)findViewById(R.eventId.profile_upload_image)).setImageResource(R.drawable.default_avatar);
                 //Toast.makeText(getBaseContext(),fbpicurl,Toast.LENGTH_LONG).show();
                 if (fbpicurl.equals("null")){
                     //Toast.makeText(getBaseContext(),"1",Toast.LENGTH_LONG).show();
@@ -443,7 +443,7 @@ public class BuildProfile extends AppCompatActivity {
 
                     parameters.put("image",enI.toString());
                     parameters.put("img_name",imgName.toString());
-                    parameters.put("id",user_id.toString());
+                    parameters.put("eventId",user_id.toString());
                     return parameters;
                 }
             };
@@ -451,7 +451,7 @@ public class BuildProfile extends AppCompatActivity {
 //            ArrayList<NameValuePair> data = new ArrayList<>();
 //            data.add(new BasicNameValuePair("image",enI));
 //            data.add(new BasicNameValuePair("img_name",imgName));
-//            data.add(new BasicNameValuePair("id",user_id));
+//            data.add(new BasicNameValuePair("eventId",user_id));
 //            HttpParams httpParams = httpRequest();
 //            HttpClient httpClient = new DefaultHttpClient(httpParams);
 //            HttpPost httpPost = new HttpPost("");

@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class SideMenuFragment extends Fragment implements View.OnClickListener {
 
     TextView myTeamView;
+    TextView sideEventsView;
 
     @Nullable
     @Override
@@ -24,15 +25,23 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_side_menu, container, false);
 
         myTeamView = view.findViewById(R.id.myTeamView);
+        sideEventsView = view.findViewById(R.id.sideEventsView);
         myTeamView.setOnClickListener(this);
+        sideEventsView.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()){
             case R.id.myTeamView:
-                Intent intent = new Intent(getActivity(), ViewTeamsActivity.class);
+                intent = new Intent(getActivity(), ViewTeamsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.sideEventsView:
+                intent = new Intent(getActivity(), MyEventsActivity.class);
                 startActivity(intent);
                 break;
 

@@ -147,7 +147,7 @@ public class FriendsActivity extends AppCompatActivity {
                                 UserResponse userResponse = new UserResponse();
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 userResponse.setName(object.getString("username"));
-                                userResponse.setId(object.getInt("id"));
+                                userResponse.setId(object.getInt("eventId"));
                                 users.add(userResponse);
                                 friendsRecyclerView.setLayoutManager(new LinearLayoutManager(FriendsActivity.this));
                                 friendsRecyclerView.setAdapter(adapter);
@@ -170,7 +170,7 @@ public class FriendsActivity extends AppCompatActivity {
                 HashMap<String, String> map = new HashMap<>();
 
                 String userId = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
-                map.put("id", userId);
+                map.put("eventId", userId);
 
                 return map;
 

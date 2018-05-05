@@ -178,10 +178,10 @@ public class Profile extends Fragment {
        // topScroll.smoothScrollTo(0,topScroll.getBottom());
 
 
-//        overview=(TextView)v.findViewById(R.id.overview_tab);
-//        posts=(TextView)v.findViewById(R.id.posts_tab);
-//        videos=(TextView)v.findViewById(R.id.videos_tab);
-//        photos=(TextView)v.findViewById(R.id.photos_tab);
+//        overview=(TextView)v.findViewById(R.eventId.overview_tab);
+//        posts=(TextView)v.findViewById(R.eventId.posts_tab);
+//        videos=(TextView)v.findViewById(R.eventId.videos_tab);
+//        photos=(TextView)v.findViewById(R.eventId.photos_tab);
 //        overview.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -211,7 +211,7 @@ public class Profile extends Fragment {
 //                viewPager2.setCurrentItem(3);
 //            }
 //        });
-        //probar = (RelativeLayout)v.findViewById(R.id.loadingPanel) ;
+        //probar = (RelativeLayout)v.findViewById(R.eventId.loadingPanel) ;
         getUser(userId,requestQueue);
         getIDs(v);
         setEvents();

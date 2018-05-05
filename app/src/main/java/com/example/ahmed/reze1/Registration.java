@@ -58,7 +58,7 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        //Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        //Spinner spinner = (Spinner) findViewById(R.eventId.spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.object_array, R.layout.spinner_item);
 
@@ -136,11 +136,11 @@ public class Registration extends AppCompatActivity {
                                 jsonObject = new JSONObject(response);
                                // Toast.makeText(getBaseContext(), jsonObject.getString("msg"), Toast.LENGTH_LONG).show();
                                 if (jsonObject.getString("msg").equals("done")) {
-                                   // Toast.makeText(getApplicationContext(), jsonObject.getString("id"), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), jsonObject.getString("eventId"), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                     intent.putExtra("fbname", inputFullName.getText().toString());
                                     intent.putExtra("fbpicurl", "null");
-                                    intent.putExtra("id", jsonObject.getString("id"));
+                                    intent.putExtra("eventId", jsonObject.getString("eventId"));
                                     startActivityForResult(intent, 0);
                                     finish();
                                 } else if (jsonObject.getString("msg").equals("This mail is already exsist you can log in")) {

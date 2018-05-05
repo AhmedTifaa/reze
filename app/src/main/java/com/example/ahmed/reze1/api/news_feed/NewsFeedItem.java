@@ -11,6 +11,9 @@ public class NewsFeedItem {
 
     public static final int PRODUCT_TYPE = 0;
     public static final int POST_TYPE = 1;
+    public static final int VENDOR_POST_TYPE = 2;
+    public static final int EVENT_TYPE = 3;
+    public static final int GROUP_POSTS_TYPE = 4;
 
     private int type;
     private int id;
@@ -25,9 +28,54 @@ public class NewsFeedItem {
     private float productPrice;
     private int productAmount;
     private String productImageUrl;
-    private String productDescription;
+    private String description;
     private int productSale;
     private int productSoldAmount;
+    private String occurDate;
+    private String itemName;
+    private int groupId;
+    private int vendorId;
+    private int postId;
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
+    public int getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(int vendorId) {
+        this.vendorId = vendorId;
+    }
+
+    public String getOccurDate() {
+        return occurDate;
+    }
+
+    public void setOccurDate(String occurDate) {
+        this.occurDate = occurDate;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 
     public int getType() {
         return type;
@@ -133,12 +181,12 @@ public class NewsFeedItem {
         this.productImageUrl = productImageUrl;
     }
 
-    public String getProductDescription() {
-        return productDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getProductSale() {

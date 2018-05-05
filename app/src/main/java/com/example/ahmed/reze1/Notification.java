@@ -179,7 +179,7 @@ public class Notification extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("post-id", String.valueOf(notifications.get(position).getPostId()));
+                    Log.e("post-eventId", String.valueOf(notifications.get(position).getPostId()));
                     Intent intent = PostActivity.createIntent(notifications.get(position).getPostId(), getActivity());
                     startActivity(intent);
                 }
@@ -219,7 +219,7 @@ public class Notification extends Fragment {
 
                 String userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
                         .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
-                Log.i("user-id", "user-id" + userId);
+                Log.i("user-eventId", "user-eventId" + userId);
                 map.put("method", "get_notification");
                 map.put("user_id", userId);
 
