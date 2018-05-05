@@ -121,7 +121,7 @@ public class Login extends AppCompatActivity {
                                         Log.v("LoginActivity", response.toString());
 
                                         // Application code
-                                        try {
+                                       /* try {
 
                                             //String email = object.getString("email");
                                             //String birthday = object.getString("birthday"); // 01/31/1980 format
@@ -130,7 +130,7 @@ public class Login extends AppCompatActivity {
                                             //Toast.makeText(getBaseContext(),email+" "+birthday,Toast.LENGTH_LONG).show();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
-                                        }
+                                        }*/
 
 
                                     }
@@ -291,65 +291,65 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    public void fbRegister(final String name, final String mail, final String birthdate, final String imgUrl){
-
-        showDialog();
-        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/fbregister.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hideDialog();
-                //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
-                try {
-                    JSONObject jsonObject;
-                    jsonObject = new JSONObject(response);
-                    //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
-                    if(jsonObject.getString("msg").equals("done")){
-                        Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                        intent.putExtra("fbname",name);
-                        intent.putExtra("fbpicurl",imgUrl);
-                        intent.putExtra("id",jsonObject.getString("id"));
-                        startActivityForResult(intent, 0);
-                        finish();
-                    }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
-                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                        intent.putExtra("fbname",name);
-                        intent.putExtra("fbpicurl",imgUrl);
-                        intent.putExtra("id",jsonObject.getString("id"));
-                        startActivityForResult(intent, 0);
-                        finish();
-
-                        //Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> parameters  = new HashMap<String, String>();
-
-                parameters.put("name",name);
-                parameters.put("mail",mail);
-                parameters.put("birthday",birthdate);
-                parameters.put("img_url",imgUrl);
-
-                return parameters;
-            }
-        };
-        requestQueue.add(request);
-    }
+//    public void fbRegister(final String name, final String mail, final String birthdate, final String imgUrl){
+//
+//        showDialog();
+//        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/fbregister.php", new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                hideDialog();
+//                //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+//                try {
+//                    JSONObject jsonObject;
+//                    jsonObject = new JSONObject(response);
+//                    //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+//                    if(jsonObject.getString("msg").equals("done")){
+//                        Toast.makeText(getApplicationContext(),jsonObject.getString("id"),Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//                        intent.putExtra("fbname",name);
+//                        intent.putExtra("fbpicurl",imgUrl);
+//                        intent.putExtra("id",jsonObject.getString("id"));
+//                        startActivityForResult(intent, 0);
+//                        finish();
+//                    }else if(jsonObject.getString("msg").equals("This mail is already exsist you can log in")){
+//                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//                        intent.putExtra("fbname",name);
+//                        intent.putExtra("fbpicurl",imgUrl);
+//                        intent.putExtra("id",jsonObject.getString("id"));
+//                        startActivityForResult(intent, 0);
+//                        finish();
+//
+//                        //Toast.makeText(getBaseContext(),R.string.exsistEmail,Toast.LENGTH_LONG).show();
+//                    }
+//                    else {
+//                        Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        }) {
+//
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String,String> parameters  = new HashMap<String, String>();
+//
+//                parameters.put("name",name);
+//                parameters.put("mail",mail);
+//                parameters.put("birthday",birthdate);
+//                parameters.put("img_url",imgUrl);
+//
+//                return parameters;
+//            }
+//        };
+//        requestQueue.add(request);
+//    }
     public void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
