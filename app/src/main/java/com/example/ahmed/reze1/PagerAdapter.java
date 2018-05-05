@@ -43,6 +43,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                     VendorProfile vendorProfile = new VendorProfile();
                     return vendorProfile;
                 }
+            case 4:
+                SideMenuFragment sideMenu = new SideMenuFragment();
+                return  sideMenu;
             default:
                 return null;
         }

@@ -19,7 +19,7 @@ public class ProductResponse implements Serializable {
     @Expose
     private String name;
 
-    @SerializedName("vendor_id")
+    @SerializedName("vendorId")
     @Expose
     private int vendorId;
 
@@ -35,7 +35,7 @@ public class ProductResponse implements Serializable {
     @Expose
     private int amount;
 
-    @SerializedName("image_url")
+    @SerializedName("imageUrl")
     @Expose
     private String imageUrl;
 
@@ -47,7 +47,7 @@ public class ProductResponse implements Serializable {
     @Expose
     private int sale;
 
-    @SerializedName("sold_amount")
+    @SerializedName("soldAmount")
     @Expose
     private int soldAmount;
 

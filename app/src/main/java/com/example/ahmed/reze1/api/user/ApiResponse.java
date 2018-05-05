@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class ApiResponse{
 
-        @SerializedName("users")
-        @Expose
-        private ArrayList<UserResponse>users;
+    @SerializedName("users")
+    @Expose
+    private ArrayList<UserResponse>users;
 
     public ArrayList<UserResponse> getUsers() {
         return users;

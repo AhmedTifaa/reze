@@ -483,9 +483,10 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
-                        Intent intent = new Intent(getActivity(), VendorActivity.class);
-                        intent.putExtra("vendor_id", item.getOwnerId());
-                        startActivity(intent);
+                        if (item.getOwnerId() > 0) {
+                            Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
+                            startActivity(intent);
+                        }
                     }
                 }
             });
@@ -494,9 +495,10 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
-                        Intent intent = new Intent(getActivity(), VendorActivity.class);
-                        intent.putExtra("vendor_id", item.getOwnerId());
-                        startActivity(intent);
+                        if (item.getOwnerId() > 0) {
+                            Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
+                            startActivity(intent);
+                        }
                     }
                 }
             });
