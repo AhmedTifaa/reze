@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         mActionBar.setCustomView(mCustomView,layout);
         mActionBar.setDisplayShowCustomEnabled(true);
         backView = mCustomView.findViewById(R.id.searchBackView);
-
-
         userType = getIntent().getStringExtra("type");
         inflateMainView(currentTab);
 
@@ -101,6 +100,16 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     public void active(View view){

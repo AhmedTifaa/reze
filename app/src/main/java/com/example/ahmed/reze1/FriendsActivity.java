@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.api.user.UserResponse;
 import com.example.ahmed.reze1.app.AppConfig;
+import com.github.nkzawa.emitter.Emitter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +44,7 @@ public class FriendsActivity extends AppCompatActivity {
     int user_id;
     RecyclerView friendsRecyclerView;
     UserRecyclerAdapter adapter;
+    JSONArray data;
 
 
     public static Intent createIntent(int userId,String userName ,Context context){
@@ -61,22 +65,46 @@ public class FriendsActivity extends AppCompatActivity {
         //getIntent().getExtras().getString(User_NAME);
         friendsRecyclerView = findViewById(R.id.friends_list);
         adapter=new UserRecyclerAdapter();
+        SocketConnect.socket.emit("online");
+        SocketConnect.socket.on("online", handleIncomingMessages);
         getUsers();
 
     }
+    private Emitter.Listener handleIncomingMessages = new Emitter.Listener(){
+        @Override
+        public void call(final Object... args){
+            FriendsActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    data = (JSONArray) args[0];
+                    Toast.makeText(getBaseContext(),""+data.length(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
 
     private class FriendsViewHolder extends RecyclerView.ViewHolder{
 
         TextView username;
+        ImageView imageView;
 
         public FriendsViewHolder(View itemView) {
             super(itemView);
             username=itemView.findViewById(R.id.UserName);
-
+            imageView = itemView.findViewById(R.id.onlineState);
         }
 
-        public void bind(final UserResponse user){
+
+        public void bind(final UserResponse user) throws JSONException {
             username.setText(user.getName());
+            for (int i = 0;i < data.length();i++){
+                if (Integer.toString(user.getId()).equals(data.get(i))){
+                    imageView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    imageView.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -92,7 +120,11 @@ public class FriendsActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull FriendsViewHolder holder, int position) {
-            holder.bind(users.get(position));
+            try {
+                holder.bind(users.get(position));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

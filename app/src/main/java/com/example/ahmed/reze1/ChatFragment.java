@@ -305,7 +305,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SocketConnect.socket.disconnect();
+       // SocketConnect.socket.disconnect();
     }
 
 }
