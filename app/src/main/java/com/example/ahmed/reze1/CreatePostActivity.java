@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -60,6 +61,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
         postTextView = findViewById(R.id.new_post_desc);
         imageView = findViewById(R.id.new_post_image);
         postButton = findViewById(R.id.post_btn);
+
 
         imageView.setOnClickListener(this);
         postButton.setOnClickListener(this);
