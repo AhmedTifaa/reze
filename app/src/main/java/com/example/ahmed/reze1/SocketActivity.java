@@ -78,6 +78,7 @@ public class SocketActivity extends AppCompatActivity {
             // Move to first row
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+
             imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
             //Log.d("onActivityResult",imgDecodableString);

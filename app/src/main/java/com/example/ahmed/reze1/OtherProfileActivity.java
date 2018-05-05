@@ -428,6 +428,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     }
                 };
                 requestQueue.add(request);
+
                 msgBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

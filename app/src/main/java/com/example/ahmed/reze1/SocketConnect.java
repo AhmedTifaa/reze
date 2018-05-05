@@ -15,6 +15,7 @@ public class SocketConnect {
     {
         try{
             socket = IO.socket("http://192.168.1.5:3000");
+
         }catch(URISyntaxException e){
             throw new RuntimeException(e);
         }
