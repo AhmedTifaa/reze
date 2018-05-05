@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.FontRequestEmojiCompatConfig;
+import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.provider.FontRequest;
 import android.support.v4.view.ViewPager;
@@ -69,13 +70,8 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         setContentView(R.layout.activity_main);
 
         SocketConnect socketConnect = new SocketConnect();
-
-        /*FontRequest fontRequest = new FontRequest(
-                "com.example.fontprovider",
-                "com.example",
-                "emoji compat Font Query", CERTIFICATES);
-        EmojiCompat.Config config = new FontRequestEmojiCompatConfig(this, fontRequest);
-        EmojiCompat.init(config);*/
+        EmojiCompat.Config config = new BundledEmojiCompatConfig(this);
+        EmojiCompat.init(config);
         userId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         SocketConnect.socket.emit("id",userId);

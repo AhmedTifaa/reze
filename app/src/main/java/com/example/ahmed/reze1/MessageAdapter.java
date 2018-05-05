@@ -2,6 +2,7 @@ package com.example.ahmed.reze1;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.text.emoji.widget.EmojiTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -61,19 +64,34 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
-        private TextView mMessageView;
+        private EmojiTextView mMessageView;
         private TextView amMessageView;
+        private TextView textView;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.image);
-            mMessageView = (TextView) itemView.findViewById(R.id.message);
+            mMessageView = (EmojiTextView) itemView.findViewById(R.id.message);
+            textView = (TextView) itemView.findViewById(R.id.textView);
             Toast.makeText(itemView.getContext(),Message.TYPE_MESSAGE+"",Toast.LENGTH_LONG).show();
+            mMessageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   if (textView.getVisibility() == View.GONE){
+                       textView.setVisibility(View.VISIBLE);
+                   }else if (textView.getVisibility() == View.VISIBLE){
+                        textView.setVisibility(View.GONE);
+                    }
+                }
+            });
 
         }
 
         public void setMessage(String message) {
             if (null == mMessageView) return;
             if(null == message) return;
+            textView.setText(formatter.format(date));
             mMessageView.setText(message);
            // amMessageView.setText(message);
 

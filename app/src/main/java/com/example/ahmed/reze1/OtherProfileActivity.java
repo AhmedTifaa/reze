@@ -78,6 +78,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     String q;
     int searchBoxWidth = 300;
     String userId;
+    String guestUserId;
     TextView usernamePView;
 
     private RecyclerView.Adapter postsAdapter;
@@ -102,7 +103,9 @@ public class OtherProfileActivity extends AppCompatActivity {
         searchRecyclerView = findViewById(R.id.otherSearchRecView);
 
         searchBox = findViewById(R.id.searchView);
+        guestUserId = getIntent().getStringExtra(USER_ID_EXTRA);
         backView = findViewById(R.id.searchBackArrow);
+
         userId = OtherProfileActivity.this.getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         searchBox.addTextChangedListener(new TextWatcher() {
@@ -590,7 +593,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
 
-                map.put("userId", userId);
+                map.put("userId", guestUserId);
                 map.put("method", "get_user_posts");
                 map.put("cursor", "0");
 

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 public class SocketActivity extends AppCompatActivity {
@@ -17,6 +19,7 @@ public class SocketActivity extends AppCompatActivity {
     String imgDecodableString;
     public static String friendId;
     String Fname;
+    ImageButton imageButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,24 +30,31 @@ public class SocketActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle(Fname);
+        imageButton = (ImageButton)findViewById(R.id.attach_btn);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
 
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         Log.d("onCreateOptionsMenu", "create menu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.socket_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case R.id.action_attach:
                 Log.d("onOptionsItemSelected","action_attach");
                 openGallery();
@@ -55,7 +65,8 @@ public class SocketActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return false;
     }
 
     private void openGallery()

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.text.emoji.widget.EmojiButton;
+import android.support.text.emoji.widget.EmojiEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
@@ -29,7 +31,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -43,7 +47,7 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private EditText mInputMessageView;
+    private EmojiEditText mInputMessageView;
     private RecyclerView mMessagesView;
     private OnFragmentInteractionListener mListener;
     private List<Message> mMessages = new ArrayList<Message>();
@@ -127,8 +131,8 @@ public class ChatFragment extends Fragment {
         mMessagesView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMessagesView.setAdapter(mAdapter);
 
-        ImageButton sendButton = (ImageButton) view.findViewById(R.id.send_button);
-        mInputMessageView = (EditText) view.findViewById(R.id.message_input);
+        EmojiButton sendButton = (EmojiButton) view.findViewById(R.id.send_button);
+        mInputMessageView = (EmojiEditText) view.findViewById(R.id.message_input);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +146,8 @@ public class ChatFragment extends Fragment {
 
     private void sendMessage(){
         String message = mInputMessageView.getText().toString().trim();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
         otherId = SocketActivity.friendId;
         mInputMessageView.setText("");
         addMessage(message);
@@ -150,6 +156,8 @@ public class ChatFragment extends Fragment {
             sendText.put("text",message);
             sendText.put("sender",userId);
             sendText.put("reciever",otherId);
+            sendText.put("time",formatter.format(date));
+
             SocketConnect.socket.emit("message", sendText);
         }catch(JSONException e){
             Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();

@@ -614,8 +614,8 @@ public class Home extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-
                 map.put("method", "get_news_feed");
+                map.put("userId", userId);
                 map.put("cursor", "0");
 
                 return map;
