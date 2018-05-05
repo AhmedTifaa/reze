@@ -58,7 +58,7 @@ public class contactAddapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //convertView = LayoutInflater.from(context).inflate(R.layout.item_friend,parent,false);
-        //TextView textView = (TextView)convertView.findViewById(R.id.sugName);
+        //TextView textView = (TextView)convertView.findViewById(R.eventId.sugName);
        /* try {
             jsonObject = new JSONObject(vals.get(position));
             //textView.setText("50");
@@ -77,8 +77,8 @@ public class contactAddapter extends ArrayAdapter<String> {
         try {
             jsonObject = new JSONObject(vals.get(position));
             textView.setText(jsonObject.get("name").toString());
-            button.setId(Integer.parseInt(jsonObject.get("id").toString()));
-            btnId = jsonObject.get("id").toString();
+            button.setId(Integer.parseInt(jsonObject.get("eventId").toString()));
+            btnId = jsonObject.get("eventId").toString();
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

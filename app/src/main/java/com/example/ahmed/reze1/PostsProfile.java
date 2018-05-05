@@ -412,7 +412,8 @@ public class PostsProfile extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
 
-                map.put("method", "get_news_feed");
+                map.put("method", "get_user_posts");
+                map.put("userId", userId);
                 map.put("cursor", "0");
 
                 return map;

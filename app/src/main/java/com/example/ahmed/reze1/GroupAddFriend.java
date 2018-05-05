@@ -143,7 +143,7 @@ public class GroupAddFriend extends Fragment {
                                     UserResponse userResponse = new UserResponse();
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     userResponse.setName(object.getString("username"));
-                                    userResponse.setId(object.getInt("id"));
+                                    userResponse.setId(object.getInt("eventId"));
                                     users.add(userResponse);
                                     friendsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
                                     adapter = new UserRecyclerAdapter();

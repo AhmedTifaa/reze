@@ -1,5 +1,8 @@
 package com.example.ahmed.reze1.api.post;
 
+import com.example.ahmed.reze1.api.news_feed.EventResponse;
+import com.example.ahmed.reze1.api.news_feed.GroupPostResponse;
+import com.example.ahmed.reze1.api.news_feed.VendorPostsResponse;
 import com.example.ahmed.reze1.api.product.ProductResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -22,9 +25,46 @@ public class ApiResponse {
     @Expose
     private ProductResponse[] products;
 
+    @SerializedName("events")
+    @Expose
+    private EventResponse[] events;
+
+    @SerializedName("group_posts")
+    @Expose
+    private GroupPostResponse[] groupPosts;
+
+
+    @SerializedName("vendor_posts")
+    @Expose
+    private VendorPostsResponse[] vendorPosts;
+
     @SerializedName("now")
     @Expose
     private long now;
+
+    public EventResponse[] getEvents() {
+        return events;
+    }
+
+    public void setEvents(EventResponse[] events) {
+        this.events = events;
+    }
+
+    public GroupPostResponse[] getGroupPosts() {
+        return groupPosts;
+    }
+
+    public void setGroupPosts(GroupPostResponse[] groupPosts) {
+        this.groupPosts = groupPosts;
+    }
+
+    public VendorPostsResponse[] getVendorPosts() {
+        return vendorPosts;
+    }
+
+    public void setVendorPosts(VendorPostsResponse[] vendorPosts) {
+        this.vendorPosts = vendorPosts;
+    }
 
     public ProductResponse[] getProducts() {
         return products;

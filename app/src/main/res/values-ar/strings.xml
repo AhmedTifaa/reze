@@ -50,6 +50,7 @@
     <string name="groups">مجموعات</string>
     <string name="events">حدث</string>
     <string name="my_teams">فريق</string>
+    <string name="my_event">الخاصة بى</string>
     <string name="my_coins">فلوسى</string>
     <string name="my_orders">الطلبات</string>
     <string name="setting">اعدادات</string>
@@ -88,6 +89,14 @@
     <string name="public_">عام</string>
     <string name="create_team">انشاء فريق</string>
     <string name="owner">مالك</string>
+    <string name="going">ذاهب</string>
+    <string name="interested">مهتم</string>
+    <string name="vendors">ممولين</string>
+    <string name="teams">فرق</string>
+    <string name="discussion">Discussion</string>
+    <string name="occur_date">يحدث فى: </string>
+    <string name="create">انشاء</string>
+    <string name="create_event">انشاء حدث</string>
 
 
 

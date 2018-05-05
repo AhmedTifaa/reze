@@ -106,7 +106,7 @@ public class BuildProfile1 extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildprofile);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("id").toString();
+        user_id = inBundle.get("eventId").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -159,7 +159,7 @@ public class BuildProfile1 extends AppCompatActivity {
                                 //Toast.makeText(getBaseContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                                 if(jsonObject.getString("msg").equals("done")){
                                     Intent intent = new Intent(BuildProfile1.this,BuildProfile2.class);
-                                    intent.putExtra("id",user_id);
+                                    intent.putExtra("eventId",user_id);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -187,7 +187,7 @@ public class BuildProfile1 extends AppCompatActivity {
                             parameters.put("nationality",spinnerNag.getSelectedItem().toString());
                             parameters.put("position",spinnerPosition.getSelectedItem().toString());
                             parameters.put("df",spinnerFoot.getSelectedItem().toString());
-                            parameters.put("id",user_id);
+                            parameters.put("eventId",user_id);
 
                             return parameters;
                         }
@@ -255,15 +255,15 @@ public class BuildProfile1 extends AppCompatActivity {
                 //btnSkip.setVisibility(View.GONE);
             }
 //            if(position == 0){
-//                user_namae = (TextView)findViewById(R.id.user_build_name);
+//                user_namae = (TextView)findViewById(R.eventId.user_build_name);
 //                user_namae.setText(fbname);
 //                if (fbpicurl != "null"){
-//                    new DownloadImage((ImageView)findViewById(R.id.profile_upload_image)).execute(fbpicurl);
+//                    new DownloadImage((ImageView)findViewById(R.eventId.profile_upload_image)).execute(fbpicurl);
 //                }
 //                else{
-//                    ((ImageView)findViewById(R.id.profile_upload_image)).setImageResource(R.drawable.default_avatar);
+//                    ((ImageView)findViewById(R.eventId.profile_upload_image)).setImageResource(R.drawable.default_avatar);
 //                }
-//                Spinner spinnerCity = (Spinner) findViewById(R.id.spinner_city);
+//                Spinner spinnerCity = (Spinner) findViewById(R.eventId.spinner_city);
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //                ArrayAdapter<CharSequence> adapterSpinnerCity = ArrayAdapter.createFromResource(getApplicationContext(),
 //                        R.array.spinner_city, android.R.layout.simple_spinner_item);
@@ -273,7 +273,7 @@ public class BuildProfile1 extends AppCompatActivity {
 //                spinnerCity.setAdapter(adapterSpinnerCity);
 //
 //
-//                Spinner spinnerCarrer = (Spinner) findViewById(R.id.spinner_carrer);
+//                Spinner spinnerCarrer = (Spinner) findViewById(R.eventId.spinner_carrer);
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //                ArrayAdapter<CharSequence> adapterSpinnerCarrer = ArrayAdapter.createFromResource(getApplicationContext(),
 //                        R.array.spinner_carrer, android.R.layout.simple_spinner_item);

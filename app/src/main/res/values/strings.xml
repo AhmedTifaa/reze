@@ -110,6 +110,15 @@
     <string name="public_">Public</string>
     <string name="create_team">Create Team</string>
     <string name="owner">Owner</string>
+    <string name="going">Going</string>
+    <string name="interested">Interested</string>
+    <string name="vendors">Vendors</string>
+    <string name="teams">Teams</string>
+    <string name="discussion">Discussion</string>
+    <string name="occur_date">Takes place at: </string>
+    <string name="create">Create</string>
+    <string name="create_event">Create event</string>
+    <string name="my_event">My event</string>
 
     <string-array name="object_array">
 

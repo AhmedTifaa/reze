@@ -116,7 +116,7 @@ public class BuildNetwork1 extends AppCompatActivity {
 
         setContentView(R.layout.activity_buildnetwork);
         Bundle inBundle = getIntent().getExtras();
-        user_id = inBundle.get("id").toString();
+        user_id = inBundle.get("eventId").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         btnSkip = (Button) findViewById(R.id.btn_skip);
@@ -135,7 +135,7 @@ public class BuildNetwork1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuildNetwork1.this,MainActivity.class);
-                intent.putExtra("id",user_id);
+                intent.putExtra("eventId",user_id);
                 startActivity(intent);
                 finish();
             }

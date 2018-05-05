@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     ImageButton searchIcon;
     boolean searchUsers = false;
     boolean searchGroups = false;
+    boolean searchEvent = false;
+    boolean searchVendor = false;
+    boolean searchTeam = false;
     String q;
     int searchBoxWidth = 300;
     int currentTab = 0;
@@ -203,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 } else {
                     searchGroups = false;
                     searchUsers = false;
+                    searchEvent = false;
+                    searchVendor = false;
+                    searchTeam = false;
                 }
             }
 
@@ -238,19 +244,112 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
         Button userSearchFilter;
         Button groupSearchFilter;
+        Button vendorSearchFilter;
+        Button teamSearchFilter;
+        Button eventSearchFilter;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
 
             userSearchFilter = itemView.findViewById(R.id.userSearchFilter);
             groupSearchFilter = itemView.findViewById(R.id.groupSearchFilter);
+            vendorSearchFilter = itemView.findViewById(R.id.vendorSearchFilter);
+            teamSearchFilter = itemView.findViewById(R.id.teamSearchFilter);
+            eventSearchFilter = itemView.findViewById(R.id.eventSearchFilter);
+
+            eventSearchFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (searchItems != null && searchItems.size() > 0){
+                        searchVendor = false;
+                        searchGroups = false;
+                        searchUsers = false;
+                        searchEvent = true;
+                        searchTeam = false;
+                        if (q != null){
+                            ArrayList<SearchItem> items = new ArrayList<>();
+                            for (SearchItem item:searchItems) {
+                                if (item.getType().contentEquals("event")){
+                                    items.add(item);
+                                }
+                            }
+                            if (items.size() > 0){
+                                searchItems = items;
+                                updateSearchView(searchItems);
+                            } else {
+                                performSearch(q);
+                                //Toast.makeText(MainActivity.this, R.string.search_result, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            });
+
+            teamSearchFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (searchItems != null && searchItems.size() > 0){
+                        searchVendor = false;
+                        searchGroups = false;
+                        searchUsers = false;
+                        searchEvent = false;
+                        searchTeam = true;
+                        if (q != null){
+                            ArrayList<SearchItem> items = new ArrayList<>();
+                            for (SearchItem item:searchItems) {
+                                if (item.getType().contentEquals("team")){
+                                    items.add(item);
+                                }
+                            }
+                            if (items.size() > 0){
+                                searchItems = items;
+                                updateSearchView(searchItems);
+                            } else {
+                                performSearch(q);
+                                //Toast.makeText(MainActivity.this, R.string.search_result, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            });
+
+            vendorSearchFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (searchItems != null && searchItems.size() > 0){
+                        searchVendor = true;
+                        searchGroups = false;
+                        searchUsers = false;
+                        searchEvent = false;
+                        searchTeam = false;
+                        if (q != null){
+                            ArrayList<SearchItem> items = new ArrayList<>();
+                            for (SearchItem item:searchItems) {
+                                if (item.getType().contentEquals("vendor")){
+                                    items.add(item);
+                                }
+                            }
+                            if (items.size() > 0){
+                                searchItems = items;
+                                updateSearchView(searchItems);
+                            } else {
+                                performSearch(q);
+                                //Toast.makeText(MainActivity.this, R.string.search_result, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+            });
 
             userSearchFilter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (searchItems != null && searchItems.size() > 0){
-                        searchUsers = true;
+                        searchVendor = false;
                         searchGroups = false;
+                        searchUsers = true;
+                        searchEvent = false;
+                        searchTeam = false;
                         if (q != null){
                             ArrayList<SearchItem> items = new ArrayList<>();
                             for (SearchItem item:searchItems) {
@@ -274,8 +373,11 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 @Override
                 public void onClick(View v) {
                     if (searchItems != null && searchItems.size() > 0){
+                        searchVendor = false;
                         searchGroups = true;
                         searchUsers = false;
+                        searchEvent = false;
+                        searchTeam = false;
                         if (q != null){
                             ArrayList<SearchItem> items = new ArrayList<>();
                             for (SearchItem item:searchItems) {
@@ -391,14 +493,14 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     }
 
     private void performSearch(final String query){
-        VolleyCustomRequest customRequest = new VolleyCustomRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_search.php", SearchResponse.class,
+        VolleyCustomRequest customRequest = new VolleyCustomRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_search.php", SearchResponse.class,
                 new Response.Listener<SearchResponse>() {
                     @Override
                     public void onResponse(SearchResponse response) {
                         searchItems = new ArrayList<>();
                         if (searchUsers){
                             if (response.getUsers() != null && response.getUsers().length > 0){
-                                Log.i("volley response", "onResponse: " + response.getUsers()[0].getUsername());
+                                Log.i("volley_response_search", "onResponse: " + response.getUsers()[0].getUsername());
 
                                 for (int i = 0; i < response.getUsers().length; i++) {
                                     SearchItem item = new SearchItem();
@@ -421,7 +523,45 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                                     searchItems.add(item);
                                 }
                             }
-                        } else {
+                        } else if (searchVendor){
+                            if (response.getVendors() != null && response.getVendors().length > 0){
+                                for (int i = 0; i < response.getVendors().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getVendors()[i].getVendorId());
+                                    item.setName(response.getVendors()[i].getVendorName());
+                                    if (response.getVendors()[i].getVendorDescription() != null && !response.getVendors()[i].getVendorDescription().contentEquals("")){
+                                        item.setDescription(response.getVendors()[i].getVendorDescription());
+                                    }
+                                    item.setType("vendor");
+                                    searchItems.add(item);
+                                }
+                            }
+                        } else if (searchTeam){
+                            if (response.getTeams() != null && response.getTeams().length > 0){
+                                for (int i = 0; i < response.getTeams().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getTeams()[i].getTeamId());
+                                    item.setName(response.getTeams()[i].getTeamName());
+                                    item.setType("team");
+                                    searchItems.add(item);
+                                }
+                            }
+                        } else if (searchEvent){
+                            if (response.getEvents() != null && response.getEvents().length > 0){
+                                for (int i = 0; i < response.getEvents().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getEvents()[i].getEventId());
+                                    item.setName(response.getEvents()[i].getEventName());
+                                    if (response.getEvents()[i].getEventDescription() != null && !response.getEvents()[i].getEventDescription().contentEquals("")){
+                                        item.setDescription(response.getEvents()[i].getEventDescription());
+                                    }
+                                    item.setType("event");
+                                    searchItems.add(item);
+                                }
+                            }
+                        }
+
+                        else {
                             if (response.getUsers() != null && response.getUsers().length > 0){
                                 Log.i("volley response", "onResponse: " + response.getUsers()[0].getUsername());
 
@@ -446,6 +586,42 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                                     searchItems.add(item);
                                 }
                             }
+
+                            if (response.getVendors() != null && response.getVendors().length > 0){
+                                for (int i = 0; i < response.getVendors().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getVendors()[i].getVendorId());
+                                    item.setName(response.getVendors()[i].getVendorName());
+                                    if (response.getVendors()[i].getVendorDescription() != null && !response.getVendors()[i].getVendorDescription().contentEquals("")){
+                                        item.setDescription(response.getVendors()[i].getVendorDescription());
+                                    }
+                                    item.setType("vendor");
+                                    searchItems.add(item);
+                                }
+                            }
+
+                            if (response.getTeams() != null && response.getTeams().length > 0){
+                                for (int i = 0; i < response.getTeams().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getTeams()[i].getTeamId());
+                                    item.setName(response.getTeams()[i].getTeamName());
+                                    item.setType("team");
+                                    searchItems.add(item);
+                                }
+                            }
+
+                            if (response.getEvents() != null && response.getEvents().length > 0){
+                                for (int i = 0; i < response.getEvents().length; i++) {
+                                    SearchItem item = new SearchItem();
+                                    item.setId(response.getEvents()[i].getEventId());
+                                    item.setName(response.getEvents()[i].getEventName());
+                                    if (response.getEvents()[i].getEventDescription() != null && !response.getEvents()[i].getEventDescription().contentEquals("")){
+                                        item.setDescription(response.getEvents()[i].getEventDescription());
+                                    }
+                                    item.setType("event");
+                                    searchItems.add(item);
+                                }
+                            }
                         }
 
 
@@ -456,7 +632,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+                Log.i("volley_error_search", "onErrorResponse: " + error.getMessage());
             }
         }){
             @Override
@@ -464,6 +640,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 HashMap<String, String> map = new HashMap<>();
 
                 map.put("query", query);
+                map.put("cursor", "0");
                 //map.put("cursor", "0");
 
                 return map;
