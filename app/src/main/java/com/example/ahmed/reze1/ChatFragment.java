@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.ahmed.reze1.app.AppConfig;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -31,6 +32,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ChatFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,14 +48,8 @@ public class ChatFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private List<Message> mMessages = new ArrayList<Message>();
     private RecyclerView.Adapter mAdapter;
-    private Socket socket;
-    {
-        try{
-            socket = IO.socket("http://192.168.1.25:3000/");
-        }catch(URISyntaxException e){
-            throw new RuntimeException(e);
-        }
-    }
+    public  String userId;
+    public String otherId;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -79,8 +76,18 @@ public class ChatFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        setHasOptionsMenu(true);
-        socket.connect();
-        socket.on("message", handleIncomingMessages);
+        userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
+       SocketConnect socketConnect = new SocketConnect();
+        Toast.makeText(getActivity(),SocketConnect.socket.connected()+"",Toast.LENGTH_LONG).show();
+
+//       if (socket.connected()){
+//           Toast.makeText(getActivity(),"socket connected",Toast.LENGTH_LONG).show();
+//       }
+//       else{
+//           Toast.makeText(getActivity(),"no socket",Toast.LENGTH_LONG).show();
+//       }
+        SocketConnect.socket.on("message", handleIncomingMessages);
     }
 
 
@@ -135,15 +142,17 @@ public class ChatFragment extends Fragment {
 
     private void sendMessage(){
         String message = mInputMessageView.getText().toString().trim();
+        otherId = SocketActivity.friendId;
         mInputMessageView.setText("");
         addMessage(message);
         JSONObject sendText = new JSONObject();
         try{
             sendText.put("text",message);
-            socket.emit("message", sendText);
+            sendText.put("sender",userId);
+            sendText.put("reciever",otherId);
+            SocketConnect.socket.emit("message", sendText);
         }catch(JSONException e){
             Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
-
         }
 
     }
@@ -155,7 +164,7 @@ public class ChatFragment extends Fragment {
             sendData.put("image", encodeImage(path));
             Bitmap bmp = decodeImage(sendData.getString("image"));
             addImage(bmp);
-            socket.emit("message",sendData);
+            SocketConnect.socket.emit("message",sendData);
         }catch(JSONException e){
 
         }
@@ -166,14 +175,35 @@ public class ChatFragment extends Fragment {
         mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
                 .message(message).build());
         // mAdapter = new MessageAdapter(mMessages);
+        Message.TYPE_MESSAGE = 0;
+        mAdapter = new MessageAdapter(mMessages);
+        mAdapter.notifyItemInserted(0);
+        scrollToBottom();
+    }
+    private void getMessage(String message) {
+
+        mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
+                .message(message).build());
+        // mAdapter = new MessageAdapter(mMessages);
+        Message.TYPE_MESSAGE = 1;
         mAdapter = new MessageAdapter(mMessages);
         mAdapter.notifyItemInserted(0);
         scrollToBottom();
     }
 
+
     private void addImage(Bitmap bmp){
         mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
                 .image(bmp).build());
+        Message.TYPE_MESSAGE = 0;
+        mAdapter = new MessageAdapter( mMessages);
+        mAdapter.notifyItemInserted(0);
+        scrollToBottom();
+    }
+    private void getImage(Bitmap bmp){
+        mMessages.add(new Message.Builder(Message.TYPE_MESSAGE)
+                .image(bmp).build());
+        Message.TYPE_MESSAGE = 1;
         mAdapter = new MessageAdapter( mMessages);
         mAdapter.notifyItemInserted(0);
         scrollToBottom();
@@ -217,9 +247,13 @@ public class ChatFragment extends Fragment {
                     String message;
                     String imageText;
                     try {
-                        message = data.getString("text").toString();
-                        addMessage(message);
-                        Toast.makeText(getActivity(),"another   :"+message,Toast.LENGTH_LONG).show();
+                        if (data.getString("reciever").toString().equals(userId)){
+                            message = data.getString("text").toString();
+                            getMessage(message);
+                        }else{
+
+                        }
+                        Toast.makeText(getActivity(),"another   :"+data,Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         // return;
                         Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
@@ -227,7 +261,7 @@ public class ChatFragment extends Fragment {
                     }
                     try {
                         imageText = data.getString("image");
-                        addImage(decodeImage(imageText));
+                        getImage(decodeImage(imageText));
                     } catch (JSONException e) {
                         //retur
                         Toast.makeText(getActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
@@ -263,7 +297,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        socket.disconnect();
+        SocketConnect.socket.disconnect();
     }
 
 }

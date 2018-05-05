@@ -15,13 +15,18 @@ import android.view.MenuItem;
 public class SocketActivity extends AppCompatActivity {
 
     String imgDecodableString;
+    public static String friendId;
+    String Fname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent intent = getIntent();
+        friendId = intent.getStringExtra("freiendId");
+        Fname = intent.getStringExtra("freiendName");
         setContentView(R.layout.activity_socket);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle(Fname);
 
     }
 

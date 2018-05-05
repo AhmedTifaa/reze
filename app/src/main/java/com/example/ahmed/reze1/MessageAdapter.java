@@ -1,5 +1,6 @@
 package com.example.ahmed.reze1;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -24,21 +26,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layout = -1;
-        /*switch (viewType) {
-            case Message.TYPE_MESSAGE:
-                layout = R.layout.item_message;
+        switch (Message.TYPE_MESSAGE) {
+            case 0:
+                layout = R.layout.layout_message;
                 break;
-            case Message.TYPE_LOG:
-                layout = R.layout.item_log;
+            case 1:
+                layout = R.layout.layout_amessage;
                 break;
-            case Message.TYPE_ACTION:
-                layout = R.layout.item_action;
-                break;
-        }*/
+        }
 
             View v = LayoutInflater
                     .from(parent.getContext())
-                    .inflate(R.layout.layout_message, parent, false);
+                    .inflate(layout, parent, false);
 
         return new ViewHolder(v);
     }
@@ -63,21 +62,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
         private TextView mMessageView;
+        private TextView amMessageView;
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.image);
             mMessageView = (TextView) itemView.findViewById(R.id.message);
+            Toast.makeText(itemView.getContext(),Message.TYPE_MESSAGE+"",Toast.LENGTH_LONG).show();
+
         }
 
         public void setMessage(String message) {
             if (null == mMessageView) return;
             if(null == message) return;
             mMessageView.setText(message);
+           // amMessageView.setText(message);
+
         }
 
         public void setImage(Bitmap bmp){
             if(null == mImageView) return;
             if(null == bmp) return;
+            mMessageView.setVisibility(View.GONE);
             mImageView.setImageBitmap(bmp);
         }
         private int getUsernameColor(String username) {

@@ -5,7 +5,10 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.FontRequestEmojiCompatConfig;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.provider.FontRequest;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -58,11 +61,22 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     int currentTab = 0;
     ImageView chatButton;
     String userType;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SocketConnect socketConnect = new SocketConnect();
+        /*FontRequest fontRequest = new FontRequest(
+                "com.example.fontprovider",
+                "com.example",
+                "emoji compat Font Query", CERTIFICATES);
+        EmojiCompat.Config config = new FontRequestEmojiCompatConfig(this, fontRequest);
+        EmojiCompat.init(config);*/
+        userId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
+        SocketConnect.socket.emit("id",userId);
         savedBundle = savedInstanceState;
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);

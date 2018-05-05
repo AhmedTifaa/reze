@@ -78,6 +78,7 @@ public class OtherProfileActivity extends AppCompatActivity {
     String q;
     int searchBoxWidth = 300;
     String userId;
+    TextView usernamePView;
 
     private RecyclerView.Adapter postsAdapter;
     RecyclerView postsRecyclerView;
@@ -167,7 +168,6 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder{
 
-        TextView usernamePView;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
@@ -432,6 +432,8 @@ public class OtherProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(OtherProfileActivity.this, SocketActivity.class);
+                        intent.putExtra("freiendId",profileId);
+                        intent.putExtra("freiendName",usernamePView.getText());
                         startActivity(intent);
                     }
                 });

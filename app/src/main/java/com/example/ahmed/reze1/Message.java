@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 public class Message {
 
-    public static final int TYPE_MESSAGE = 0;
+    public static int TYPE_MESSAGE = 0;
     public static final int TYPE_LOG = 1;
     public static final int TYPE_ACTION = 2;
 
@@ -15,8 +15,7 @@ public class Message {
     private String mMessage;
     private Bitmap mImage;
 
-    private Message() {}
-
+    public Message() {}
     public int getType() {
         return mType;
     };
