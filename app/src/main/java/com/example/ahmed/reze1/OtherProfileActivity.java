@@ -247,14 +247,14 @@ public class OtherProfileActivity extends AppCompatActivity {
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
-                    Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now,
+                    /*ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
+                    Intent intent = CommentActivity.createIntent( post.getLikes(), post.getPostId(), now,
                             Integer.parseInt(post.getUserId()), OtherProfileActivity.this);
                     adapterPos = pos;
                     startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
 
                     //startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                    overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);*/
                 }
             });
 

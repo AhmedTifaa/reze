@@ -119,6 +119,7 @@
     <string name="create">Create</string>
     <string name="create_event">Create event</string>
     <string name="my_event">My event</string>
+    <string name="posting">Posting&#8230;</string>
 
     <string-array name="object_array">
 

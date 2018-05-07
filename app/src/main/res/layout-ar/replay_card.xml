@@ -1,45 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
-    android:layout_margin="@dimen/dimen_10"
-    android:background="@drawable/post_background"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ppReplayView"
+        android:layout_centerVertical="true"
+        android:id="@+id/commentPPView"
+        android:background="@drawable/post_pp_circle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/post_pp_circle"
-        android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginEnd="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginBottom="@dimen/dimen_10"/>
+        android:layout_marginEnd="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_10"/>
 
-    <LinearLayout
-        android:id="@+id/headerLayout"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@id/ppReplayView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/commentLayout"
+        android:layout_toEndOf="@id/commentPPView"
+        android:background="@drawable/tell_something_background"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp">
 
         <LinearLayout
+            android:id="@+id/userDataLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_marginLeft="10dp"
+                android:id="@+id/commenterView"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="عمرو طارق"
+                android:text="Amro Tarek"
                 android:textColor="@android:color/black"/>
 
             <ImageView
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_gravity="center"
                 android:layout_width="8dp"
                 android:layout_height="8dp"
@@ -49,62 +48,44 @@
 
 
         <TextView
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_below="@id/userDataLayout"
+            android:id="@+id/commentTextView"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="منذ 2 ساعة"/>
-    </LinearLayout>
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:text="@string/tell_something"/>
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/postView"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_below="@id/ppReplayView"
+    <LinearLayout
+        android:layout_marginTop="@dimen/dimen_40"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="20dp"
-        android:textSize="10sp"
-        android:maxLines="6"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/commentPPView"
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/dimen_20">
 
-    <ImageView
-        android:id="@+id/lineView"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@id/postView"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
 
-    <RelativeLayout
-        android:layout_below="@id/lineView"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/commentCreatedAtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1m"
+            android:layout_marginEnd="@dimen/dimen_20"/>
 
-        <Button
-            android:drawableStart="@drawable/ic_star"
+        <TextView
+            android:id="@+id/commentLikeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:textAllCaps="false"
             android:text="@string/like"
-            android:background="@android:color/transparent"
-            android:drawablePadding="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/likeReplayButton"
-            android:layout_marginStart="@dimen/dimen_40"/>
+            android:layout_marginEnd="@dimen/dimen_10"/>
 
+    </LinearLayout>
 
-        <Button
-            android:layout_alignParentEnd="true"
-            android:textSize="13sp"
-            android:textAllCaps="false"
-            android:text="@string/replay"
-            android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:drawableStart="@drawable/ic_comment"
-            android:layout_marginEnd="@dimen/dimen_40"/>
-
-    </RelativeLayout>
 
 </RelativeLayout>

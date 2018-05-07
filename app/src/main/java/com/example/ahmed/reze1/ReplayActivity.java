@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
     RecyclerView repliesRecyclerView;
     RecyclerView.Adapter adapter;
 
+
     public static Intent createIntent(ArrayList<CommentReplyResponse> replayItems, int[] likeItems, int postId, int comment_id, long now, Context context){
         Intent intent = new Intent(context, ReplayActivity.class);
         Bundle bundle = new Bundle();
@@ -84,6 +86,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
         backView.setOnClickListener(this);
 
         commentLikesView = findViewById(R.id.likesCommentView);
+
 
 
         replies = (ArrayList<CommentReplyResponse>) getIntent().getExtras().getSerializable(REPLIES_EXTRA);
@@ -114,12 +117,12 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.replayBackView:
-                /*if (replayResponse != null){
+                if (replayResponse != null){
                     Intent intent = new Intent();
-                    intent.putExtra("comment", replayResponse);
-                    intent.putExtra("post_id", postId);
+                    intent.putExtra("replay", replayResponse);
+                    intent.putExtra("comment_id", commentId);
                     setResult(RESULT_OK, intent);
-                }*/
+                }
                 onBackPressed();
                 break;
             case R.id.sendReplayView:
@@ -164,7 +167,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
         @NonNull
         @Override
         public ReplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(ReplayActivity.this).inflate(R.layout.post_comment, parent, false);
+            View view = LayoutInflater.from(ReplayActivity.this).inflate(R.layout.replay_card, parent, false);
             return new ReplayViewHolder(view);
         }
 
@@ -195,20 +198,22 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
                                     Toast.makeText(ReplayActivity.this, "Error submitting replay", Toast.LENGTH_SHORT).show();
                                 } else {
                                     replayResponse = new CommentReplyResponse();
-                                    replayResponse.setReplayId(jsonObject.getInt("replayId"));
+                                    replayResponse.setReplayId(Integer.parseInt(userId));
                                     replayResponse.setReplierId(jsonObject.getInt("replierId"));
-                                    replayResponse.setReplayText(jsonObject.getString("replayText"));
+                                    replayResponse.setReplayText(jsonObject.getString("replay_text"));
                                     replayResponse.setCreatedAt(jsonObject.getString("createdAt"));
                                     replayResponse.setUsername(jsonObject.getString("username"));
-                                    JSONArray jsonArray = jsonObject.getJSONArray("likes");
+                                    /*JSONArray jsonArray = jsonObject.getJSONArray("likes");
                                     if (jsonArray != null && jsonArray.length() > 0){
                                         int[] likes = new int[jsonArray.length()];
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             likes[i] = (int) jsonArray.get(0);
                                         }
-                                    }
-                                    replayResponse.setLikes(likes);
+                                    }*/
+                                    replayResponse.setLikes(null);
 
+                                    if (replies == null)
+                                        replies = new ArrayList<>();
                                     replies.add(replayResponse);
                                     adapter.notifyItemInserted(replies.size()-1);
                                     repliesRecyclerView.scrollToPosition(replies.size()-1);

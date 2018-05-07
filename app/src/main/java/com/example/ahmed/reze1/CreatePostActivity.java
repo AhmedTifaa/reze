@@ -51,6 +51,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
     EditText postTextView;
     ImageView imageView;
     Button postButton;
+    String userId;
 
 
     @Override
@@ -61,6 +62,9 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
         postTextView = findViewById(R.id.new_post_desc);
         imageView = findViewById(R.id.new_post_image);
         postButton = findViewById(R.id.post_btn);
+
+        userId = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
 
 
         imageView.setOnClickListener(this);
@@ -131,18 +135,20 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
     private void performUserUpload(){
         dialog.show();
         encodedImages = new ArrayList<>();
-        if (selectedImages.size() > 0){
-            for (Image image: selectedImages) {
-                Bitmap bm = null;
-                bm = BitmapFactory.decodeFile(image.getPath());
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                String encodedImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-                encodedImages.add(encodedImage);
-            }
+        if (selectedImages != null) {
+            if (selectedImages.size() > 0) {
+                for (Image image : selectedImages) {
+                    Bitmap bm = null;
+                    bm = BitmapFactory.decodeFile(image.getPath());
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    String encodedImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+                    encodedImages.add(encodedImage);
+                }
 
-            HashMap<String, ArrayList<String>> jsonMap = new HashMap<>();
-            jsonMap.put("imageList", encodedImages);
+                HashMap<String, ArrayList<String>> jsonMap = new HashMap<>();
+                jsonMap.put("imageList", encodedImages);
+            }
         }
 
 
@@ -158,6 +164,9 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
                             postResponse.setUsername(jsonObject.getString("username"));
                             postResponse.setCreatedAt(jsonObject.getString("createdAt"));
                             postResponse.setText(jsonObject.getString("text"));
+                            postResponse.setPostId(jsonObject.getInt("post_id"));
+                            postResponse.setCreatedAt(jsonObject.getString("createdAt"));
+                            postResponse.setUserId(userId);
                             Intent intent = new Intent();
                             intent.putExtra("post", postResponse);
                             setResult(RESULT_OK, intent);
@@ -185,8 +194,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
                 }
 
                 map.put("method", "create_post");
-                map.put("userId", getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
-                        .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "1"));
+                map.put("userId", userId);
                 if (postTextView.getText().toString().length() > 0){
                     map.put("post_text", postTextView.getText().toString());
                 }

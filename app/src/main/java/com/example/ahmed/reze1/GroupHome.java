@@ -193,16 +193,19 @@ public class GroupHome extends Fragment {
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Intent intent = CommentActivity.createIntent(item.getLikes(), item.getPostId(), now, Integer.parseInt(item.getUserId()),
+                            getActivity());
+
+                    adapterPos = pos;
+                    startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
+
+                    //startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+
                     if (item.getComments() != null) {
                         ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(item.getComments()));
-                        Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getPostId(), now, Integer.parseInt(item.getUserId()),
-                                getActivity());
 
-                        adapterPos = pos;
-                        startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
-
-                        //startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
                     }
                 }
             });
