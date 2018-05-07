@@ -23,6 +23,10 @@ public class PostResponse implements Serializable {
     @Expose
     private AttachmentResponse attachment;
 
+    @SerializedName("comment_size")
+    @Expose
+    private int commentSize;
+
     @SerializedName("comments")
     @Expose
     private CommentResponse[] comments;
@@ -42,6 +46,14 @@ public class PostResponse implements Serializable {
     @SerializedName("user_id")
     @Expose
     private String userId;
+
+    public int getCommentSize() {
+        return commentSize;
+    }
+
+    public void setCommentSize(int commentSize) {
+        this.commentSize = commentSize;
+    }
 
     public String getUserId() {
         return userId;

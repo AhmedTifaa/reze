@@ -27,6 +27,10 @@ public class CommentResponse implements Serializable{
     @Expose
     private CommentReplyResponse[] replies;
 
+    @SerializedName("replay_size")
+    @Expose
+    private int replaySize;
+
     @SerializedName("commenterName")
     @Expose
     private String commenterName;
@@ -38,6 +42,26 @@ public class CommentResponse implements Serializable{
     @SerializedName("likes")
     @Expose
     private int[] likes;
+
+    @SerializedName("pending")
+    @Expose
+    private boolean pending;
+
+    public boolean isPending() {
+        return pending;
+    }
+
+    public void setPending(boolean pending) {
+        this.pending = pending;
+    }
+
+    public int getReplaySize() {
+        return replaySize;
+    }
+
+    public void setReplaySize(int replaySize) {
+        this.replaySize = replaySize;
+    }
 
     public int[] getLikes() {
         return likes;

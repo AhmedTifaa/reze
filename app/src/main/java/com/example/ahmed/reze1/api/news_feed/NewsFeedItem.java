@@ -36,6 +36,15 @@ public class NewsFeedItem {
     private int groupId;
     private int vendorId;
     private int postId;
+    private int commentSize;
+
+    public int getCommentSize() {
+        return commentSize;
+    }
+
+    public void setCommentSize(int commentSize) {
+        this.commentSize = commentSize;
+    }
 
     public int getPostId() {
         return postId;

@@ -261,16 +261,20 @@ public class Home extends Fragment {
                 }
             }
 
-            if (item.getPostComments() != null && item.getPostComments().length > 0){
+            if (item.getCommentSize() > 0){
+                commentButton.setText(item.getCommentSize() + " Comment");
+            }
+
+            /*if (item.getPostComments() != null && item.getPostComments().length > 0){
                 //commentButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
                 commentButton.setText(item.getPostComments().length + " Comment");
-            }
+            }*/
 
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(item.getPostComments()));
-                    Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getId(), now, item.getOwnerId(),
+
+                    Intent intent = CommentActivity.createIntent(item.getLikes(), item.getId(), now, item.getOwnerId(),
                             getActivity());
 
                     adapterPos = pos;
@@ -278,6 +282,19 @@ public class Home extends Fragment {
 
                     //startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                    /*ArrayList<CommentResponse> comments = new ArrayList<>();
+                    if (item.getPostComments() != null){
+                        comments = new ArrayList<>(Arrays.asList(item.getPostComments()));
+                    }
+
+                    Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getId(), now, item.getOwnerId(),
+                            getActivity());
+
+                    adapterPos = pos;
+                    startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
+
+                    //startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);*/
                 }
             });
 
@@ -285,14 +302,29 @@ public class Home extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    for (int i = 0; i < item.getLikes().length; i++) {
-                        if (item.getLikes()[i] == Integer.parseInt(userId)){
-                            reverseLike(item, pos);
-                            return;
+                    String likeString = getActivity().getResources().getString(R.string.like);
+
+                    if (item.getLikes() != null) {
+                        for (int i = 0; i < item.getLikes().length; i++) {
+                            if (item.getLikes()[i] == Integer.parseInt(userId)) {
+
+                                if (item.getLikes().length > 1) {
+                                    likeButton.setText((item.getLikes().length - 1) + " " + likeString);
+                                } else {
+                                    likeButton.setText(likeString);
+                                }
+                                likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0);
+                                reverseLike(item, pos);
+                                return;
+                            }
                         }
                     }
 
+
+                    likeButton.setText((item.getLikes().length + 1) + " " + likeString);
+                    likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
                     performLike(item, pos);
+
                 }
             });
 
@@ -345,25 +377,23 @@ public class Home extends Fragment {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (!jsonObject.getBoolean("error")){
-                                    likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
-                                    likeButton.setText((item.getLikes().length + 1) + " Like");
                                     int[] likes = new int[item.getLikes().length + 1];
-                                        for (int i = 0; i < posts[pos].getLikes().length; i++) {
-                                        likes[i] = posts[pos].getLikes()[i];
+                                        for (int i = 0; i < item.getLikes().length; i++) {
+                                        likes[i] = item.getLikes()[i];
                                     }
 
-                                    likes[posts[pos].getLikes().length] = Integer.parseInt(userId);
-                                    posts[pos].setLikes(likes);
+                                    likes[likes.length - 1] = Integer.parseInt(userId);
+                                    item.setLikes(likes);
+                                    adapter.notifyItemChanged(pos);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.i("volley error", "onErrorResponse: " + error.getMessage());
+                    Log.i("like_error", "onErrorResponse: " + error.getMessage());
                 }
             }){
                 @Override
@@ -384,7 +414,7 @@ public class Home extends Fragment {
         }
 
         private void reverseLike(final NewsFeedItem item, final int pos){
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/user_post.php",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -392,16 +422,6 @@ public class Home extends Fragment {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (!jsonObject.getBoolean("error")){
-
-                                    likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star,  0, 0, 0);
-
-                                    if (item.getLikes().length > 1){
-                                        likeButton.setText((item.getLikes().length - 1) + " Like");
-                                    } else {
-                                        likeButton.setText("Like");
-                                    }
-
-
 
                                     ArrayList<Integer> likesList = new ArrayList<>();
 
@@ -417,7 +437,8 @@ public class Home extends Fragment {
                                         likes[i] = likesList.get(i);
                                     }
 
-                                    posts[pos].setLikes(likes);
+                                    item.setLikes(likes);
+                                    adapter.notifyItemChanged(pos);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -427,7 +448,7 @@ public class Home extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.i("volley error", "onErrorResponse: " + error.getMessage());
+                    Log.i("unlike_error", "onErrorResponse: " + error.getMessage());
                 }
             }){
                 @Override
@@ -902,7 +923,8 @@ public class Home extends Fragment {
                                     item.setOwnerId(Integer.parseInt(postResponse.getUserId()));
                                     item.setOwnerName(postResponse.getUsername());
                                     item.setPostAttachment(postResponse.getAttachment());
-                                    item.setPostComments(postResponse.getComments());
+                                    //item.setPostComments(postResponse.getComments());
+                                    item.setCommentSize(postResponse.getCommentSize());
                                     item.setPostText(postResponse.getText());
                                     item.setType(NewsFeedItem.POST_TYPE);
                                     newsFeedItems.add(item);
@@ -971,7 +993,7 @@ public class Home extends Fragment {
 
                             nextCursor = response.getNextCursor();
                             now = response.getNow();
-                            Collections.shuffle(newsFeedItems);
+                            //Collections.shuffle(newsFeedItems);
                             updateUi();
                         }
                     }
@@ -1016,36 +1038,56 @@ public class Home extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == COMMENT_ACTIVITY_RESULT){
             if (data != null){
-                CommentResponse commentResponse = (CommentResponse) data.getSerializableExtra("comment");
+                //CommentResponse commentResponse = (CommentResponse) data.getSerializableExtra("comment");
                 int postId = data.getIntExtra("post_id", 0);
-                for (int i = 0; i < posts.length; i++) {
-                    if (posts[i].getPostId() == postId){
-                        int c_size = posts[i].getComments().length;
-                        CommentResponse[] c_resArray = new CommentResponse[c_size+1];
-                        for (int j = 0; j <  posts[i].getComments().length; j++) {
-                            c_resArray[j] = posts[i].getComments()[j];
-                        }
+                for (int i = 0; i < newsFeedItems.size(); i++) {
+                    Log.e("feed_size", String.valueOf(newsFeedItems.size()));
+                    Log.e("postIDs", String.valueOf(newsFeedItems.get(i).getId()) );
+                    if (newsFeedItems.get(i).getType() == NewsFeedItem.POST_TYPE) {
+                        if (newsFeedItems.get(i).getId() == postId) {
+                            int commentSize = data.getIntExtra("added_size", newsFeedItems.get(i).getCommentSize());
+                            newsFeedItems.get(i).setCommentSize(commentSize);
+                            adapter.notifyItemChanged(i);
+                            /*int c_size = 0;
+                            if (newsFeedItems.get(i).getPostComments() != null)
+                                c_size = newsFeedItems.get(i).getPostComments().length ;
+                            CommentResponse[] c_resArray = new CommentResponse[c_size + 1];
+                            if (newsFeedItems.get(i).getPostComments() != null) {
+                                for (int j = 0; j < newsFeedItems.get(i).getPostComments().length; j++) {
+                                    c_resArray[j] = newsFeedItems.get(i).getPostComments()[j];
+                                }
+                            }
 
-                        c_resArray[c_size] = commentResponse;
-                        posts[i].setComments(c_resArray);
-                        adapter.notifyDataSetChanged();
+                            c_resArray[c_size] = commentResponse;
+                            newsFeedItems.get(i).setPostComments(c_resArray);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();
+                            break;*/
+                        }
                     }
                 }
 
             }
-            Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CREATE_POST_RESULT){
             if (data != null){
-                PostResponse postResponse = (PostResponse) data.getSerializableExtra("post");
-                PostResponse[] p_array = new PostResponse[posts.length + 1];
+                PostResponse returnPost = (PostResponse) data.getSerializableExtra("post");
 
-                p_array[0] = postResponse;
-
-                for (int i = 0; i < posts.length; i++) {
-                    p_array[i+1] = posts[i];
+                if (returnPost != null) {
+                    NewsFeedItem item = new NewsFeedItem();
+                    item.setId(returnPost.getPostId());
+                    item.setCreatedAt(returnPost.getCreatedAt());
+                    item.setOwnerId(Integer.parseInt(returnPost.getUserId()));
+                    item.setOwnerName(returnPost.getUsername());
+                    item.setPostText(returnPost.getText());
+                    item.setPostAttachment(null);
+                    item.setLikes(null);
+                    item.setPostComments(null);
+                    item.setType(NewsFeedItem.POST_TYPE);
+                    newsFeedItems.set(0, item);
+                    //newsFeedItems.add(item);
                 }
 
-                posts = p_array;
+
                 adapter.notifyItemInserted(0);
             }
         }

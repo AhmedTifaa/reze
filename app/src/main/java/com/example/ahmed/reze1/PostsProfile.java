@@ -160,7 +160,7 @@ public class PostsProfile extends Fragment {
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
+                    /*ArrayList<CommentResponse> comments = new ArrayList<>(Arrays.asList(post.getComments()));
                     Intent intent = CommentActivity.createIntent(comments, post.getLikes(), post.getPostId(), now, Integer.parseInt(post.getUserId()),
                             getActivity());
 
@@ -168,7 +168,7 @@ public class PostsProfile extends Fragment {
                     startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
 
                     //startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);*/
                 }
             });
 
