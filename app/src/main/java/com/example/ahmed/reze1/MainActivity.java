@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         SocketConnect.socket.emit("id",userId);
         savedBundle = savedInstanceState;
+        SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
+        editor.putString(AppConfig.LOGGED_IN_FIRE_ID_SHARED,"fireAuthed").apply();
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
@@ -144,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         String fireId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                                 .getString(AppConfig.LOGGED_IN_FIRE_ID_SHARED, "0");
                         Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
-
                         // probar.setVisibility(View.GONE);
                         // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                     }
@@ -221,8 +222,6 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = current_user.getUid();
-                    SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
-                    editor.putString(AppConfig.LOGGED_IN_FIRE_ID_SHARED,uid).apply();
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
                     String device_token = FirebaseInstanceId.getInstance().getToken();
                     HashMap<String, String> userMap = new HashMap<>();
