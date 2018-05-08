@@ -44,6 +44,11 @@ import com.example.ahmed.reze1.api.search.SearchResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ResizeWidthAnimation;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -59,7 +64,7 @@ import io.socket.emitter.Emitter;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends AppCompatActivity implements Home.OnCallback,Notification.OnFragmentInteractionListener,Requests.OnFragmentInteractionListener,Profile.OnFragmentInteractionListener {
-
+    private FirebaseAuth mAuth;
     private static final int VIEW_HEADER = 1;
     private static final int VIEW_ITEM = 2;
 
@@ -83,11 +88,13 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     ImageView chatButton;
     String userType;
     String userId;
+    private DatabaseReference mUserRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
         SocketConnect socketConnect = new SocketConnect();
         SocketConnect.socket.on("friendRequest", handleIncomingMessages);
         SocketConnect.socket.on("cancelRequest", handleCancelRequest);
@@ -115,6 +122,15 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         backView = mCustomView.findViewById(R.id.searchBackView);
         userType = getIntent().getStringExtra("type");
         inflateMainView(currentTab);
+
+        if (mAuth.getCurrentUser() != null) {
+
+
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+
+        }
+
+
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,10 +239,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     };
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+
 
     @Override
     protected void onDestroy() {
@@ -783,5 +796,45 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null){
+
+            sendToStart();
+
+        } else {
+
+            mUserRef.child("online").setValue("true");
+
+        }
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null) {
+
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+
+        }
+
+    }
+
+    private void sendToStart() {
+
+        Intent startIntent = new Intent(MainActivity.this, Login.class);
+        startActivity(startIntent);
+        finish();
+
+    }
+
 }
 
