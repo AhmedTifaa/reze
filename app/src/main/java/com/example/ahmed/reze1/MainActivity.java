@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         backView = mCustomView.findViewById(R.id.searchBackView);
         userType = getIntent().getStringExtra("type");
         mAuth = FirebaseAuth.getInstance();
+        //
         if (mAuth.getCurrentUser() != null) {
 
 
