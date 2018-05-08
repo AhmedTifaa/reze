@@ -151,14 +151,14 @@ public class BuildProfile2 extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
-                finish();
+//                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
+//                finish();
                 progress.show();
                 StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/us.php", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                         //hideDialog();
                         progress.dismiss();

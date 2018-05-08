@@ -116,7 +116,7 @@ public class CreateEventFragment extends DialogFragment {
                                 if (!jsonObject.getBoolean("error")){
                                     dismiss();
                                 } else {
-                                    Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                                     dismiss();
                                 }
                             } catch (JSONException e) {

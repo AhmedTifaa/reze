@@ -68,28 +68,28 @@ public class ForgetPassword extends AppCompatActivity {
                     URL_RESET = "https://rezetopia.com/app/resetsms.php";
                 }
                 validate();
-                Toast.makeText(getApplicationContext(),"clicked"+URL_RESET,Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(),"clicked"+URL_RESET,Toast.LENGTH_SHORT).show();
 
                 request = new StringRequest(Request.Method.POST, URL_RESET, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
 
                         try {
                             JSONObject jsonObject;
                             jsonObject = new JSONObject(response);
-                            Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
+                      //      Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();
                             if(jsonObject.getString("msg").equals("sent")){
-                                Toast.makeText(getApplicationContext(),jsonObject.getString("sent"),Toast.LENGTH_SHORT).show();
+                       //         Toast.makeText(getApplicationContext(),jsonObject.getString("sent"),Toast.LENGTH_SHORT).show();
 //                                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
 //                                startActivityForResult(intent, 0);
 //                                finish();
                             }
                             else if(jsonObject.getString("msg").equals("no")){
-                                Toast.makeText(getBaseContext(),R.string.wrongreset,Toast.LENGTH_LONG).show();
+                         //       Toast.makeText(getBaseContext(),R.string.wrongreset,Toast.LENGTH_LONG).show();
                             }
                             else {
-                                Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();                            }
+                       //         Toast.makeText(getBaseContext(),response.toString(),Toast.LENGTH_LONG).show();                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -100,7 +100,7 @@ public class ForgetPassword extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(),error.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(),error.getMessage().toString(),Toast.LENGTH_SHORT).show();
 
                     }
                 }){

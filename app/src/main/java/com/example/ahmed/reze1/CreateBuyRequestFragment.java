@@ -108,7 +108,7 @@ public class CreateBuyRequestFragment extends DialogFragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (!jsonObject.getBoolean("error")){
-                                Toast.makeText(getActivity(), R.string.create, Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getActivity(), R.string.create, Toast.LENGTH_LONG).show();
                                 dismiss();
                             }
                         } catch (JSONException e) {

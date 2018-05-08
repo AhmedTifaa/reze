@@ -151,7 +151,7 @@ public class BuildProfile extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                            Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
                             progress.dismiss();
                             //hideDialog();
                             try {
@@ -503,7 +503,7 @@ public boolean validate() {
         phone.setError(null);
     }
     if (spinnerCarrer.getSelectedItemPosition() == 0) {
-        Toast.makeText(getBaseContext(),R.string.validate_career,Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getBaseContext(),R.string.validate_career,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCarrer.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_career));
         valid = false;
@@ -512,7 +512,7 @@ public boolean validate() {
         errorText.setError(null);
     }
     if (spinnerCity.getSelectedItemPosition() == 0) {
-        Toast.makeText(getBaseContext(),R.string.validate_city,Toast.LENGTH_LONG).show();
+    //    Toast.makeText(getBaseContext(),R.string.validate_city,Toast.LENGTH_LONG).show();
         TextView errorText = (TextView)spinnerCity.getSelectedView();
         errorText.setError(getResources().getString(R.string.validate_city));
         valid = false;
