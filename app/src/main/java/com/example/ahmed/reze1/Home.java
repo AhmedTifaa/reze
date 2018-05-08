@@ -223,6 +223,7 @@ public class Home extends Fragment {
             hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
         }
 
+        //todo
         public void bind(final NewsFeedItem item, final int pos) {
             String postText = null;
             if (item.getOwnerName() != null){
