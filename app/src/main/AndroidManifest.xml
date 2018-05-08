@@ -124,7 +124,22 @@
         <activity
             android:name=".Login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MyEventsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MyEventsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SavedPostsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StoresListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateStoreActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StoreActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateProductActivity" android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -77,7 +77,7 @@
     <string name="amount">الكمية</string>
     <string name="available">متاح</string>
     <string name="unavailable">غير متاح</string>
-    <string name="point">نقطة</string>
+    <string name="pound">نقطة</string>
     <string name="buy">اشترى الان</string>
     <string name="sold_out">نفذ</string>
     <string name="member">عضو</string>
@@ -98,6 +98,12 @@
     <string name="create">انشاء</string>
     <string name="create_event">انشاء حدث</string>
     <string name="posting">انشاء&#8230;</string>
+    <string name="to">فى</string>
+    <string name="saved_posts">المنشورات المحفوظة</string>
+    <string name="stores">المتاجر</string>
+    <string name="create_store">انشاء متجر</string>
+    <string name="address">العنوان</string>
+    <string name="beta">نسخة تجريبية</string>
 
 
 

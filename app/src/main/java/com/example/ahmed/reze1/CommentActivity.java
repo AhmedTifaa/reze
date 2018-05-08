@@ -92,6 +92,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
+
+        comments = new ArrayList<>();
+
         backView = findViewById(R.id.commentBackView);
         backView.setOnClickListener(this);
 
@@ -120,13 +123,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         postId = getIntent().getExtras().getInt(POST_ID_EXTRA);
         now = getIntent().getExtras().getLong(TIME_NOW_EXTRA);
         commentsRecyclerView = findViewById(R.id.commentRecView);
-        adapter = new CommentRecyclerAdapter();
 
         fetchComments();
         sendCommentView = findViewById(R.id.sendCommentView);
         commentEditText = findViewById(R.id.commentEditText);
 
-        //todo
         sendCommentView.setOnClickListener(this);
     }
 
@@ -137,7 +138,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 if (commentResponse != null){
                     Intent intent = new Intent();
                     //intent.putExtra("comment", commentResponse);
-                    intent.putExtra("added_size", addedComments);
+                    intent.putExtra("added_size", comments.size());
                     intent.putExtra("post_id", postId);
                     setResult(RESULT_OK, intent);
                 }
@@ -149,6 +150,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                     response.setCommentText(commentEditText.getText().toString());
                     response.setPending(true);
                     comments.add(response);
+                    updateUi();
                     adapter.notifyItemInserted(comments.size()-1);
                     commentsRecyclerView.scrollToPosition(comments.size()-1);
                     performComment();
@@ -221,7 +223,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
 
                         Intent intent = ReplayActivity.createIntent(
-                                replies,
                                 likes,
                                 postId,
                                 comment.getCommentId(),
@@ -271,6 +272,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getBoolean("error")){
                                     Toast.makeText(CommentActivity.this, "Error submitting comment", Toast.LENGTH_SHORT).show();
+                                    comments.remove(comments.size()-1);
                                 } else {
                                     commentResponse = new CommentResponse();
                                     commentResponse.setCommenterId(jsonObject.getInt("commenterId"));
@@ -281,6 +283,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     commentResponse.setCommenterName(jsonObject.getString("commenterName"));
                                     commentResponse.setPending(false);
                                     comments.set(comments.size()-1, commentResponse);
+
                                     //comments.add(commentResponse);
                                     adapter.notifyItemChanged(comments.size()-1);
                                     commentsRecyclerView.scrollToPosition(comments.size()-1);
@@ -322,12 +325,17 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REPLAY_REQUEST_CODE){
             if (data != null){
-                CommentReplyResponse returnReplay = (CommentReplyResponse) data.getSerializableExtra("replay");
+
+
+                //CommentReplyResponse returnReplay = (CommentReplyResponse) data.getSerializableExtra("replay");
                 int commentId = data.getIntExtra("comment_id", 0);
 
                 for (int i = 0; i < comments.size(); i++) {
                     if (comments.get(i).getCommentId() == commentId) {
-                        int c_size = 0;
+                        int commentSize = data.getIntExtra("added_size", comments.get(i).getReplaySize());
+                        comments.get(i).setReplaySize(commentSize);
+                        adapter.notifyItemChanged(i+1);
+                        /*int c_size = 0;
                         if (comments.get(i).getReplies() != null)
                             c_size = comments.get(i).getReplies().length ;
                         CommentReplyResponse[] c_resArray = new CommentReplyResponse[c_size + 1];
@@ -339,7 +347,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
                         c_resArray[c_size] = returnReplay;
                         comments.get(i).setReplies(c_resArray);
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();*/
                         break;
                     }
                 }
@@ -354,15 +362,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 new Response.Listener<ApiCommentResponse>() {
                     @Override
                     public void onResponse(ApiCommentResponse response) {
+                        commentProgressView.setVisibility(View.GONE);
                         if (!response.isError()){
                             if (response.getComments() != null) {
                                 comments = new ArrayList<>(Arrays.asList(response.getComments()));
                                 for (CommentResponse commentResponse:comments) {
                                     commentResponse.setPending(false);
                                 }
-                                commentProgressView.setVisibility(View.GONE);
-                                commentsRecyclerView.setAdapter(adapter);
-                                commentsRecyclerView.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
+                                updateUi();
                             }
                         }
                     }
@@ -384,5 +391,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         };
 
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void updateUi(){
+        if (adapter == null){
+            adapter = new CommentRecyclerAdapter();
+            commentsRecyclerView.setAdapter(adapter);
+            commentsRecyclerView.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
+        }
     }
 }

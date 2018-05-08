@@ -28,6 +28,7 @@ public class NewsFeedItem {
     private float productPrice;
     private int productAmount;
     private String productImageUrl;
+    private String itemImage;
     private String description;
     private int productSale;
     private int productSoldAmount;
@@ -37,6 +38,23 @@ public class NewsFeedItem {
     private int vendorId;
     private int postId;
     private int commentSize;
+    private int storeId;
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getItemImage() {
+        return itemImage;
+    }
+
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
+    }
 
     public int getCommentSize() {
         return commentSize;

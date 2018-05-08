@@ -43,8 +43,10 @@ import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
 import com.example.ahmed.reze1.helper.MenuCustomItem;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
+import com.example.ahmed.reze1.helper.WrapContentLinearLayoutManager;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +65,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -87,6 +91,7 @@ public class Home extends Fragment {
     private static final int VIEW_PRODUCT = 3;
     private static final int VIEW_EVENT = 4;
     private static final int VIEW_VENDOR_POST = 5;
+    private static final int VIEW_GROUP_POST = 6;
     private WebView webview;
     String distfile = "";
     private PostResponse[] posts;
@@ -103,6 +108,10 @@ public class Home extends Fragment {
     RequestQueue requestQueue;
     long now;
     String userId;
+    private boolean loading = true;
+    int pastVisibleItems, visibleItemCount, totalItemCount;
+    LinearLayoutManager layoutManager;
+    int lastCount = 0, newCount = 0;
 
 
     // TODO: Rename and change types of parameters
@@ -156,6 +165,27 @@ public class Home extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getActivity());
         fetchNewsFeed();
+
+        layoutManager = new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(dy > 0){
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loading){
+                        if ( (visibleItemCount + pastVisibleItems) >= totalItemCount){
+                            loading = false;
+                            fetchNewsFeed();
+                        }
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -251,9 +281,9 @@ public class Home extends Fragment {
                 likeButton.setText(item.getLikes().length + " Like");
 
 
-                Log.e("loggedInUserId", userId);
+                //Log.e("loggedInUserId", userId);
                 for (int id : item.getLikes()) {
-                    Log.e("likesUserId", String.valueOf(id));
+                    //Log.e("likesUserId", String.valueOf(id));
                     if (String.valueOf(id).contentEquals(String.valueOf(userId))){
                         likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
                         break;
@@ -469,6 +499,288 @@ public class Home extends Fragment {
         }
     }
 
+    private class GroupPostViewHolder extends RecyclerView.ViewHolder{
+
+        TextView postTextView;
+        Button likeButton;
+        Button commentButton;
+        TextView dateView;
+        TextView usernameView;
+        ImageView ppView;
+        ImageView postSideMenu;
+        ImageView hiddenMenuPositionView;
+        TextView groupName;
+
+        public GroupPostViewHolder(final View itemView) {
+            super(itemView);
+
+            postTextView = itemView.findViewById(R.id.postTextView);
+            likeButton = itemView.findViewById(R.id.postLikeButton);
+            commentButton = itemView.findViewById(R.id.postCommentButton);
+            dateView = itemView.findViewById(R.id.postDateView);
+            usernameView = itemView.findViewById(R.id.postUserName);
+            ppView = itemView.findViewById(R.id.ppView);
+            postSideMenu = itemView.findViewById(R.id.postSideMenu);
+            hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
+            groupName = itemView.findViewById(R.id.postGroupName);
+        }
+
+        public void bind(final NewsFeedItem item, final int pos) {
+            String postText = null;
+            if (item.getOwnerName() != null){
+                usernameView.setText(item.getOwnerName());
+            }
+
+            groupName.setText(item.getItemName());
+
+            groupName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = GroupActivity.createIntent(item.getGroupId(), item.getItemName(), getActivity());
+                    startActivity(intent);
+                }
+            });
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss", Locale.ENGLISH).parse(item.getCreatedAt());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long milliseconds = date.getTime();
+            long millisecondsFromNow = milliseconds - now;
+            dateView.setText(DateUtils.getRelativeDateTimeString(getActivity(), milliseconds, millisecondsFromNow, DateUtils.DAY_IN_MILLIS, 0));
+
+            try {
+                postText = URLEncoder.encode(item.getPostText(), "ISO-8859-1");
+                postText = URLDecoder.decode(postText, "UTF-8");
+                postTextView.setText(postText);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            if (item.getLikes() != null && item.getLikes().length > 0){
+                //likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
+                likeButton.setText(item.getLikes().length + " Like");
+
+
+                //Log.e("loggedInUserId", userId);
+                for (int id : item.getLikes()) {
+                    //Log.e("likesUserId", String.valueOf(id));
+                    if (String.valueOf(id).contentEquals(String.valueOf(userId))){
+                        likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
+                        break;
+                    }
+                }
+            }
+
+            if (item.getCommentSize() > 0){
+                commentButton.setText(item.getCommentSize() + " Comment");
+            }
+
+            /*if (item.getPostComments() != null && item.getPostComments().length > 0){
+                //commentButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
+                commentButton.setText(item.getPostComments().length + " Comment");
+            }*/
+
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = CommentActivity.createIntent(item.getLikes(), item.getPostId(), now, item.getOwnerId(),
+                            getActivity());
+
+                    adapterPos = pos;
+                    startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
+
+                    //startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+                    /*ArrayList<CommentResponse> comments = new ArrayList<>();
+                    if (item.getPostComments() != null){
+                        comments = new ArrayList<>(Arrays.asList(item.getPostComments()));
+                    }
+
+                    Intent intent = CommentActivity.createIntent(comments, item.getLikes(), item.getId(), now, item.getOwnerId(),
+                            getActivity());
+
+                    adapterPos = pos;
+                    startActivityForResult(intent, COMMENT_ACTIVITY_RESULT);
+
+                    //startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);*/
+                }
+            });
+
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String likeString = getActivity().getResources().getString(R.string.like);
+
+                    if (item.getLikes() != null) {
+                        for (int i = 0; i < item.getLikes().length; i++) {
+                            if (item.getLikes()[i] == Integer.parseInt(userId)) {
+
+                                if (item.getLikes().length > 1) {
+                                    likeButton.setText((item.getLikes().length - 1) + " " + likeString);
+                                } else {
+                                    likeButton.setText(likeString);
+                                }
+                                likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star, 0, 0, 0);
+                                reverseLike(item, pos);
+                                return;
+                            }
+                        }
+                    }
+
+
+                    likeButton.setText((item.getLikes().length + 1) + " " + likeString);
+                    likeButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_star_holo_green,  0, 0, 0);
+                    performLike(item, pos);
+
+                }
+            });
+
+            usernameView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.getOwnerId() == Integer.parseInt(userId)){
+                        mListener.onProfile();
+                    } else if (item.getType() == NewsFeedItem.GROUP_POSTS_TYPE){
+                        startOtherProfile(pos);
+                    }
+                }
+            });
+
+            ppView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (item.getOwnerId() == Integer.parseInt(userId)){
+                        mListener.onProfile();
+                    } else if (item.getType() == NewsFeedItem.GROUP_POSTS_TYPE){
+                        startOtherProfile(pos);
+                    }
+                }
+            });
+
+            postSideMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (String.valueOf(item.getOwnerId()).contentEquals(String.valueOf(userId))) {
+                        showPostPopupWindow(postSideMenu, true, item.getPostId(), item.getOwnerId());
+                    } else {
+                        showPostPopupWindow(postSideMenu, false, item.getPostId(), item.getOwnerId());
+                    }
+                }
+            });
+        }
+
+        private void startOtherProfile(int position){
+            Intent intent = OtherProfileActivity.createIntent(String.valueOf(newsFeedItems.get(position).getOwnerId()), newsFeedItems.get(position).getOwnerName(), getActivity());
+            startActivity(intent);
+        }
+
+        private void performLike(final NewsFeedItem item, final int pos){
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("volley response", "onResponse: " + response);
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (!jsonObject.getBoolean("error")){
+                                    int[] likes = new int[item.getLikes().length + 1];
+                                    for (int i = 0; i < item.getLikes().length; i++) {
+                                        likes[i] = item.getLikes()[i];
+                                    }
+
+                                    likes[likes.length - 1] = Integer.parseInt(userId);
+                                    item.setLikes(likes);
+                                    adapter.notifyItemChanged(pos);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("like_error", "onErrorResponse: " + error.getMessage());
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    HashMap<String, String> map = new HashMap<>();
+
+                    map.put("method", "post_like");
+                    map.put("userId", userId);
+                    map.put("owner_id", String.valueOf(item.getOwnerId()));
+                    map.put("post_id", String.valueOf(item.getPostId()));
+                    map.put("add_like", String.valueOf(true));
+
+                    return map;
+                }
+            };
+
+            requestQueue.add(stringRequest);
+        }
+
+        private void reverseLike(final NewsFeedItem item, final int pos){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("volley response", "onResponse: " + response);
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (!jsonObject.getBoolean("error")){
+
+                                    ArrayList<Integer> likesList = new ArrayList<>();
+
+                                    for (int id : item.getLikes()) {
+                                        if (id != Integer.parseInt(userId)){
+                                            likesList.add(id);
+                                        }
+                                    }
+
+                                    int[] likes = new int[likesList.size()];
+
+                                    for(int i = 0; i < likesList.size(); i++) {
+                                        likes[i] = likesList.get(i);
+                                    }
+
+                                    item.setLikes(likes);
+                                    adapter.notifyItemChanged(pos);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("unlike_error", "onErrorResponse: " + error.getMessage());
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    HashMap<String, String> map = new HashMap<>();
+
+                    map.put("method", "post_like");
+                    map.put("userId", userId);
+                    map.put("owner_id", String.valueOf(item.getOwnerId()));
+                    map.put("post_id", String.valueOf(item.getPostId()));
+                    map.put("remove_like", String.valueOf(true));
+
+                    return map;
+                }
+            };
+
+            requestQueue.add(stringRequest);
+        }
+    }
+
     private class VendorProductHolder extends RecyclerView.ViewHolder{
 
         TextView postUserName;
@@ -479,7 +791,8 @@ public class Home extends Fragment {
         TextView priceView;
         TextView avilView;
         CustomButton productBuyNow;
-        ImageView ppView;
+        CircleImageView ppView;
+        ImageView productImageView;
 
         public VendorProductHolder(View itemView) {
             super(itemView);
@@ -493,13 +806,23 @@ public class Home extends Fragment {
             avilView = itemView.findViewById(R.id.avilView);
             productBuyNow = itemView.findViewById(R.id.productBuyNow);
             ppView = itemView.findViewById(R.id.ppView);
+            productImageView = itemView.findViewById(R.id.productImageView);
         }
 
         public void bind(final NewsFeedItem item){
             productTitleView.setText(item.getProductTitle());
             productDetailView.setText(item.getDescription());
             priceView.setText(String.valueOf(item.getProductPrice()));
-            postUserName.setText(item.getOwnerName());
+            postUserName.setText(item.getItemName());
+
+            if (item.getItemImage() != null){
+                Picasso.with(getActivity()).load(item.getItemImage()).into(ppView);
+            }
+
+            if (item.getProductImageUrl() != null){
+                Picasso.with(getActivity()).load(item.getProductImageUrl()).into(productImageView);
+            }
+
             if (item.getProductSoldAmount() < item.getProductAmount()){
                 avilView.setText(R.string.available);
                 productBuyNow.setText(R.string.buy);
@@ -509,27 +832,37 @@ public class Home extends Fragment {
                 productBuyNow.setEnabled(false);
             }
 
+            productBuyNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CreateBuyRequestFragment fragment = CreateBuyRequestFragment.createFragment(item.getOwnerId(), item.getId(), item.getStoreId());
+                    fragment.show(getActivity().getFragmentManager(), null);
+                }
+            });
+
+
+
             ppView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                    /*if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
                         if (item.getOwnerId() > 0) {
                             Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             });
 
             postUserName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                    /*if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
                         if (item.getOwnerId() > 0) {
                             Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             });
         }
@@ -852,11 +1185,15 @@ public class Home extends Fragment {
             } else if (viewType == VIEW_EVENT){
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.event_card, parent, false);
                 return new EventViewHolder(view);
-            } else {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.post_card, parent, false);
-                return new VendorPostViewHolder(view);
+            } else if (viewType == VIEW_GROUP_POST){
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.group_post_card, parent, false);
+                return new GroupPostViewHolder(view);
             }
 
+            else{
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.post_card, parent, false);
+                return new PostViewHolder(view);
+            }
         }
 
         @Override
@@ -873,6 +1210,9 @@ public class Home extends Fragment {
             } else if (holder instanceof  VendorPostViewHolder){
                 VendorPostViewHolder vendorPostViewHolder = (VendorPostViewHolder) holder;
                 vendorPostViewHolder.bind(newsFeedItems.get(position-1), position-1);
+            } else if (holder instanceof  GroupPostViewHolder){
+                GroupPostViewHolder groupPostViewHolder = (GroupPostViewHolder) holder;
+                groupPostViewHolder.bind(newsFeedItems.get(position-1), position-1);
             }
         }
 
@@ -891,6 +1231,8 @@ public class Home extends Fragment {
                 return VIEW_EVENT;
             } else if (newsFeedItems.get(position-1).getType() == NewsFeedItem.VENDOR_POST_TYPE){
                 return VIEW_VENDOR_POST;
+            } else if (newsFeedItems.get(position-1).getType() == NewsFeedItem.GROUP_POSTS_TYPE){
+                return VIEW_GROUP_POST;
             }
 
             return VIEW_POST;
@@ -906,14 +1248,17 @@ public class Home extends Fragment {
                 new Response.Listener<ApiResponse>() {
                     @Override
                     public void onResponse(ApiResponse response) {
-                        if (response.getPosts() != null){
+                        if (!response.isError()){
                             Log.i("volley response", "onResponse: " + response.getPosts()[0].getCreatedAt());
                             posts = response.getPosts();
                             products = response.getProducts();
                             vendorPosts = response.getVendorPosts();
                             events = response.getEvents();
                             groupPosts = response.getGroupPosts();
-                            newsFeedItems = new ArrayList<>();
+                            if (newsFeedItems == null) {
+                                newsFeedItems = new ArrayList<>();
+                            }
+                            lastCount = newsFeedItems.size()-1;
                             if (posts != null) {
                                 for (PostResponse postResponse : posts) {
                                     NewsFeedItem item = new NewsFeedItem();
@@ -942,8 +1287,10 @@ public class Home extends Fragment {
                                     item.setProductSoldAmount(productResponse.getSoldAmount());
                                     item.setProductTitle(productResponse.getTitle());
                                     item.setId(productResponse.getId());
-                                    item.setOwnerId(productResponse.getVendorId());
+                                    item.setOwnerId(productResponse.getStoreId());
                                     item.setOwnerName(productResponse.getName());
+                                    item.setItemName(productResponse.getStoreName());
+                                    item.setItemImage(productResponse.getStoreImageUrl());
                                     item.setType(NewsFeedItem.PRODUCT_TYPE);
                                     newsFeedItems.add(item);
                                 }
@@ -978,19 +1325,27 @@ public class Home extends Fragment {
                                 }
                             }
 
-                            /*if (groupPosts != null){
+                            if (groupPosts != null){
                                 for (GroupPostResponse groupPostResponse : groupPosts) {
                                     NewsFeedItem item = new NewsFeedItem();
-                                    item.setId(groupPostResponse.getId());
+                                    item.setPostId(groupPostResponse.getPostId());
+                                    item.setCreatedAt(groupPostResponse.getCreatedAt());
+                                    item.setLikes(groupPostResponse.getLikes());
+                                    item.setOwnerId(Integer.parseInt(groupPostResponse.getUserId()));
+                                    item.setOwnerName(groupPostResponse.getUsername());
+                                    item.setPostAttachment(groupPostResponse.getAttachment());
+                                    //item.setPostComments(postResponse.getComments());
+                                    item.setCommentSize(groupPostResponse.getCommentSize());
+                                    item.setPostText(groupPostResponse.getText());
+                                    item.setType(NewsFeedItem.GROUP_POSTS_TYPE);
                                     item.setItemName(groupPostResponse.getName());
-                                    PostResponse[] postResponses = groupPostResponse.getPosts();
-                                    for (PostResponse  response1 : postResponses) {
-
-                                    }
+                                    item.setGroupId(groupPostResponse.getId());
+                                    newsFeedItems.add(item);
 
                                 }
-                            }*/
+                            }
 
+                            newCount = newsFeedItems.size()-1;
                             nextCursor = response.getNextCursor();
                             now = response.getNow();
                             //Collections.shuffle(newsFeedItems);
@@ -1008,7 +1363,7 @@ public class Home extends Fragment {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("method", "get_news_feed");
                 map.put("userId", userId);
-                map.put("cursor", "0");
+                map.put("cursor", String.valueOf(nextCursor));
 
                 return map;
             }
@@ -1021,10 +1376,10 @@ public class Home extends Fragment {
     private void updateUi(){
         if (adapter == null){
             adapter = new PostRecyclerAdapter();
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
         } else {
-
+            adapter.notifyItemRangeInserted(lastCount,newCount);
         }
     }
 
@@ -1047,7 +1402,7 @@ public class Home extends Fragment {
                         if (newsFeedItems.get(i).getId() == postId) {
                             int commentSize = data.getIntExtra("added_size", newsFeedItems.get(i).getCommentSize());
                             newsFeedItems.get(i).setCommentSize(commentSize);
-                            adapter.notifyItemChanged(i);
+                            adapter.notifyItemChanged(i+1);
                             /*int c_size = 0;
                             if (newsFeedItems.get(i).getPostComments() != null)
                                 c_size = newsFeedItems.get(i).getPostComments().length ;
@@ -1061,8 +1416,8 @@ public class Home extends Fragment {
                             c_resArray[c_size] = commentResponse;
                             newsFeedItems.get(i).setPostComments(c_resArray);
                             adapter.notifyDataSetChanged();
-                            Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();
-                            break;*/
+                            Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();*/
+                            break;
                         }
                     }
                 }
@@ -1083,7 +1438,7 @@ public class Home extends Fragment {
                     item.setLikes(null);
                     item.setPostComments(null);
                     item.setType(NewsFeedItem.POST_TYPE);
-                    newsFeedItems.set(0, item);
+                    newsFeedItems.add(0, item);
                     //newsFeedItems.add(item);
                 }
 
@@ -1099,12 +1454,12 @@ public class Home extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Log.i("remove_post", response);
-                        ArrayList<PostResponse> newPosts = new ArrayList<>(Arrays.asList(posts));
-                        for (int i = 0; i < newPosts.size(); i++) {
-                            if (newPosts.get(i).getPostId() == postId){
-                                newPosts.remove(i);
-                                posts = newPosts.toArray(new PostResponse[newPosts.size()]);
-                                adapter.notifyDataSetChanged();
+                        //ArrayList<PostResponse> newPosts = new ArrayList<>(Arrays.asList(posts));
+                        for (int i = 0; i < newsFeedItems.size(); i++) {
+                            if (newsFeedItems.get(i).getId() == postId){
+                                newsFeedItems.remove(i);
+                                //posts = newPosts.toArray(new PostResponse[newPosts.size()]);
+                                adapter.notifyItemRemoved(i+1);
                                 break;
                             }
                         }

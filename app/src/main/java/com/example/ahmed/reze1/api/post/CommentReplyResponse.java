@@ -35,6 +35,18 @@ public class CommentReplyResponse implements Serializable {
     @Expose
     private String createdAt;
 
+    @SerializedName("pending")
+    @Expose
+    private boolean pending;
+
+    public boolean isPending() {
+        return pending;
+    }
+
+    public void setPending(boolean pending) {
+        this.pending = pending;
+    }
+
     public int[] getLikes() {
         return likes;
     }

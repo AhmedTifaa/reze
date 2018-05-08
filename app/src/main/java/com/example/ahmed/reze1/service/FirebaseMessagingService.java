@@ -22,6 +22,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     private static final String SERVER_NOTIFICATION = "rezetopia_app_fcm";
+    private static final String SERVER_STORE_NOTIFICATION = "rezetopia_app_fcm_store";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -58,7 +59,34 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 NotificationManager mNotifyMgr =
                         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(mNotificationId, mBuilder.build());
-            } else {
+            } else if (title != null && title.contentEquals(SERVER_STORE_NOTIFICATION)){
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(this)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle(jsonObject.getString("username"))
+                                .setContentText(jsonObject.getString("message"));
+
+
+                Intent resultIntent = new Intent();
+
+
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                resultIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+
+                mBuilder.setContentIntent(resultPendingIntent);
+
+                int mNotificationId = (int) System.currentTimeMillis();
+                NotificationManager mNotifyMgr =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+            }
+
+            else {
                 String notification_title = remoteMessage.getNotification().getTitle();
                 String notification_message = remoteMessage.getNotification().getBody();
 

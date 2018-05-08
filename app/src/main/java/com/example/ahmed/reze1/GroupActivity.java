@@ -54,10 +54,10 @@ public class GroupActivity extends AppCompatActivity {
     GroupResponse group;
 
 
-    public static Intent createIntent(int itemId, String itemName, Context context){
+    public static Intent createIntent(int groupId, String groupName, Context context){
         Intent intent = new Intent(context, GroupActivity.class);
-        intent.putExtra(GROUP_ID_EXTRA, itemId);
-        intent.putExtra(GROUP_NAME_EXTRA, itemName);
+        intent.putExtra(GROUP_ID_EXTRA, groupId);
+        intent.putExtra(GROUP_NAME_EXTRA, groupName);
         return intent;
     }
 
@@ -217,6 +217,7 @@ public class GroupActivity extends AppCompatActivity {
 
                 String userId = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                         .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
+
                 map.put("method", "is_member");
                 map.put("user_id", userId);
                 map.put("group_id", String.valueOf(groupId));

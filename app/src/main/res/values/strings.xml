@@ -98,7 +98,7 @@
     <string name="amount">Amount</string>
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
-    <string name="point">Point</string>
+    <string name="pound">Point</string>
     <string name="buy">Buy now</string>
     <string name="sold_out">Sold out</string>
     <string name="member">member</string>
@@ -120,6 +120,14 @@
     <string name="create_event">Create event</string>
     <string name="my_event">My event</string>
     <string name="posting">Posting&#8230;</string>
+    <string name="to">to</string>
+    <string name="saved_posts">Saved Posts</string>
+    <string name="stores">Stores</string>
+    <string name="create_store">Create Store</string>
+    <string name="my_store">My Stores</string>
+    <string name="explore">Explore</string>
+    <string name="address">Address</string>
+    <string name="beta">Beta</string>
 
     <string-array name="object_array">
 
