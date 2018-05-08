@@ -218,9 +218,8 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                     String uid = current_user.getUid();
 
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-
+                    Toast.makeText(getBaseContext(),uid.toString(),Toast.LENGTH_LONG).show();
                     String device_token = FirebaseInstanceId.getInstance().getToken();
-
                     HashMap<String, String> userMap = new HashMap<>();
                     userMap.put("name", display_name);
                     userMap.put("image", img);
