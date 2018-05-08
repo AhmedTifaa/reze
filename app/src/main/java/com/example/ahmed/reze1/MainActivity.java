@@ -3,6 +3,7 @@ package com.example.ahmed.reze1;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -140,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                     if(jsonObject.getString("msg").equals("succ")){
                         Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
                         register_user(jsonObject.getString("name"),jsonObject.getString("password"),jsonObject.getString("email"),"https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                        String fireId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "1");
+                        Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
+
                         // probar.setVisibility(View.GONE);
                         // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                     }
@@ -216,9 +221,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = current_user.getUid();
-
+                    SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
+                    editor.putString(AppConfig.LOGGED_IN_USER_ID_SHARED,uid).apply();
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                    Toast.makeText(getBaseContext(),uid.toString(),Toast.LENGTH_LONG).show();
                     String device_token = FirebaseInstanceId.getInstance().getToken();
                     HashMap<String, String> userMap = new HashMap<>();
                     userMap.put("name", display_name);
@@ -231,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if(task.isSuccessful()){
-                                Toast.makeText(getBaseContext(),"add to firebase",Toast.LENGTH_LONG).show();
+
                             }
 
                         }
