@@ -272,7 +272,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getBoolean("error")){
-                                    Toast.makeText(CommentActivity.this, "Error submitting comment", Toast.LENGTH_SHORT).show();
+                                 //   Toast.makeText(CommentActivity.this, "Error submitting comment", Toast.LENGTH_SHORT).show();
                                     comments.remove(comments.size()-1);
                                 } else {
                                     commentResponse = new CommentResponse();
@@ -317,7 +317,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
             Volley.newRequestQueue(CommentActivity.this).add(stringRequest);
         } else {
-            Toast.makeText(this, "Empty comment!", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Empty comment!", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -16,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        maven { url "https://dl.bintray.com/hani-momanii/maven"}
+    }
 }
 
 
@@ -53,6 +56,8 @@ dependencies {
     //compile "com.github.nkzawa:socket.io-client:0.5.0"
     compile "com.android.support:support-emoji:27.1.1"
     compile "com.android.support:support-emoji-bundled:27.1.1"
+    compile 'hani.momanii.supernova_emoji_library:supernova-emoji-library:0.0.2'
+
     compile('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'

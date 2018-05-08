@@ -78,7 +78,7 @@ public class CreateTeam extends DialogFragment {
                             if (!jsonObject.getBoolean("error")){
                                 dismiss();
                             } else {
-                                Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

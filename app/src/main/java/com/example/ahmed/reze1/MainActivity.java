@@ -51,9 +51,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
@@ -134,9 +137,10 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         if (mAuth.getCurrentUser() != null) {
 
 
-            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            //mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child(mAuth.getCurrentUser().getUid());
 
         }
+
         StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -214,7 +218,27 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     };
     private void register_user(final String display_name,String password, String email,final String img) {
 
+//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                if (snapshot.hasChild("online")) {
+//                    // run some code
+//                    Log.d("child","exsist");
+//                }
+//                else{
+//                    Log.d("child","not exsist");
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -223,13 +247,14 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = current_user.getUid();
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
                     String device_token = FirebaseInstanceId.getInstance().getToken();
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                     HashMap<String, String> userMap = new HashMap<>();
                     userMap.put("name", display_name);
                     userMap.put("image", img);
                     userMap.put("thumb_image", "default");
                     userMap.put("device_token", device_token);
+                    userMap.put("online","true");
 
                     mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -905,7 +930,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
         } else {
 
-            mUserRef.child("online").setValue("true");
+
 
         }
 
@@ -918,7 +943,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
         if(currentUser != null) {
 
-            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+            //mDatabase.child("online").setValue(ServerValue.TIMESTAMP);
 
         }
 

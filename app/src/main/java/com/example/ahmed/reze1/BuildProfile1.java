@@ -544,7 +544,7 @@ public class BuildProfile1 extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
         if (spinnerNag.getSelectedItemPosition() == 0) {
-            Toast.makeText(getBaseContext(),R.string.validate_nag,Toast.LENGTH_LONG).show();
+          //  Toast.makeText(getBaseContext(),R.string.validate_nag,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerNag.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_nag));
             valid = false;
@@ -553,7 +553,7 @@ public class BuildProfile1 extends AppCompatActivity {
             errorText.setError(null);
         }
         if (spinnerFoot.getSelectedItemPosition() == 0) {
-            Toast.makeText(getBaseContext(),R.string.validate_foot,Toast.LENGTH_LONG).show();
+         //   Toast.makeText(getBaseContext(),R.string.validate_foot,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerFoot.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_foot));
             valid = false;
@@ -562,7 +562,7 @@ public class BuildProfile1 extends AppCompatActivity {
             errorText.setError(null);
         }
         if (spinnerPosition.getSelectedItemPosition() == 0) {
-            Toast.makeText(getBaseContext(),R.string.validate_position,Toast.LENGTH_LONG).show();
+         //   Toast.makeText(getBaseContext(),R.string.validate_position,Toast.LENGTH_LONG).show();
             TextView errorText = (TextView)spinnerPosition.getSelectedView();
             errorText.setError(getResources().getString(R.string.validate_position));
             valid = false;

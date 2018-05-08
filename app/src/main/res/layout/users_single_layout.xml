@@ -23,7 +23,9 @@
         android:layout_toEndOf="@+id/user_single_image"
         android:text="Display Name"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/user_single_image" />
 
     <TextView
         android:id="@+id/user_single_status"
@@ -32,7 +34,8 @@
         android:layout_alignStart="@+id/user_single_name"
         android:layout_below="@+id/user_single_name"
         android:layout_marginTop="10dp"
-        android:text="User default Status" />
+        android:text="User default Status"
+        android:layout_alignLeft="@+id/user_single_name" />
 
     <ImageView
         android:id="@+id/user_single_online_icon"
@@ -42,6 +45,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/user_single_name"
         android:visibility="invisible"
-        app:srcCompat="@drawable/online_icon" />
+        app:srcCompat="@drawable/online_icon"
+        android:layout_toRightOf="@+id/user_single_name" />
 
 </RelativeLayout>

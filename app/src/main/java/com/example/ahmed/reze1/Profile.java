@@ -211,7 +211,7 @@ public class Profile extends Fragment {
 //                viewPager2.setCurrentItem(3);
 //            }
 //        });
-        probar = (RelativeLayout)v.findViewById(R.id.loadingPanel) ;
+        //probar = (RelativeLayout)v.findViewById(R.eventId.loadingPanel) ;
         getUser(userId,requestQueue);
         getIDs(v);
         setEvents();
@@ -347,7 +347,7 @@ public class Profile extends Fragment {
                         Picasso.with(getApplicationContext())
                                 .load("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG")
                                 .placeholder(R.drawable.circle).into(playerImg);
-                        probar.setVisibility(View.GONE);
+                       // probar.setVisibility(View.GONE);
                        // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                     }
                     else {
