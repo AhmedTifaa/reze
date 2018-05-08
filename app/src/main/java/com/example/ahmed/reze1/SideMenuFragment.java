@@ -20,6 +20,7 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
     TextView sideEventsView;
     TextView sideSavedPostsView;
     TextView sideStoreView;
+    TextView policy;
 
     @Nullable
     @Override
@@ -30,6 +31,15 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
         sideEventsView = view.findViewById(R.id.sideEventsView);
         sideSavedPostsView = view.findViewById(R.id.sideSavedPostsView);
         sideStoreView = view.findViewById(R.id.sideStoreView);
+        policy = view.findViewById(R.id.policy);
+
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                startActivity(intent);
+            }
+        });
 
         myTeamView.setOnClickListener(this);
         sideEventsView.setOnClickListener(this);

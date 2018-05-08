@@ -60,9 +60,9 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         //Spinner spinner = (Spinner) findViewById(R.eventId.spinner);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.object_array, R.layout.spinner_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.object_array, R.layout.spinner_item);
 
-        adapter.setDropDownViewResource(R.layout.spinner_item);
+        //adapter.setDropDownViewResource(R.layout.spinner_item);
 //        myCalendar = Calendar.getInstance();
 //        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 //

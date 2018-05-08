@@ -151,8 +151,8 @@ public class BuildProfile2 extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
-//                finish();
+                startActivity(new Intent(BuildProfile2.this,MainActivity.class));
+                finish();
                 progress.show();
                 StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/us.php", new Response.Listener<String>() {
                     @Override

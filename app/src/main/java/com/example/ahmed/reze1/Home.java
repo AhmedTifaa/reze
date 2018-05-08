@@ -223,7 +223,7 @@ public class Home extends Fragment {
             usernameView = itemView.findViewById(R.id.postUserName);
             ppView = itemView.findViewById(R.id.ppView);
             postSideMenu = itemView.findViewById(R.id.postSideMenu);
-            hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
+            //hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
             postShareButton = itemView.findViewById(R.id.postShareButton);
 
             postShareButton.setOnClickListener(new View.OnClickListener() {
@@ -647,7 +647,7 @@ public class Home extends Fragment {
             usernameView = itemView.findViewById(R.id.postUserName);
             ppView = itemView.findViewById(R.id.ppView);
             postSideMenu = itemView.findViewById(R.id.postSideMenu);
-            hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
+            //hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
         }
 
         public void bind(final NewsFeedItem item, final int pos) {

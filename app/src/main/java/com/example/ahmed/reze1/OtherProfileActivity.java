@@ -444,17 +444,21 @@ public class OtherProfileActivity extends AppCompatActivity {
                 msgBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(OtherProfileActivity.this, SocketActivity.class);
+                        AlertFragment fragment = AlertFragment.createFragment("Chatting is coming soon");
+                        fragment.show(getFragmentManager(), null);
+                        /*Intent intent = new Intent(OtherProfileActivity.this, SocketActivity.class);
                         intent.putExtra("freiendId",profileId);
                         intent.putExtra("freiendName",usernamePView.getText());
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 });
 
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (addBtn.getText().equals("add +")){
+                        AlertFragment fragment = AlertFragment.createFragment("Add friend is coming soon");
+                        fragment.show(getFragmentManager(), null);
+                        /*if (addBtn.getText().equals("add +")){
                         Toast.makeText(getBaseContext(),"hi",Toast.LENGTH_LONG).show();
                         JSONObject sendRequest = new JSONObject();
                         try {
@@ -559,6 +563,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                             requestQueue.add(request);
 
                         }*/
+
 
                     }
                 });

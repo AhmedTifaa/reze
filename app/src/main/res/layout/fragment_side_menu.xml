@@ -114,6 +114,21 @@
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
             android:background="@color/colorAccent"/>
+        <TextView
+            android:id="@+id/policy"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terms and Conditions"
+            android:textSize="15sp"
+            android:textColor="@color/green7"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorAccent"/>
 
         <TextView
             android:enabled="false"

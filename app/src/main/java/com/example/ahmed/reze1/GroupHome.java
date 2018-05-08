@@ -144,7 +144,7 @@ public class GroupHome extends Fragment {
             usernameView = itemView.findViewById(R.id.postUserName);
             ppView = itemView.findViewById(R.id.ppView);
             postSideMenu = itemView.findViewById(R.id.postSideMenu);
-            hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
+            //hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
         }
 
         public void bind(final PostResponse item, final int pos) {
