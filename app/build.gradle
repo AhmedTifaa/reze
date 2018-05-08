@@ -53,13 +53,13 @@ dependencies {
     //compile "com.github.nkzawa:socket.io-client:0.5.0"
     compile "com.android.support:support-emoji:27.1.1"
     compile "com.android.support:support-emoji-bundled:27.1.1"
-    compile ('io.socket:socket.io-client:1.0.0') {
+    compile('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
     compile "com.android.support:support-emoji:27.1.1"
     compile "com.android.support:support-emoji-bundled:27.1.1"
-    compile ('io.socket:socket.io-client:1.0.0') {
+    compile('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
