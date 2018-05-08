@@ -20,6 +20,15 @@
             android:layout_gravity="center"
             android:contentDescription="logo"
             android:src="@drawable/logo_splash" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/splash_logo"
+            android:textColor="@color/white"
+            android:text="@string/beta"
+            android:layout_centerHorizontal="true"/>
+
         <ImageView
             android:id="@+id/loading_bar"
             android:layout_width="match_parent"

@@ -18,6 +18,8 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
 
     TextView myTeamView;
     TextView sideEventsView;
+    TextView sideSavedPostsView;
+    TextView sideStoreView;
 
     @Nullable
     @Override
@@ -26,8 +28,13 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
 
         myTeamView = view.findViewById(R.id.myTeamView);
         sideEventsView = view.findViewById(R.id.sideEventsView);
+        sideSavedPostsView = view.findViewById(R.id.sideSavedPostsView);
+        sideStoreView = view.findViewById(R.id.sideStoreView);
+
         myTeamView.setOnClickListener(this);
         sideEventsView.setOnClickListener(this);
+        sideSavedPostsView.setOnClickListener(this);
+        sideStoreView.setOnClickListener(this);
         return view;
     }
 
@@ -42,6 +49,16 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
 
             case R.id.sideEventsView:
                 intent = new Intent(getActivity(), MyEventsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.sideSavedPostsView:
+                intent = new Intent(getActivity(), SavedPostsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.sideStoreView:
+                intent = new Intent(getActivity(), StoresListActivity.class);
                 startActivity(intent);
                 break;
 

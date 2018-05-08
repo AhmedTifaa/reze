@@ -43,7 +43,8 @@ import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
 import com.example.ahmed.reze1.helper.MenuCustomItem;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
-
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -222,6 +223,7 @@ public class Home extends Fragment {
             hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
         }
 
+        //todo
         public void bind(final NewsFeedItem item, final int pos) {
             String postText = null;
             if (item.getOwnerName() != null){

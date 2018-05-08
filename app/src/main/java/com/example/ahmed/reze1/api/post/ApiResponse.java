@@ -17,6 +17,10 @@ public class ApiResponse {
     @Expose
     private int nextCursor;
 
+    @SerializedName("error")
+    @Expose
+    private boolean error;
+
     @SerializedName("posts")
     @Expose
     private PostResponse[] posts;
@@ -41,6 +45,14 @@ public class ApiResponse {
     @SerializedName("now")
     @Expose
     private long now;
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
 
     public EventResponse[] getEvents() {
         return events;

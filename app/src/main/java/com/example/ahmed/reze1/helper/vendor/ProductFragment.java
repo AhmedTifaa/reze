@@ -1,7 +1,6 @@
 package com.example.ahmed.reze1.helper.vendor;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,17 +19,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.R;
-import com.example.ahmed.reze1.VendorProfile;
 import com.example.ahmed.reze1.api.product.ApiResponse;
 import com.example.ahmed.reze1.api.product.ProductResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,7 +104,7 @@ public class ProductFragment extends Fragment {
             productTitleView.setText(product.getTitle());
             productDetailView.setText(product.getDescription());
 
-            String point = getActivity().getResources().getString(R.string.point);
+            String point = getActivity().getResources().getString(R.string.pound);
             priceView.setText(String.valueOf(product.getPrice()) + " " + point);
 
             if (product.getAmount() > product.getSoldAmount()){
