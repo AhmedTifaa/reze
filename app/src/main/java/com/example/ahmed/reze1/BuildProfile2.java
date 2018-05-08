@@ -158,7 +158,7 @@ public class BuildProfile2 extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         //Toast.makeText(getBaseContext(),"test",Toast.LENGTH_LONG).show();
-                      //  Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),response,Toast.LENGTH_LONG).show();
 
                         //hideDialog();
                         progress.dismiss();
