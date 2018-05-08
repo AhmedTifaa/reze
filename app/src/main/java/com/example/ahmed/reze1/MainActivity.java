@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
                         register_user(jsonObject.getString("name"),jsonObject.getString("password"),jsonObject.getString("email"),"https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                         String fireId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
-                                .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "1");
+                                .getString(AppConfig.LOGGED_IN_FIRE_ID_SHARED, "0");
                         Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
 
                         // probar.setVisibility(View.GONE);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
                     String uid = current_user.getUid();
                     SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
-                    editor.putString(AppConfig.LOGGED_IN_USER_ID_SHARED,uid).apply();
+                    editor.putString(AppConfig.LOGGED_IN_FIRE_ID_SHARED,uid).apply();
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
                     String device_token = FirebaseInstanceId.getInstance().getToken();
                     HashMap<String, String> userMap = new HashMap<>();
