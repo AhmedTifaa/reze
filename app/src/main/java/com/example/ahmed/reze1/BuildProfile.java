@@ -89,7 +89,7 @@ public class BuildProfile extends AppCompatActivity {
         Bundle inBundle = getIntent().getExtras();
         fbname = inBundle.get("fbname").toString();
         fbpicurl = inBundle.get("fbpicurl").toString();
-        user_id = inBundle.get("eventId").toString();
+        user_id = inBundle.get("id").toString();
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         requestQueue = Volley.newRequestQueue(this);
         //btnSkip = (Button) findViewById(R.eventId.btn_skip);

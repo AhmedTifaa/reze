@@ -130,7 +130,13 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         backView = mCustomView.findViewById(R.id.searchBackView);
         userType = getIntent().getStringExtra("type");
         mAuth = FirebaseAuth.getInstance();
+        //
+        if (mAuth.getCurrentUser() != null) {
 
+
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+
+        }
         StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -178,12 +184,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         requestQueue.add(request);
         inflateMainView(currentTab);
 
-        if (mAuth.getCurrentUser() != null) {
 
-
-            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-
-        }
 
 
         chatButton.setOnClickListener(new View.OnClickListener() {

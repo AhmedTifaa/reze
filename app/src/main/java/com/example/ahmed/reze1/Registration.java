@@ -140,7 +140,7 @@ public class Registration extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                                     intent.putExtra("fbname", inputFullName.getText().toString());
                                     intent.putExtra("fbpicurl", "null");
-                                    intent.putExtra("eventId", jsonObject.getString("eventId"));
+                                    intent.putExtra("id", jsonObject.getString("id"));
                                     startActivityForResult(intent, 0);
                                     finish();
                                 } else if (jsonObject.getString("msg").equals("This mail is already exsist you can log in")) {
