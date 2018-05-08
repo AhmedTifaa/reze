@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         SocketConnect.socket.on("cancelRequest", handleCancelRequest);
         SocketConnect.socket.on("getRequestNoti",getRequestNoti);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        Toast.makeText(getBaseContext(),SocketConnect.socket+"",Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getBaseContext(),SocketConnect.socket+"",Toast.LENGTH_LONG).show();
         EmojiCompat.Config config = new BundledEmojiCompatConfig(this);
         EmojiCompat.init(config);
         userId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                     jsonObject = new JSONObject(response);
                     //Toast.makeText(getApplicationContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
                     if(jsonObject.getString("msg").equals("succ")){
-                        Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
                         register_user(jsonObject.getString("name"),jsonObject.getString("password"),jsonObject.getString("email"),"https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                         String fireId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                                 .getString(AppConfig.LOGGED_IN_FIRE_ID_SHARED, "0");
-                        Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
                         // probar.setVisibility(View.GONE);
                         // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
                     }
@@ -260,14 +260,14 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     try {
-                        Toast.makeText(getBaseContext(),userId+"  "+data.getString("to"),Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getBaseContext(),userId+"  "+data.getString("to"),Toast.LENGTH_LONG).show();
 
                             final String id = data.getString("from");
                             StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
 
-                                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
                                     try {
                                         JSONObject jsonObject;
                                         jsonObject = new JSONObject(response);
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                                         if(jsonObject.getString("msg").equals("succ")){
                                             //values.add(jsonObject);
 
-                                                //SocketConnect.socket.emit("sendRequestNoti",jsonObject);
+                                                SocketConnect.socket.emit("sendRequestNoti",jsonObject);
 
 //                                            playerNameTv.setText(jsonObject.getString("name"));
 //                                            Picasso.with(getApplicationContext())
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                             requestQueue.add(request);
 
 
-                        Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
-                    Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -73,7 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             mImageView = (ImageView) itemView.findViewById(R.id.image);
             mMessageView = (EmojiTextView) itemView.findViewById(R.id.message);
             textView = (TextView) itemView.findViewById(R.id.textView);
-            Toast.makeText(itemView.getContext(),Message.TYPE_MESSAGE+"",Toast.LENGTH_LONG).show();
+           // Toast.makeText(itemView.getContext(),Message.TYPE_MESSAGE+"",Toast.LENGTH_LONG).show();
             mMessageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

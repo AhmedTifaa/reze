@@ -171,7 +171,7 @@ public class Profile extends Fragment {
             }
         });
 
-        Toast.makeText(getContext(),wraper.getHeight()+"",Toast.LENGTH_LONG).show();
+       // Toast.makeText(getContext(),wraper.getHeight()+"",Toast.LENGTH_LONG).show();
         //params.height = 200;
        // wraper.setLayoutParams(params);
         //topScroll.setMinimumHeight(500);
@@ -401,7 +401,7 @@ public class Profile extends Fragment {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.menu_item_network:
-                            Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getApplicationContext(),menuItem.getTitle(),Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getActivity(), NetworkList.class);
                             startActivity(intent);
                             return true;

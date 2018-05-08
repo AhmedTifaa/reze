@@ -460,7 +460,7 @@ public class PostsProfile extends Fragment {
                 }
 
             }
-            Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getActivity(), "result", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CREATE_POST_RESULT){
             if (data != null){
                 PostResponse postResponse = (PostResponse) data.getSerializableExtra("post");

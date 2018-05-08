@@ -725,7 +725,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                 }
 
             }
-            Toast.makeText(OtherProfileActivity.this, "result", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(OtherProfileActivity.this, "result", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CREATE_POST_RESULT){
             if (data != null){
                 PostResponse postResponse = (PostResponse) data.getSerializableExtra("post");

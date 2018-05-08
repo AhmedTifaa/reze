@@ -205,7 +205,7 @@ public class Login extends AppCompatActivity {
                                         .putString(AppConfig.LOGGED_IN_USER_NAME_SHARED, jsonObject.getString("name")).apply();
 
                                 if (jsonObject.getString("msg").equals("user")) {
-                                    Toast.makeText(getApplicationContext(), jsonObject.getString("state"), Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getApplicationContext(), jsonObject.getString("state"), Toast.LENGTH_SHORT).show();
                                     if(jsonObject.getString("state").equals("0")){
                                         Intent intent = new Intent(getApplicationContext(), BuildProfile.class);
                                         intent.putExtra("fbname", jsonObject.getString("name"));
@@ -232,14 +232,14 @@ public class Login extends AppCompatActivity {
                                     }
                                     else if(jsonObject.getString("state").equals("3")){
                                         if(jsonObject.getString("snet").equals("0")){
-                                            Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                                          //  Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), BuildNetwork.class);
                                             intent.putExtra("id",jsonObject.getString("id"));
                                             startActivityForResult(intent, 0);
                                             finish();
                                         }
                                         else{
-                                            Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
+                                           // Toast.makeText(getBaseContext(),jsonObject.getString("id"),Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             intent.putExtra("id",jsonObject.getString("id"));
                                             intent.putExtra("type", jsonObject.getString("msg"));
@@ -250,9 +250,9 @@ public class Login extends AppCompatActivity {
                                     }
 
                                 } else if (jsonObject.getString("msg").equals("no")) {
-                                    Toast.makeText(getBaseContext(), R.string.wronglogin, Toast.LENGTH_LONG).show();
+                                  //  Toast.makeText(getBaseContext(), R.string.wronglogin, Toast.LENGTH_LONG).show();
                                 } else if (jsonObject.getString("msg").equals("vendor")){
-                                    Toast.makeText(getBaseContext(), "vendor", Toast.LENGTH_LONG).show();
+                                   // Toast.makeText(getBaseContext(), "vendor", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     intent.putExtra("id",jsonObject.getString("id"));
                                     intent.putExtra("type", jsonObject.getString("msg"));
@@ -260,7 +260,7 @@ public class Login extends AppCompatActivity {
                                     finish();
                                 }
                                 else {
-                                    Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
+                                   // Toast.makeText(getBaseContext(), response.toString(), Toast.LENGTH_LONG).show();
                                 }
 
                             } catch (JSONException e) {
@@ -272,7 +272,7 @@ public class Login extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getBaseContext(), R.string.checkingNetwork, Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getBaseContext(), R.string.checkingNetwork, Toast.LENGTH_LONG).show();
 
                         }
                     }) {

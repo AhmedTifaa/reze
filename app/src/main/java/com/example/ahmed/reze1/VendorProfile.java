@@ -208,7 +208,7 @@ public class VendorProfile extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1005 && data != null){
-            Toast.makeText(getActivity(), "product posted", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getActivity(), "product posted", Toast.LENGTH_LONG).show();
         }
 
         if (requestCode == IMAGE_REQUEST_CODE && data!= null){

@@ -224,7 +224,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (jsonObject.getBoolean("error")){
-                                    Toast.makeText(ReplayActivity.this, "Error submitting replay", Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(ReplayActivity.this, "Error submitting replay", Toast.LENGTH_SHORT).show();
                                 } else {
                                     replayResponse = new CommentReplyResponse();
                                     replayResponse.setReplayId(Integer.parseInt(userId));
@@ -278,7 +278,7 @@ public class ReplayActivity extends AppCompatActivity implements View.OnClickLis
 
             Volley.newRequestQueue(ReplayActivity.this).add(stringRequest);
         } else {
-            Toast.makeText(this, "Empty replay!", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Empty replay!", Toast.LENGTH_SHORT).show();
         }
     }
 
