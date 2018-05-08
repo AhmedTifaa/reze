@@ -23,7 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ahmed.reze1.api.user.UserResponse;
 import com.example.ahmed.reze1.app.AppConfig;
-import com.github.nkzawa.emitter.Emitter;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +32,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.socket.emitter.Emitter;
 
 /**
  * Created by amr on 4/19/2018.

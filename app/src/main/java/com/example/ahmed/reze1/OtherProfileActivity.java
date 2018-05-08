@@ -51,6 +51,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import io.socket.emitter.Emitter;
+
 public class OtherProfileActivity extends AppCompatActivity {
 
     private static final String USER_ID_EXTRA = "profile_other_user_id_extra";
@@ -62,6 +64,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     boolean searchUsers = false;
     boolean searchGroups = false;
+    public OtherProfileActivity otherProfileActivity;
 
     ArrayList<SearchItem> searchItems;
 
@@ -83,7 +86,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     private RecyclerView.Adapter postsAdapter;
     RecyclerView postsRecyclerView;
-
+    public Button addBtn;
     private RecyclerView.Adapter searchAdapter;
     RecyclerView searchRecyclerView;
 
@@ -99,6 +102,8 @@ public class OtherProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
 
+        SocketConnect.socket.on("succ", new PostRecyclerAdapter().suucRequest);
+        SocketConnect.socket.on("succCancel", new PostRecyclerAdapter().succCancel);
         postsRecyclerView = findViewById(R.id.otherProfileRecView);
         searchRecyclerView = findViewById(R.id.otherSearchRecView);
 
@@ -113,6 +118,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -274,6 +280,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             });
         }
 
+
         private void performLike(final PostResponse postResponse, final int pos){
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
@@ -391,10 +398,12 @@ public class OtherProfileActivity extends AppCompatActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if (viewType == VIEW_HEADER){
+
                 View view = LayoutInflater.from(OtherProfileActivity.this).inflate(R.layout.other_header_layout, parent, false);
                 Button msgBtn = (Button)view.findViewById(R.id.msgSend);
-                final Button addBtn = (Button)view.findViewById(R.id.addfBtn);
-                StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
+                addBtn = (Button)view.findViewById(R.id.addfBtn);
+
+               /* StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -430,7 +439,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                         return parameters;
                     }
                 };
-                requestQueue.add(request);
+                requestQueue.add(request);*/
 
                 msgBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -441,10 +450,33 @@ public class OtherProfileActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (addBtn.getText().equals("add +")){
+                        Toast.makeText(getBaseContext(),"hi",Toast.LENGTH_LONG).show();
+                        JSONObject sendRequest = new JSONObject();
+                        try {
+                            sendRequest.put("from",userId);
+                            sendRequest.put("to",profileId);
+                            SocketConnect.socket.emit("friendRequest",sendRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        }else if (addBtn.getText().equals("cancel")){
+                            JSONObject cancelRequest = new JSONObject();
+                            try {
+                                cancelRequest.put("from",userId);
+                                cancelRequest.put("to",profileId);
+                                SocketConnect.socket.emit("cancelRequest",cancelRequest);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                        /*if (addBtn.getText().equals("add +")){
                             StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/addfriend.php", new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -526,7 +558,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                             };
                             requestQueue.add(request);
 
-                        }
+                        }*/
 
                     }
                 });
@@ -536,6 +568,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                 return new OtherProfileActivity.PostViewHolder(view);
             }
         }
+
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -565,6 +598,36 @@ public class OtherProfileActivity extends AppCompatActivity {
         private boolean isPositionHeader(int position) {
             return position == 0;
         }
+        public Emitter.Listener suucRequest = new Emitter.Listener(){
+            @Override
+            public void call(final Object... args){
+                OtherProfileActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Boolean data = (Boolean) args[0];
+                        if (data){
+                            addBtn.setText("cancel");
+                            Log.i("Request Friend",data.toString());
+                        }
+                    }
+                });
+            }
+        };
+        public  Emitter.Listener succCancel = new Emitter.Listener(){
+            @Override
+            public void call(final Object... args){
+                OtherProfileActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Boolean data = (Boolean) args[0];
+                        if (data){
+                            addBtn.setText("add +");
+                            Log.i("Request Friend",data.toString());
+                        }
+                    }
+                });
+            }
+        };
     }
 
     private void fetchPosts(){
