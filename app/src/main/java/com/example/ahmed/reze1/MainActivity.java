@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
             teamSearchFilter = itemView.findViewById(R.id.teamSearchFilter);
             eventSearchFilter = itemView.findViewById(R.id.eventSearchFilter);
 
-            eventSearchFilter.setOnClickListener(new View.OnClickListener() {
+            /*eventSearchFilter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (searchItems != null && searchItems.size() > 0){
@@ -521,9 +521,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         }
                     }
                 }
-            });
+            });*/
 
-            teamSearchFilter.setOnClickListener(new View.OnClickListener() {
+            /*teamSearchFilter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (searchItems != null && searchItems.size() > 0){
@@ -549,9 +549,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         }
                     }
                 }
-            });
+            });*/
 
-            vendorSearchFilter.setOnClickListener(new View.OnClickListener() {
+            /*vendorSearchFilter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (searchItems != null && searchItems.size() > 0){
@@ -577,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
                         }
                     }
                 }
-            });
+            });*/
 
             userSearchFilter.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -113,7 +113,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         userId = OtherProfileActivity.this.getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
-        searchBox.addTextChangedListener(new TextWatcher() {
+        /*searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -135,9 +135,9 @@ public class OtherProfileActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
-        searchBox.setOnClickListener(new View.OnClickListener() {
+        /*searchBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ResizeWidthAnimation anim = new ResizeWidthAnimation(searchBox, 800);
@@ -149,7 +149,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                 }
                 updateSearchUi();
             }
-        });
+        });*/
 
         backView.setOnClickListener(new View.OnClickListener() {
             @Override
