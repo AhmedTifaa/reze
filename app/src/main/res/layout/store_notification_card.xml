@@ -6,7 +6,6 @@
     android:background="@color/colorAccent">
 
     <ImageView
-        android:layout_alignParentStart="true"
         android:id="@+id/notificationPPView"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -38,10 +37,23 @@
 
     <TextView
         android:layout_toEndOf="@id/notificationPPView"
-        android:id="@+id/notificationCreatedAtView"
+        android:id="@+id/notificationMobileView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notificationMsgView"
+        android:text="01117269447"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:layout_toEndOf="@id/notificationPPView"
+        android:id="@+id/notificationCreatedAtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notificationMobileView"
         android:text="Jan 15, 12:57AM"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="5dp"

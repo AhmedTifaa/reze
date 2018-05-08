@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -52,6 +53,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
     ImageView imageView;
     Button postButton;
     String userId;
+    LinearLayout newPostHeader;
 
 
     @Override
@@ -62,6 +64,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
         postTextView = findViewById(R.id.new_post_desc);
         imageView = findViewById(R.id.new_post_image);
         postButton = findViewById(R.id.post_btn);
+        newPostHeader = findViewById(R.id.newPostHeader);
 
         userId = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
@@ -69,6 +72,7 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
 
         imageView.setOnClickListener(this);
         postButton.setOnClickListener(this);
+        newPostHeader.setOnClickListener(this);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Creating your post");
@@ -109,6 +113,11 @@ public class CreatePostActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.new_post_image:
                 openImagePicker();
+                break;
+            case R.id.newPostHeader:
+                if (validPost()){
+                    performUserUpload();
+                }
                 break;
         }
     }

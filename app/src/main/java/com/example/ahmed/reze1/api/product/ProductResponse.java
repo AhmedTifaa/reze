@@ -23,6 +23,10 @@ public class ProductResponse implements Serializable {
     @Expose
     private String storeName;
 
+    @SerializedName("user_id")
+    @Expose
+    private int userId;
+
     @SerializedName("store_image_url")
     @Expose
     private String storeImageUrl;
@@ -66,6 +70,14 @@ public class ProductResponse implements Serializable {
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getStoreImageUrl() {
         return storeImageUrl;

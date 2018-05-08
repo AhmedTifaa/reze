@@ -38,7 +38,7 @@ public class InstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void updateToken(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.18:80/reze/push_notification.php",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/push_notification.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -46,7 +46,7 @@ public class InstanceIDService extends FirebaseInstanceIdService {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean error = jsonObject.getBoolean("error");
                             if (!error){
-                                Log.i("volley response", "updateToken: " + jsonObject.getString("message"));
+                                Log.i("updateToken", "updateToken: " + jsonObject.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -55,7 +55,7 @@ public class InstanceIDService extends FirebaseInstanceIdService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("volley error", "onErrorResponse: " + error.getMessage());
+                Log.i("updateTokenError", "onErrorResponse: " + error.getMessage());
             }
         }){
             @Override

@@ -41,25 +41,31 @@ public class SideMenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent;
+        AlertFragment fragment;
         switch (v.getId()){
             case R.id.myTeamView:
-                intent = new Intent(getActivity(), ViewTeamsActivity.class);
-                startActivity(intent);
+                /*intent = new Intent(getActivity(), ViewTeamsActivity.class);
+                startActivity(intent);*/
+                fragment = AlertFragment.createFragment("Teams will be available soon");
+                fragment.show(getActivity().getFragmentManager(), null);
                 break;
 
             case R.id.sideEventsView:
-                intent = new Intent(getActivity(), MyEventsActivity.class);
-                startActivity(intent);
+                /*intent = new Intent(getActivity(), MyEventsActivity.class);
+                startActivity(intent);*/
+                fragment = AlertFragment.createFragment("Events will be available soon");
+                fragment.show(getActivity().getFragmentManager(), null);
                 break;
 
             case R.id.sideSavedPostsView:
-                intent = new Intent(getActivity(), SavedPostsActivity.class);
-                startActivity(intent);
+                fragment = AlertFragment.createFragment("Saved posts will be available soon");
+                fragment.show(getActivity().getFragmentManager(), null);
                 break;
 
             case R.id.sideStoreView:
                 intent = new Intent(getActivity(), StoresListActivity.class);
                 startActivity(intent);
+
                 break;
 
             default:

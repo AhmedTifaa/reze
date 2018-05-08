@@ -33,6 +33,10 @@ public class ApiResponse {
     @Expose
     private EventResponse[] events;
 
+    @SerializedName("image_url")
+    @Expose
+    private String imageUrl;
+
     @SerializedName("group_posts")
     @Expose
     private GroupPostResponse[] groupPosts;
@@ -45,6 +49,14 @@ public class ApiResponse {
     @SerializedName("now")
     @Expose
     private long now;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public boolean isError() {
         return error;

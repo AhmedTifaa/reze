@@ -36,12 +36,13 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/vendorPpView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/circle"
                 android:layout_margin="@dimen/dimen_10"/>
 
             <LinearLayout
+                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -146,6 +147,7 @@
                     android:background="@drawable/light_post_button"/>
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/createPostButton"
                     android:layout_alignParentBottom="true"
                     android:layout_toStartOf="@id/createProductButton"

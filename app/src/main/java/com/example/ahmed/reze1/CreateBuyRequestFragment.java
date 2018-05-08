@@ -1,6 +1,9 @@
 package com.example.ahmed.reze1;
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -24,6 +27,7 @@ import com.example.ahmed.reze1.api.news_feed.VendorPostsResponse;
 import com.example.ahmed.reze1.api.post.ApiResponse;
 import com.example.ahmed.reze1.api.post.PostResponse;
 import com.example.ahmed.reze1.api.product.ProductResponse;
+import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
 
 import org.json.JSONException;
@@ -64,6 +68,7 @@ public class CreateBuyRequestFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_buy_request, container, false);
 
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Bundle bundle = getArguments();
         ownerId = bundle.getInt(OWNER_ID_EXTRA);
         productId = bundle.getInt(PRODUCT_ID_EXTRA);
@@ -96,7 +101,7 @@ public class CreateBuyRequestFragment extends DialogFragment {
     }
 
     private void performBuyRequest(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_post.php",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/reze/user_store.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -109,6 +114,7 @@ public class CreateBuyRequestFragment extends DialogFragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        dismiss();
 
                     }
                 }, new Response.ErrorListener() {
@@ -120,13 +126,17 @@ public class CreateBuyRequestFragment extends DialogFragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
+                String userId = getActivity().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+                        .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, null);
+
+                Log.i("volley error", "onErrorResponse: " + ownerId +  " " + storeId + " " + productId);
                 map.put("method", "buy_request");
-                map.put("user_id", "");
+                map.put("user_id", userId);
                 map.put("owner_id", String.valueOf(ownerId));
-                map.put("amount", String.valueOf(""));
+                map.put("amount", amountView.getText().toString());
                 map.put("product_id", String.valueOf(productId));
                 map.put("store_id", String.valueOf(storeId));
-                map.put("user_phone_number", String.valueOf(""));
+                map.put("user_phone_number", mobileNumberView.getText().toString());
 
                 return map;
             }

@@ -176,6 +176,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             commenterView = itemView.findViewById(R.id.commenterView);
             commentReplayView = itemView.findViewById(R.id.commentReplayView);
             commentLikeView = itemView.findViewById(R.id.commentLikeView);
+            commentLikeView.setEnabled(false);
             postingView = itemView.findViewById(R.id.postingView);
         }
 

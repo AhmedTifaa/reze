@@ -47,6 +47,18 @@ public class PostResponse implements Serializable {
     @Expose
     private String userId;
 
+    @SerializedName("image_url")
+    @Expose
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public int getCommentSize() {
         return commentSize;
     }

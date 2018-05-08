@@ -8,7 +8,7 @@
     android:background="@drawable/post_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ppView"
         android:layout_width="30dp"
         android:layout_height="30dp"

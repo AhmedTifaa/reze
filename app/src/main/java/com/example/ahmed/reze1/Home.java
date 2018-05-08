@@ -43,8 +43,7 @@ import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ListPopupWindowAdapter;
 import com.example.ahmed.reze1.helper.MenuCustomItem;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +62,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -210,6 +211,8 @@ public class Home extends Fragment {
         ImageView ppView;
         ImageView postSideMenu;
         ImageView hiddenMenuPositionView;
+        Button postShareButton;
+
         public PostViewHolder(final View itemView) {
             super(itemView);
 
@@ -221,10 +224,26 @@ public class Home extends Fragment {
             ppView = itemView.findViewById(R.id.ppView);
             postSideMenu = itemView.findViewById(R.id.postSideMenu);
             hiddenMenuPositionView = itemView.findViewById(R.id.hiddenMenuPositionView);
+            postShareButton = itemView.findViewById(R.id.postShareButton);
+
+            postShareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertFragment fragment = AlertFragment.createFragment("Post share is coming soon");
+                    fragment.show(getActivity().getFragmentManager(), null);
+                }
+            });
         }
 
         //todo
         public void bind(final NewsFeedItem item, final int pos) {
+
+            if (item.getItemImage() != null){
+                Picasso.with(getActivity()).load(item.getItemImage()).into(ppView);
+            } else {
+                ppView.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.default_avatar));
+            }
+
             String postText = null;
             if (item.getOwnerName() != null){
                 usernameView.setText(item.getOwnerName());
@@ -480,7 +499,8 @@ public class Home extends Fragment {
         TextView priceView;
         TextView avilView;
         CustomButton productBuyNow;
-        ImageView ppView;
+        CircleImageView ppView;
+        ImageView productImageView;
 
         public VendorProductHolder(View itemView) {
             super(itemView);
@@ -494,9 +514,20 @@ public class Home extends Fragment {
             avilView = itemView.findViewById(R.id.avilView);
             productBuyNow = itemView.findViewById(R.id.productBuyNow);
             ppView = itemView.findViewById(R.id.ppView);
+            productImageView = itemView.findViewById(R.id.productImageView);
         }
 
         public void bind(final NewsFeedItem item){
+
+            if (item.getProductImageUrl() != null){
+                Picasso.with(getActivity()).load(item.getProductImageUrl()).into(ppView);
+            }
+
+            if (item.getItemImage() != null){
+                Picasso.with(getActivity()).load(item.getItemImage()).into(productImageView);
+            }
+
+
             productTitleView.setText(item.getProductTitle());
             productDetailView.setText(item.getDescription());
             priceView.setText(String.valueOf(item.getProductPrice()));
@@ -510,27 +541,35 @@ public class Home extends Fragment {
                 productBuyNow.setEnabled(false);
             }
 
+            productBuyNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CreateBuyRequestFragment fragment = CreateBuyRequestFragment.createFragment(item.getOwnerId(), item.getId(), item.getStoreId());
+                    fragment.show(getActivity().getFragmentManager(), null);
+                }
+            });
+
             ppView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                    /*if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
                         if (item.getOwnerId() > 0) {
                             Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             });
 
             postUserName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
+                    /*if (item.getType() == NewsFeedItem.PRODUCT_TYPE){
                         if (item.getOwnerId() > 0) {
                             Intent intent = VendorActivity.createIntent(String.valueOf(item.getOwnerId()), getActivity());
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             });
         }
@@ -924,6 +963,7 @@ public class Home extends Fragment {
                                     item.setOwnerId(Integer.parseInt(postResponse.getUserId()));
                                     item.setOwnerName(postResponse.getUsername());
                                     item.setPostAttachment(postResponse.getAttachment());
+                                    item.setItemImage(postResponse.getImageUrl());
                                     //item.setPostComments(postResponse.getComments());
                                     item.setCommentSize(postResponse.getCommentSize());
                                     item.setPostText(postResponse.getText());
@@ -943,8 +983,10 @@ public class Home extends Fragment {
                                     item.setProductSoldAmount(productResponse.getSoldAmount());
                                     item.setProductTitle(productResponse.getTitle());
                                     item.setId(productResponse.getId());
-                                    item.setOwnerId(productResponse.getVendorId());
-                                    item.setOwnerName(productResponse.getName());
+                                    item.setOwnerId(productResponse.getUserId());
+                                    item.setOwnerName(productResponse.getStoreName());
+                                    item.setItemImage(productResponse.getStoreImageUrl());
+                                    item.setStoreId(productResponse.getStoreId());
                                     item.setType(NewsFeedItem.PRODUCT_TYPE);
                                     newsFeedItems.add(item);
                                 }

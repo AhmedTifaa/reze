@@ -71,7 +71,7 @@ public class StoreActivity extends AppCompatActivity {
         createPostButton = findViewById(R.id.createPostButton);
         createProductButton = findViewById(R.id.createProductButton);
         vendorPpView = findViewById(R.id.vendorPpView);
-        coverPpView = findViewById(R.id.coverPpView);
+        //coverPpView = findViewById(R.id.coverPpView);
         vendorNameView = findViewById(R.id.vendorNameView);
         vendorAddressView = findViewById(R.id.vendorAddressView);
 
@@ -155,7 +155,7 @@ public class StoreActivity extends AppCompatActivity {
 
     private void updateUi(){
         tabLayout.addTab(tabLayout.newTab().setText(R.string.product));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.details));
+        tabLayout.addTab(tabLayout.newTab().setText("Requests"));
         /*tabLayout.addTab(tabLayout.newTab().setText(R.string.review));*/
 
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -167,8 +167,8 @@ public class StoreActivity extends AppCompatActivity {
                         StoreProductsFragment product = StoreProductsFragment.createFragment(storeId);
                         return product;
                     case 1:
-                        StoreDescriptionFragment details = StoreDescriptionFragment.createFragment(storeId, store.getDescription());
-                        return details;
+                        BuyRequestFragment request = BuyRequestFragment.createFragment(storeId);
+                        return request;
                     /*case 2:
                         ReviewsFragment reviews = new ReviewsFragment();
                         return reviews;*/
