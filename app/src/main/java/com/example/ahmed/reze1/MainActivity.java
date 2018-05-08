@@ -1,6 +1,7 @@
 package com.example.ahmed.reze1;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -44,11 +45,15 @@ import com.example.ahmed.reze1.api.search.SearchResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ResizeWidthAnimation;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -64,7 +69,6 @@ import io.socket.emitter.Emitter;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends AppCompatActivity implements Home.OnCallback,Notification.OnFragmentInteractionListener,Requests.OnFragmentInteractionListener,Profile.OnFragmentInteractionListener {
-    private FirebaseAuth mAuth;
     private static final int VIEW_HEADER = 1;
     private static final int VIEW_ITEM = 2;
 
@@ -89,12 +93,13 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     String userType;
     String userId;
     private DatabaseReference mUserRef;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
         SocketConnect socketConnect = new SocketConnect();
         SocketConnect.socket.on("friendRequest", handleIncomingMessages);
         SocketConnect.socket.on("cancelRequest", handleCancelRequest);
@@ -121,6 +126,50 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         mActionBar.setDisplayShowCustomEnabled(true);
         backView = mCustomView.findViewById(R.id.searchBackView);
         userType = getIntent().getStringExtra("type");
+        mAuth = FirebaseAuth.getInstance();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(response);
+                    //Toast.makeText(getApplicationContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    if(jsonObject.getString("msg").equals("succ")){
+                        Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
+                        register_user(jsonObject.getString("name"),jsonObject.getString("password"),jsonObject.getString("email"),"https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                        // probar.setVisibility(View.GONE);
+                        // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                    }
+                    else {
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parameters  = new HashMap<String, String>();
+
+                parameters.put("id",userId);
+                parameters.put("getInfo","");
+
+
+                return parameters;
+            }
+        };
+        requestQueue.add(request);
         inflateMainView(currentTab);
 
         if (mAuth.getCurrentUser() != null) {
@@ -156,6 +205,49 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
             });
         }
     };
+    private void register_user(final String display_name,String password, String email,final String img) {
+
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful()){
+
+
+                    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = current_user.getUid();
+
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                    String device_token = FirebaseInstanceId.getInstance().getToken();
+
+                    HashMap<String, String> userMap = new HashMap<>();
+                    userMap.put("name", display_name);
+                    userMap.put("image", img);
+                    userMap.put("thumb_image", "default");
+                    userMap.put("device_token", device_token);
+
+                    mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if(task.isSuccessful()){
+                                Toast.makeText(getBaseContext(),"add to firebase",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+
+
+                } else {
+
+
+                }
+
+            }
+        });
+
+    }
     private Emitter.Listener handleIncomingMessages = new Emitter.Listener(){
         @Override
         public void call(final Object... args){
@@ -805,7 +897,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
         if(currentUser == null){
 
-            sendToStart();
+            //sendToStart();
 
         } else {
 
@@ -828,13 +920,13 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
 
     }
 
-    private void sendToStart() {
-
-        Intent startIntent = new Intent(MainActivity.this, Login.class);
-        startActivity(startIntent);
-        finish();
-
-    }
+//    private void sendToStart() {
+//
+//        Intent startIntent = new Intent(MainActivity.this, Login.class);
+//        startActivity(startIntent);
+//        finish();
+//
+//    }
 
 }
 
