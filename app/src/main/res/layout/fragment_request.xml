@@ -1,10 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.Requests">
+    android:orientation="vertical"
+    android:fadeScrollbars="false"
+    tools:context="com.example.ahmed.reze1.BuildNetwork">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/requests_list"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="50dp"
+        android:layout_height="wrap_content"></ListView>
 
-
-</FrameLayout>
+</LinearLayout>

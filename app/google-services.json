@@ -15,10 +15,62 @@
       },
       "oauth_client": [
         {
-          "client_id": "169248879228-s0s25q2vh0dlgl0t0tovj7a5rgj4rim9.apps.googleusercontent.com",
+          "client_id": "169248879228-isfbidqmobban4btk2tmi200ehf4ikfg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.ahmed.reze1",
+            "certificate_hash": "ea81ccf7242cbf5bd7f1c58e09f1fccaea187546"
+          }
+        },
+        {
+          "client_id": "169248879228-thlocga08fqkh4j97nmarpsiotc1jd4q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ahmed.reze1",
+            "certificate_hash": "794f838bc7c21e340803761d40e0bdc7a53ce2c9"
+          }
+        },
+        {
+          "client_id": "169248879228-0f91v0d7gqs5l55b28dadm9i26bj90ot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyU6ue5OVY-Hnn3QIfbN59q-hWJtpwaYE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169248879228-0f91v0d7gqs5l55b28dadm9i26bj90ot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169248879228:android:8043ceb815cb5a88",
+        "android_client_info": {
+          "package_name": "com.example.amr.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169248879228-4ladua1cgom6cpg22iatmffe2lar4eoq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.amr.myapplication",
             "certificate_hash": "ea81ccf7242cbf5bd7f1c58e09f1fccaea187546"
           }
         },

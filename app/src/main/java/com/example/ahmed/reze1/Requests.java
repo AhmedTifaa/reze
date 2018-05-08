@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -22,6 +30,8 @@ public class Requests extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public ListView requestList;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,8 +74,14 @@ public class Requests extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_request, container, false);
+        View  view = inflater.inflate(R.layout.fragment_request, container, false);
+        requestList = (ListView) view.findViewById(R.id.requests_list);
+        //values.add("name test");
+        requestsAdapter adapter = new requestsAdapter(getActivity(),R.layout.request_row,new MainActivity().values);
+        requestList.setAdapter(adapter);
+        return view;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

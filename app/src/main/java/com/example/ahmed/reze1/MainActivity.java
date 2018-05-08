@@ -1,6 +1,9 @@
 package com.example.ahmed.reze1;
 
+import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -8,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.FontRequestEmojiCompatConfig;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.provider.FontRequest;
 import android.support.v4.view.ViewPager;
@@ -31,8 +35,10 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.example.ahmed.reze1.api.search.SearchItem;
@@ -40,13 +46,30 @@ import com.example.ahmed.reze1.api.search.SearchResponse;
 import com.example.ahmed.reze1.app.AppConfig;
 import com.example.ahmed.reze1.helper.ResizeWidthAnimation;
 import com.example.ahmed.reze1.helper.VolleyCustomRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements Home.OnCallback,Notification.OnFragmentInteractionListener,Requests.OnFragmentInteractionListener,Profile.OnFragmentInteractionListener {
+import io.socket.emitter.Emitter;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class MainActivity extends AppCompatActivity implements Home.OnCallback,Notification.OnFragmentInteractionListener,Requests.OnFragmentInteractionListener,Profile.OnFragmentInteractionListener {
     private static final int VIEW_HEADER = 1;
     private static final int VIEW_ITEM = 2;
 
@@ -61,40 +84,107 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     boolean searchEvent = false;
     boolean searchVendor = false;
     boolean searchTeam = false;
+    public View reqView;
+    public RequestQueue requestQueue;
+    public static ArrayList<JSONObject> values = new ArrayList<>();
     String q;
     int searchBoxWidth = 300;
     int currentTab = 0;
     ImageView chatButton;
     String userType;
     String userId;
+    private DatabaseReference mUserRef;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         SocketConnect socketConnect = new SocketConnect();
+        SocketConnect.socket.on("friendRequest", handleIncomingMessages);
+        SocketConnect.socket.on("cancelRequest", handleCancelRequest);
+        SocketConnect.socket.on("getRequestNoti",getRequestNoti);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        Toast.makeText(getBaseContext(),SocketConnect.socket+"",Toast.LENGTH_LONG).show();
         EmojiCompat.Config config = new BundledEmojiCompatConfig(this);
         EmojiCompat.init(config);
         userId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
                 .getString(AppConfig.LOGGED_IN_USER_ID_SHARED, "0");
         SocketConnect.socket.emit("id",userId);
         savedBundle = savedInstanceState;
+        SharedPreferences.Editor editor = getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE).edit();
+        editor.putString(AppConfig.LOGGED_IN_FIRE_ID_SHARED,"fireAuthed").apply();
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
+        reqView = LayoutInflater.from(this).inflate(R.layout.request_tab_icon, null);
         mCustomView = mInflater.inflate(R.layout.action_bar, null);
         searchBox = mCustomView.findViewById(R.id.searchbox);
         searchIcon = mCustomView.findViewById(R.id.searchIcon);
         chatButton = mCustomView.findViewById(R.id.imageButton);
-
         ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         mActionBar.setCustomView(mCustomView,layout);
         mActionBar.setDisplayShowCustomEnabled(true);
         backView = mCustomView.findViewById(R.id.searchBackView);
         userType = getIntent().getStringExtra("type");
+        mAuth = FirebaseAuth.getInstance();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(response);
+                    //Toast.makeText(getApplicationContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                    if(jsonObject.getString("msg").equals("succ")){
+                        Toast.makeText(getBaseContext(),"firbase here",Toast.LENGTH_LONG).show();
+                        register_user(jsonObject.getString("name"),jsonObject.getString("password"),jsonObject.getString("email"),"https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                        String fireId = getBaseContext().getSharedPreferences(AppConfig.SHARED_PREFERENCE_NAME, MODE_PRIVATE)
+                                .getString(AppConfig.LOGGED_IN_FIRE_ID_SHARED, "0");
+                        Toast.makeText(getBaseContext(),fireId,Toast.LENGTH_LONG).show();
+                        // probar.setVisibility(View.GONE);
+                        // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                    }
+                    else {
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parameters  = new HashMap<String, String>();
+
+                parameters.put("id",userId);
+                parameters.put("getInfo","");
+
+
+                return parameters;
+            }
+        };
+        requestQueue.add(request);
         inflateMainView(currentTab);
+
+        if (mAuth.getCurrentUser() != null) {
+
+
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+
+        }
+
 
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,11 +194,147 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
             }
         });
     }
+    private Emitter.Listener getRequestNoti = new Emitter.Listener(){
+        @Override
+        public void call(final Object... args){
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+                    TextView textView = reqView.findViewById(R.id.req_count);
+                    textView.setVisibility(View.VISIBLE);
+                    int val =  Integer.parseInt(textView.getText().toString()) + 1;
+                    textView.setText(val+"");
+                    values.add(data);
+                }
+            });
+        }
+    };
+    private void register_user(final String display_name,String password, String email,final String img) {
+
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if(task.isSuccessful()){
+
+
+                    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = current_user.getUid();
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                    String device_token = FirebaseInstanceId.getInstance().getToken();
+                    HashMap<String, String> userMap = new HashMap<>();
+                    userMap.put("name", display_name);
+                    userMap.put("image", img);
+                    userMap.put("thumb_image", "default");
+                    userMap.put("device_token", device_token);
+
+                    mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if(task.isSuccessful()){
+
+                            }
+
+                        }
+                    });
+
+
+                } else {
+
+
+                }
+
+            }
+        });
+
     }
+    private Emitter.Listener handleIncomingMessages = new Emitter.Listener(){
+        @Override
+        public void call(final Object... args){
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    try {
+                        Toast.makeText(getBaseContext(),userId+"  "+data.getString("to"),Toast.LENGTH_LONG).show();
+
+                            final String id = data.getString("from");
+                            StringRequest request = new StringRequest(Request.Method.POST, "https://rezetopia.com/app/getInfo.php", new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                    Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                                    try {
+                                        JSONObject jsonObject;
+                                        jsonObject = new JSONObject(response);
+                                        //Toast.makeText(getApplicationContext(),jsonObject.getString("msg"),Toast.LENGTH_LONG).show();
+                                        if(jsonObject.getString("msg").equals("succ")){
+                                            //values.add(jsonObject);
+
+                                                //SocketConnect.socket.emit("sendRequestNoti",jsonObject);
+
+//                                            playerNameTv.setText(jsonObject.getString("name"));
+//                                            Picasso.with(getApplicationContext())
+//                                                    .load("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG")
+//                                                    .placeholder(R.drawable.circle).into(playerImg);
+                                            // probar.setVisibility(View.GONE);
+                                            // new DownloadImage(playerImg).execute("https://rezetopia.com/images/profileImgs/"+jsonObject.getString("img")+".JPG");
+                                        }
+                                        else {
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            }) {
+
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String,String> parameters  = new HashMap<String, String>();
+
+                                    parameters.put("id",id);
+                                    parameters.put("getInfo","");
+
+
+                                    return parameters;
+                                }
+                            };
+                            requestQueue.add(request);
+
+
+                        Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    };
+    private Emitter.Listener handleCancelRequest = new Emitter.Listener(){
+        @Override
+        public void call(final Object... args){
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    Toast.makeText(getBaseContext(),data.toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    };
+
+
+
 
     @Override
     protected void onDestroy() {
@@ -155,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home_tab));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_notification_tab));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_requests_tab));
+        tabLayout.addTab(tabLayout.newTab().setCustomView(reqView));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_profile_tab));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_side_menu));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -168,7 +394,16 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                if (tab.getPosition() == 2){
+                    ImageView imageView = tab.getCustomView().findViewById(R.id.icon_in);
+                    TextView textView = tab.getCustomView().findViewById(R.id.req_count);
+                    imageView.getDrawable().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                    textView.setVisibility(View.GONE);
+                    textView.setText("0");
+                    tab.setIcon(R.drawable.ic_requests_tab);
+                }else{
+                    tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                }
                 viewPager.setCurrentItem(tab.getPosition());
                 currentTab = tab.getPosition();
             }
@@ -176,7 +411,9 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.tabs);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
+                    tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
             }
 
             @Override
@@ -654,5 +891,45 @@ public class MainActivity extends AppCompatActivity implements Home.OnCallback,N
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null){
+
+            //sendToStart();
+
+        } else {
+
+            mUserRef.child("online").setValue("true");
+
+        }
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null) {
+
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+
+        }
+
+    }
+
+//    private void sendToStart() {
+//
+//        Intent startIntent = new Intent(MainActivity.this, Login.class);
+//        startActivity(startIntent);
+//        finish();
+//
+//    }
+
 }
 
