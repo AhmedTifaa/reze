@@ -132,7 +132,7 @@
             </android.support.design.widget.TabLayout>
         </LinearLayout>
 
-        <com.example.ahmed.reze1.CustomViewPager
+        <app.reze.ahmed.reze1.CustomViewPager
             android:id="@+id/teamViewPager"
             android:layout_below="@+id/pagerHeader"
             android:layout_width="match_parent"

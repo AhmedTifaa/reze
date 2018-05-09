@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="com.example.ahmed.reze1.FacebookAccessActivity">
+    tools:context="com.rezetopia.ahmed.reze1.app.rezetopia.ahmed.reze1.FacebookAccessActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

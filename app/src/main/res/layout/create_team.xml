@@ -19,7 +19,7 @@
 
 
 
-            <com.example.ahmed.reze1.GUI.CustomEditText
+            <app.reze.ahmed.reze1.GUI.CustomEditText
                 android:inputType="text"
                 android:textSize="15sp"
                 android:id="@+id/teamTitleView"
@@ -33,7 +33,7 @@
                 android:paddingStart="@dimen/dimen_10"/>
 
 
-            <com.example.ahmed.reze1.GUI.CustomButton
+            <app.reze.ahmed.reze1.GUI.CustomButton
                 android:id="@+id/createTeamButton"
                 android:layout_width="wrap_content"
                 android:paddingStart="@dimen/dimen_10"

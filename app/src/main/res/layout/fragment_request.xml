@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fadeScrollbars="false"
-    tools:context="com.example.ahmed.reze1.BuildNetwork">
+    tools:context="com.rezetopia.ahmed.reze1.app.rezetopia.ahmed.reze1.BuildNetwork">
 
     <ListView
         android:id="@+id/requests_list"

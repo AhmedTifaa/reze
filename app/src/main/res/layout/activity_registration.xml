@@ -24,7 +24,7 @@
         android:layout_width="100dp"
         android:layout_gravity="center"
         android:src="@drawable/rezetopia"/>
-        <com.example.ahmed.reze1.GUI.CustomTextView
+        <app.reze.ahmed.reze1.GUI.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -64,7 +64,7 @@
                      android:layout_gravity="center|center_vertical|center_horizontal"
                      android:layout_marginLeft="@dimen/medium_margin"
                      android:layout_toLeftOf="@id/edName"/>
-                 <com.example.ahmed.reze1.GUI.CustomEditText
+                 <app.reze.ahmed.reze1.GUI.CustomEditText
                      android:layout_height="wrap_content"
                      android:layout_width="match_parent"
                      android:layout_marginBottom="@dimen/small_margin"
@@ -121,7 +121,7 @@
                     android:layout_gravity="center|center_vertical|center_horizontal"
                     android:layout_marginLeft="@dimen/medium_margin"
                     android:layout_toLeftOf="@id/edPhone"/>
-                <com.example.ahmed.reze1.GUI.CustomEditText
+                <app.reze.ahmed.reze1.GUI.CustomEditText
                     android:id="@+id/edPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                     android:layout_toLeftOf="@id/edPhone"
                     />
 
-                <com.example.ahmed.reze1.GUI.CustomEditText
+                <app.reze.ahmed.reze1.GUI.CustomEditText
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="@dimen/small_margin"
@@ -232,7 +232,7 @@
                     android:layout_marginLeft="@dimen/medium_margin"
                     android:layout_toLeftOf="@id/edPhone"
                     />
-                <com.example.ahmed.reze1.GUI.CustomEditText
+                <app.reze.ahmed.reze1.GUI.CustomEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_margin"
@@ -290,7 +290,7 @@
                     android:layout_marginLeft="@dimen/medium_margin"
                     android:layout_toLeftOf="@id/edPhone"
                     />
-                <com.example.ahmed.reze1.GUI.CustomEditText
+                <app.reze.ahmed.reze1.GUI.CustomEditText
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="@dimen/small_margin"
@@ -348,7 +348,7 @@
                     android:layout_marginLeft="@dimen/medium_margin"
                     android:layout_toLeftOf="@id/edPhone"
                     />
-                <com.example.ahmed.reze1.GUI.CustomEditText
+                <app.reze.ahmed.reze1.GUI.CustomEditText
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="@dimen/small_margin"
@@ -389,7 +389,7 @@
                 android:background="@drawable/roundone_green"
                 android:layout_marginLeft="@dimen/small_padding"/>
 
-            <com.example.ahmed.reze1.GUI.CustomTextView
+            <app.reze.ahmed.reze1.GUI.CustomTextView
                 android:id="@+id/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -403,7 +403,7 @@
                 android:textSize="@dimen/txtsize" />
 
         </LinearLayout>
-        <com.example.ahmed.reze1.GUI.CustomButton
+        <app.reze.ahmed.reze1.GUI.CustomButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kasb_margin_top"
@@ -416,7 +416,7 @@
             android:text="Sign Up"
             android:textColor="#000"
             android:id="@+id/btnRegister"/>
-        <com.example.ahmed.reze1.GUI.CustomButton
+        <app.reze.ahmed.reze1.GUI.CustomButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/img_gallery"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.CommentActivity"
+    tools:context="com.rezetopia.ahmed.reze1.app.rezetopia.ahmed.reze1.CommentActivity"
     android:orientation="vertical"
     android:weightSum="2">
 
@@ -76,7 +76,7 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
-        <com.example.ahmed.reze1.GUI.CustomEditText
+        <app.reze.ahmed.reze1.GUI.CustomEditText
             android:layout_weight="1.7"
             android:background="@android:color/transparent"
             android:id="@+id/commentEditText"

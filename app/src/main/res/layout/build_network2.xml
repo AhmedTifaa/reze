@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fadeScrollbars="false"
-    tools:context="com.example.ahmed.reze1.BuildNetwork1">
+    tools:context="com.rezetopia.ahmed.reze1.app.rezetopia.ahmed.reze1.BuildNetwork1">
     <ListView
         android:id="@+id/contacts_list"
         android:layout_width="match_parent"

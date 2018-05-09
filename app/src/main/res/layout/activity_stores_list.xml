@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahmed.reze1.StoresListActivity">
+    tools:context="com.rezetopia.ahmed.reze1.app.rezetopia.ahmed.reze1.StoresListActivity">
 
     <LinearLayout
         android:layout_margin="@dimen/dimen_10"
@@ -52,7 +52,7 @@
         </android.support.design.widget.TabLayout>
     </LinearLayout>
 
-    <com.example.ahmed.reze1.CustomViewPager
+    <app.reze.ahmed.reze1.CustomViewPager
         android:id="@+id/vendorViewPager"
         android:layout_below="@+id/pagerHeader"
         android:layout_width="match_parent"

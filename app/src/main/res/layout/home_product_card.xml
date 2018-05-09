@@ -186,7 +186,7 @@
                 />
         </LinearLayout>
 
-        <com.example.ahmed.reze1.GUI.CustomButton
+        <app.reze.ahmed.reze1.GUI.CustomButton
             android:id="@+id/productBuyNow"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
